@@ -14,25 +14,57 @@ from typing import Any
 from .schemas import JsonObject, schemas_by_name, validator_for
 
 _UNSAFE_KEYS = {
+    "access_token",
     "api_key",
+    "auth_token",
+    "bucket_uri",
+    "checkpoint_path",
+    "client_secret",
     "credential",
     "credentials",
     "customer_email",
+    "customer_id",
     "customer_name",
     "hidden_labels",
+    "model_path",
+    "object_uri",
+    "participant_id",
+    "password",
+    "player_name",
     "private_endpoint",
+    "private_key",
     "provider_endpoint",
     "provider_id",
     "raw_path",
     "secret",
+    "secret_key",
+    "storage_path",
+    "storage_uri",
     "token",
 }
 
 _UNSAFE_PATTERNS = (
     ("private key", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----")),
     ("common API token", re.compile(r"\b(?:ghp_|github_pat_|sk-[A-Za-z0-9_-]{12})[A-Za-z0-9_-]+")),
+    ("Google API key", re.compile(r"\bAIza[0-9A-Za-z_-]{35}\b")),
+    ("Slack token", re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{10,}\b")),
+    (
+        "JSON Web Token",
+        re.compile(r"\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\b"),
+    ),
+    (
+        "signed URL credential",
+        re.compile(
+            r"[?&](?:token|sig|signature|x-amz-credential|x-amz-signature|"
+            r"x-goog-signature)=[^&#\s]+",
+            re.IGNORECASE,
+        ),
+    ),
     ("AWS access key", re.compile(r"\bAKIA[0-9A-Z]{16}\b")),
-    ("local Unix path", re.compile(r"(?:^|\s)/(?:home|Users|mnt|var/lib)/[^\s]+")),
+    (
+        "local Unix path",
+        re.compile(r"(?:^|[\s(\[\"'=]|file://)/(?:home|Users|mnt|var/lib)/[^\s)\]}>\"']+"),
+    ),
     ("local Windows path", re.compile(r"\b[A-Za-z]:\\(?:Users|Documents|AppData)\\")),
     ("tailnet endpoint", re.compile(r"\b[A-Za-z0-9.-]+\.ts\.net\b")),
     ("loopback endpoint", re.compile(r"\b(?:localhost|127\.0\.0\.1)(?::\d+)?\b")),
