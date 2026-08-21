@@ -13,5 +13,6 @@
     {"category": "codec", "subject": "no rendering", "status": "not_applicable"},
     {"category": "output_redistribution", "subject": "JSON fixtures", "status": "verified_clear"}
   ],
-  "overall_status": "restricted"
+  "overall_status": "restricted",
+  "reviewed_at": "2026-08-21T00:00:00Z"
 }

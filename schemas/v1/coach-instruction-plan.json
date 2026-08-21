@@ -8,14 +8,17 @@
     "schema_version",
     "record_id",
     "plan_id",
+    "plan_digest",
     "actor_role",
     "workspace_id",
     "instruction",
     "scope",
     "filters",
     "transformations",
+    "permission_checks",
     "output",
     "ambiguities",
+    "execution_status",
     "human_decision_authority"
   ],
   "properties": {
@@ -23,6 +26,7 @@
     "schema_version": { "const": "1.0.0" },
     "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
     "plan_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "plan_digest": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/digest" },
     "actor_role": { "enum": ["coach", "self_coach"] },
     "workspace_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
     "instruction": { "type": "string", "minLength": 1, "maxLength": 2000 },
@@ -70,6 +74,11 @@
         "additionalProperties": false
       }
     },
+    "permission_checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/purposeGrant" }
+    },
     "output": {
       "type": "object",
       "required": ["kind", "rendition", "include_provenance", "include_omissions"],
@@ -84,6 +93,9 @@
     "ambiguities": {
       "type": "array",
       "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+    },
+    "execution_status": {
+      "enum": ["ready", "requires_clarification", "blocked", "partial_supported"]
     },
     "human_decision_authority": { "const": true }
   },

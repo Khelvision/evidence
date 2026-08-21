@@ -7,6 +7,7 @@ import pytest
 
 from khelsutra_evidence.schemas import load_schemas, schemas_by_name, validator_for
 from khelsutra_evidence.validation import (
+    canonical_plan_digest,
     canonical_recipe_digest,
     load_json,
     safety_issues,
@@ -51,6 +52,14 @@ def test_commercialization_overall_is_derived(load_example) -> None:
     assert any("must be 'restricted'" in message for message in _messages(document))
 
 
+def test_commercialization_requires_each_unique_rights_category(load_example) -> None:
+    document = load_example("commercialization-readiness.json")
+    document["components"][-1] = document["components"][0].copy()
+    messages = _messages(document)
+    assert any("categories must be unique" in message for message in messages)
+    assert any("missing commercialization categories" in message for message in messages)
+
+
 def test_cost_raw_math_and_accepted_bounds(load_example) -> None:
     document = load_example("cost-receipt.json")
     document["accepted_source_seconds"] = 700
@@ -69,6 +78,16 @@ def test_rally_ids_order_and_overlap_are_checked(load_example) -> None:
     assert any("must be unique" in message for message in messages)
     assert any("must not overlap" in message for message in messages)
     assert any("must be after" in message for message in messages)
+
+
+def test_rallies_on_different_courts_may_overlap(load_example) -> None:
+    document = load_example("rallies/truth.json")
+    document["rallies"][1].update(
+        target_court_id="court-b",
+        start_frame=150,
+        end_frame=200,
+    )
+    assert not any("must not overlap" in message for message in _messages(document))
 
 
 def test_system_run_requires_unique_samples_and_failure_disclosure(load_example) -> None:
@@ -132,10 +151,40 @@ def test_recipe_digest_and_order_are_checked(load_example) -> None:
     assert any("canonical recipe digest" in message for message in messages)
 
 
+def test_plan_digest_permissions_and_ambiguity_are_checked(load_example) -> None:
+    document = load_example("coach-instruction-plan.json")
+    assert document["plan_digest"]["value"] == canonical_plan_digest(document)
+    document["ambiguities"] = ["Player A resolves to two people."]
+    document["permission_checks"][0].pop("grant_ref")
+    document["plan_digest"]["value"] = "0" * 64
+    messages = _messages(document)
+    assert any("canonical plan digest" in message for message in messages)
+    assert any("require clarification" in message for message in messages)
+    assert any("required when a permission is granted" in message for message in messages)
+
+
+def test_portability_requires_clean_second_environment_and_receipts(load_example) -> None:
+    document = load_example("ownership-portability.json")
+    document.pop("second_environment")
+    document["restore"]["artifact_refs"] = []
+    messages = _messages(document)
+    assert any("second_environment" in message for message in messages)
+    assert any("artifact_refs" in message for message in messages)
+
+
 def test_agent_receipt_cannot_invent_extra_matches(load_example) -> None:
     document = load_example("coach-agent-run-receipt.json")
     document["available_match_count"] = 6
     assert any("cannot exceed requested" in message for message in _messages(document))
+
+
+def test_agent_receipt_explains_incomplete_scope_and_binds_artifacts(load_example) -> None:
+    document = load_example("coach-agent-run-receipt.json")
+    document["omissions"] = []
+    document["result_artifacts"] = []
+    messages = _messages(document)
+    assert any("fewer than the requested" in message for message in messages)
+    assert any("listed in result_artifacts" in message for message in messages)
 
 
 def test_model_observation_requires_identity_and_confidence(load_example) -> None:

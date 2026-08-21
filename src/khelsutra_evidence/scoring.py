@@ -52,7 +52,8 @@ def score_rallies(truth: JsonObject, prediction: JsonObject, tolerance_frames: i
                     int(truths[i]["start_frame"]) - int(predictions[j]["start_frame"])
                 )
                 end_error = abs(int(truths[i]["end_frame"]) - int(predictions[j]["end_frame"]))
-                if start_error <= tolerance_frames and end_error <= tolerance_frames:
+                same_court = truths[i]["target_court_id"] == predictions[j]["target_court_id"]
+                if same_court and start_error <= tolerance_frames and end_error <= tolerance_frames:
                     child = dp[i + 1][j + 1]
                     candidates.append(
                         _Cell(child.matches + 1, child.error + start_error + end_error, "match")

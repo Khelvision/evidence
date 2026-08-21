@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import re
@@ -43,6 +44,18 @@ _UNSAFE_PATTERNS = (
         ),
     ),
 )
+
+_COMMERCIALIZATION_CATEGORIES = {
+    "application_code",
+    "base_model",
+    "checkpoint",
+    "training_data",
+    "evaluation_data",
+    "media",
+    "hosted_api",
+    "codec",
+    "output_redistribution",
+}
 
 
 @dataclass(frozen=True)
@@ -116,13 +129,33 @@ def safety_issues(value: Any, path: str = "$") -> list[ValidationIssue]:
 
 
 def canonical_recipe_digest(document: JsonObject) -> str:
-    import hashlib
-
     payload = {
         "plan_id": document["plan_id"],
         "items": document["items"],
         "rendition": document["rendition"],
     }
+    encoded = json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+    ).encode()
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def canonical_plan_digest(document: JsonObject) -> str:
+    fields = (
+        "plan_id",
+        "actor_role",
+        "workspace_id",
+        "instruction",
+        "scope",
+        "filters",
+        "transformations",
+        "permission_checks",
+        "output",
+        "ambiguities",
+        "execution_status",
+        "human_decision_authority",
+    )
+    payload = {field: document[field] for field in fields}
     encoded = json.dumps(
         payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
     ).encode()
@@ -139,6 +172,7 @@ def _semantic_issues(document: JsonObject) -> list[ValidationIssue]:
         "SystemRunV1": _system_run_issues,
         "EvidenceReleaseV1": _release_issues,
         "OwnerAdaptationRunV1": _adaptation_issues,
+        "CoachInstructionPlanV1": _plan_issues,
         "EvidenceRecipeV1": _recipe_issues,
         "CoachAgentRunReceiptV1": _agent_receipt_issues,
     }
@@ -158,9 +192,20 @@ def _scenario_issues(document: JsonObject) -> list[ValidationIssue]:
 
 
 def _commercialization_issues(document: JsonObject) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
+    categories = [component["category"] for component in document["components"]]
+    if len(categories) != len(set(categories)):
+        issues.append(ValidationIssue("components", "commercialization categories must be unique"))
+    missing = sorted(_COMMERCIALIZATION_CATEGORIES - set(categories))
+    if missing:
+        issues.append(
+            ValidationIssue(
+                "components", "missing commercialization categories: " + ", ".join(missing)
+            )
+        )
     declared = document.get("overall_status")
     if declared is None:
-        return []
+        return issues
     statuses = {component["status"] for component in document["components"]}
     expected = (
         "unknown"
@@ -170,8 +215,10 @@ def _commercialization_issues(document: JsonObject) -> list[ValidationIssue]:
         else "verified_clear"
     )
     if declared != expected:
-        return [ValidationIssue("overall_status", f"must be {expected!r} from component states")]
-    return []
+        issues.append(
+            ValidationIssue("overall_status", f"must be {expected!r} from component states")
+        )
+    return issues
 
 
 def _rate_issue(
@@ -231,8 +278,14 @@ def _rally_set_issues(document: JsonObject) -> list[ValidationIssue]:
     issues: list[ValidationIssue] = []
     ids: set[str] = set()
     ordered = sorted(
-        document["rallies"], key=lambda rally: (rally["start_frame"], rally["end_frame"])
+        document["rallies"],
+        key=lambda rally: (
+            rally["target_court_id"],
+            rally["start_frame"],
+            rally["end_frame"],
+        ),
     )
+    previous_end_by_court: dict[str, int] = {}
     for index, rally in enumerate(ordered):
         if rally["rally_id"] in ids:
             issues.append(ValidationIssue(f"rallies.{index}.rally_id", "must be unique"))
@@ -241,8 +294,12 @@ def _rally_set_issues(document: JsonObject) -> list[ValidationIssue]:
             issues.append(
                 ValidationIssue(f"rallies.{index}.end_frame", "must be after start_frame")
             )
-        if index and rally["start_frame"] < ordered[index - 1]["end_frame"]:
+        court = rally["target_court_id"]
+        if rally["start_frame"] < previous_end_by_court.get(court, 0):
             issues.append(ValidationIssue(f"rallies.{index}", "rallies must not overlap"))
+        previous_end_by_court[court] = max(
+            int(rally["end_frame"]), previous_end_by_court.get(court, 0)
+        )
     return issues
 
 
@@ -305,6 +362,50 @@ def _adaptation_issues(document: JsonObject) -> list[ValidationIssue]:
     return issues
 
 
+def _plan_issues(document: JsonObject) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
+    expected = canonical_plan_digest(document)
+    if document["plan_digest"]["value"] != expected:
+        issues.append(
+            ValidationIssue("plan_digest.value", f"must equal canonical plan digest {expected}")
+        )
+    has_ambiguity = bool(document["ambiguities"])
+    status = document["execution_status"]
+    if has_ambiguity and status != "requires_clarification":
+        issues.append(
+            ValidationIssue(
+                "execution_status", "must require clarification while ambiguities remain"
+            )
+        )
+    if not has_ambiguity and status == "requires_clarification":
+        issues.append(
+            ValidationIssue("execution_status", "cannot require clarification without ambiguities")
+        )
+    purposes = [check["purpose"] for check in document["permission_checks"]]
+    if len(purposes) != len(set(purposes)):
+        issues.append(ValidationIssue("permission_checks", "purposes must be unique"))
+    for index, check in enumerate(document["permission_checks"]):
+        if check["granted"] and "grant_ref" not in check:
+            issues.append(
+                ValidationIssue(
+                    f"permission_checks.{index}.grant_ref",
+                    "is required when a permission is granted",
+                )
+            )
+    service_checks = [
+        check for check in document["permission_checks"] if check["purpose"] == "service_operation"
+    ]
+    if status in {"ready", "partial_supported"} and not any(
+        check["granted"] for check in service_checks
+    ):
+        issues.append(
+            ValidationIssue(
+                "permission_checks", "ready execution requires a granted service_operation"
+            )
+        )
+    return issues
+
+
 def _recipe_issues(document: JsonObject) -> list[ValidationIssue]:
     issues: list[ValidationIssue] = []
     orders = [item["order"] for item in document["items"]]
@@ -319,9 +420,24 @@ def _recipe_issues(document: JsonObject) -> list[ValidationIssue]:
 
 
 def _agent_receipt_issues(document: JsonObject) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
     if document["available_match_count"] > document["requested_match_count"]:
-        return [ValidationIssue("available_match_count", "cannot exceed requested_match_count")]
-    return []
+        issues.append(
+            ValidationIssue("available_match_count", "cannot exceed requested_match_count")
+        )
+    if (
+        document["available_match_count"] < document["requested_match_count"]
+        and not document["omissions"]
+    ):
+        issues.append(
+            ValidationIssue("omissions", "must explain why fewer than the requested matches exist")
+        )
+    first_playable = document.get("first_playable_ref")
+    if first_playable is not None and first_playable not in document["result_artifacts"]:
+        issues.append(
+            ValidationIssue("first_playable_ref", "must also be listed in result_artifacts")
+        )
+    return issues
 
 
 def _authority_issues(value: Any, path: str = "$") -> list[ValidationIssue]:

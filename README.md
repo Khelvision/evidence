@@ -22,10 +22,11 @@ not a blind benchmark, and not permission to claim that the north-star coach que
 
 - Versioned JSON Schemas for tasks, scenarios, costs, runs, releases, commercialization, owner-model
   adaptation/portability, and coach-agent execution.
-- A reference rally-boundary scorer with deterministic one-to-one matching.
+- A reference rally-boundary scorer with deterministic, court-aware one-to-one matching.
 - Comparability verdicts with reasons: `paired`, `paired_quality_only`, `partially_comparable`,
   `descriptive_only`, or `incompatible`.
 - Fail-closed validation and public-package safety scanning.
+- Content-addressed coach plans, source-bound reel recipes, and clean-environment portability receipts.
 - Separate official and community registries.
 - Static evidence-site source that can be published only after infrastructure approval.
 

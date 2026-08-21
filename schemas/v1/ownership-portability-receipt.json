@@ -14,7 +14,8 @@
     "reproduction",
     "promotion",
     "rollback",
-    "vendor_account_required"
+    "vendor_account_required",
+    "second_environment"
   ],
   "properties": {
     "schema_name": { "const": "OwnershipPortabilityReceiptV1" },
@@ -59,6 +60,7 @@
         "passed": { "type": "boolean" },
         "artifact_refs": {
           "type": "array",
+          "minItems": 1,
           "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" }
         },
         "notes": { "type": "string", "maxLength": 1000 }

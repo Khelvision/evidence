@@ -31,9 +31,11 @@
           "sample_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
           "rally_ref": {
             "type": "object",
-            "required": ["source_id", "start_frame", "end_frame"],
+            "required": ["source_ref", "start_frame", "end_frame"],
             "properties": {
-              "source_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+              "source_ref": {
+                "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef"
+              },
               "start_frame": { "type": "integer", "minimum": 0 },
               "end_frame": { "type": "integer", "minimum": 1 }
             },

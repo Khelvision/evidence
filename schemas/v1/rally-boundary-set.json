@@ -15,7 +15,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["rally_id", "start_frame", "end_frame", "provenance"],
+        "required": ["rally_id", "start_frame", "end_frame", "target_court_id", "provenance"],
         "properties": {
           "rally_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
           "start_frame": { "type": "integer", "minimum": 0 },

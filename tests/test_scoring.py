@@ -48,6 +48,24 @@ def test_empty_sets_score_perfectly_when_both_empty(load_example) -> None:
     assert result["precision"] == result["recall"] == result["f1"] == 1.0
 
 
+def test_reference_score_never_matches_an_adjacent_court(load_example) -> None:
+    truth = load_example("rallies/truth.json")
+    prediction = load_example("rallies/prediction.json")
+    truth["rallies"] = [truth["rallies"][0]]
+    prediction["rallies"] = [
+        {
+            **prediction["rallies"][0],
+            "start_frame": truth["rallies"][0]["start_frame"],
+            "end_frame": truth["rallies"][0]["end_frame"],
+            "target_court_id": "court-b",
+        }
+    ]
+    result = score_rallies(truth, prediction, 0)
+    assert result["matched_count"] == 0
+    assert result["unmatched_truth_ids"] == ["truth-rally-001"]
+    assert result["unmatched_prediction_ids"] == ["prediction-rally-001"]
+
+
 @pytest.mark.parametrize(
     ("mutation", "message"),
     [
