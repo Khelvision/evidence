@@ -1,0 +1,19 @@
+{
+  "schema_name": "OwnerWorkspaceProfileV1",
+  "schema_version": "1.0.0",
+  "record_id": "workspace-profile-synthetic-academy",
+  "workspace_id": "workspace-synthetic-academy",
+  "owner_type": "academy",
+  "sovereignty_boundary": "single_owner",
+  "authorized_role_count": 2,
+  "cross_owner_pooling": false,
+  "raw_media_location": "owner_local",
+  "purpose_grants": [
+    {"purpose": "service_operation", "granted": true},
+    {"purpose": "owner_model_improvement", "granted": true},
+    {"purpose": "shared_model_improvement", "granted": false},
+    {"purpose": "public_evidence", "granted": false}
+  ],
+  "export_supported": true,
+  "notes": "Synthetic workspace; no person or academy exists."
+}

@@ -1,0 +1,21 @@
+{
+  "schema_name": "CoachInstructionPlanV1",
+  "schema_version": "1.0.0",
+  "record_id": "coach-plan-synthetic-v1",
+  "plan_id": "synthetic-unforced-error-plan",
+  "actor_role": "coach",
+  "workspace_id": "workspace-synthetic-academy",
+  "instruction": "Show me all the unforced errors of Player A in their last five matches as a video, keeping only the last three shots of each rally.",
+  "scope": {"player_ref": "player-synthetic-a", "completed_matches": 5, "order": "recorded_at_desc", "timezone": "Asia/Kolkata"},
+  "filters": [
+    {"field": "rally_outcome", "operator": "equals", "value": "unforced_error", "accepted_authorities": ["human_confirmed", "model_observation"]}
+  ],
+  "transformations": [
+    {"operation": "keep_last_shots", "count": 3},
+    {"operation": "order_chronologically"},
+    {"operation": "stitch"}
+  ],
+  "output": {"kind": "video_reel", "rendition": "sd30", "include_provenance": true, "include_omissions": true},
+  "ambiguities": [],
+  "human_decision_authority": true
+}

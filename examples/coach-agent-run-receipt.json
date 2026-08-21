@@ -1,0 +1,24 @@
+{
+  "schema_name": "CoachAgentRunReceiptV1",
+  "schema_version": "1.0.0",
+  "record_id": "coach-agent-receipt-synthetic-v1",
+  "run_id": "synthetic-coach-agent-run",
+  "plan_id": "synthetic-unforced-error-plan",
+  "recipe_id": "synthetic-unforced-error-reel",
+  "requested_match_count": 5,
+  "available_match_count": 4,
+  "matched_rally_count": 1,
+  "omissions": [
+    {"scope_ref": "match-slot-5", "reason": "inaccessible_match", "detail": "Synthetic example reports fewer than five available matches."}
+  ],
+  "timings": {
+    "intent_to_plan_seconds": 0.1,
+    "plan_to_recipe_seconds": 0.2,
+    "recipe_to_first_playable_seconds": 1.5,
+    "full_completion_seconds": 2
+  },
+  "cost_usd": 0,
+  "prescriptive_advice_emitted": false,
+  "human_decision_required": true,
+  "completeness_reported": true
+}

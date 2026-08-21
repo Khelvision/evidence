@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:ComparisonReportV1",
+  "title": "ComparisonReportV1",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "left_run_id",
+    "right_run_id",
+    "verdict",
+    "reasons",
+    "shared_sample_ids",
+    "left_only_sample_ids",
+    "right_only_sample_ids",
+    "quality_comparable",
+    "cost_comparable"
+  ],
+  "properties": {
+    "schema_name": { "const": "ComparisonReportV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "left_run_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "right_run_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "verdict": {
+      "enum": ["paired", "paired_quality_only", "partially_comparable", "descriptive_only", "incompatible"]
+    },
+    "reasons": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+    },
+    "shared_sample_ids": {
+      "type": "array",
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" }
+    },
+    "left_only_sample_ids": {
+      "type": "array",
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" }
+    },
+    "right_only_sample_ids": {
+      "type": "array",
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" }
+    },
+    "quality_comparable": { "type": "boolean" },
+    "cost_comparable": { "type": "boolean" },
+    "scenario_strata_equal": { "type": "boolean" },
+    "generated_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:CoachAgentRunReceiptV1",
+  "title": "CoachAgentRunReceiptV1",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "run_id",
+    "plan_id",
+    "recipe_id",
+    "requested_match_count",
+    "available_match_count",
+    "matched_rally_count",
+    "omissions",
+    "timings",
+    "cost_usd",
+    "prescriptive_advice_emitted",
+    "human_decision_required",
+    "completeness_reported"
+  ],
+  "properties": {
+    "schema_name": { "const": "CoachAgentRunReceiptV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "run_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "plan_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "recipe_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "requested_match_count": { "type": "integer", "minimum": 1 },
+    "available_match_count": { "type": "integer", "minimum": 0 },
+    "matched_rally_count": { "type": "integer", "minimum": 0 },
+    "omissions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scope_ref", "reason"],
+        "properties": {
+          "scope_ref": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "reason": {
+            "enum": [
+              "ambiguous_identity",
+              "inaccessible_match",
+              "unindexed_match",
+              "uncertain_outcome",
+              "missing_shot_metadata",
+              "fewer_than_three_shots",
+              "missing_master",
+              "rights_restricted"
+            ]
+          },
+          "detail": { "type": "string", "maxLength": 500 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "timings": {
+      "type": "object",
+      "required": [
+        "intent_to_plan_seconds",
+        "plan_to_recipe_seconds",
+        "recipe_to_first_playable_seconds",
+        "full_completion_seconds"
+      ],
+      "properties": {
+        "intent_to_plan_seconds": { "type": "number", "minimum": 0 },
+        "plan_to_recipe_seconds": { "type": "number", "minimum": 0 },
+        "recipe_to_first_playable_seconds": { "type": "number", "minimum": 0 },
+        "full_completion_seconds": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "cost_usd": { "type": "number", "minimum": 0 },
+    "prescriptive_advice_emitted": { "const": false },
+    "human_decision_required": { "const": true },
+    "completeness_reported": { "const": true },
+    "first_playable_ref": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" }
+  },
+  "additionalProperties": false
+}

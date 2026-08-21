@@ -1,0 +1,15 @@
+{
+  "schema_name": "TaskProfileV1",
+  "schema_version": "1.0.0",
+  "record_id": "task-profile-synthetic-v1",
+  "task_id": "synthetic-rally-boundaries",
+  "sport": "badminton",
+  "prediction_unit": "rally_boundary",
+  "boundary_tolerance_frames": 15,
+  "scorer": {
+    "name": "khelsutra-rally-boundary",
+    "version": "1.0.0"
+  },
+  "sample_ids": ["synthetic-match-001"],
+  "notes": "Synthetic contract fixture; not product evidence."
+}

@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "khelsutra-evidence"
+version = "0.1.0"
+description = "Open evidence contracts and comparison tooling for owner-controlled sports models"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "KhelSutra" }]
+dependencies = [
+  "jsonschema>=4.23,<5",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.15,<2",
+  "pytest>=8.3,<9",
+  "pytest-cov>=6,<7",
+  "ruff>=0.11,<1",
+  "types-jsonschema>=4.23,<5",
+]
+
+[project.scripts]
+evidence = "khelsutra_evidence.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/khelsutra_evidence"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"schemas" = "khelsutra_evidence/schemas"
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers --cov=khelsutra_evidence --cov-report=term-missing --cov-fail-under=90"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["khelsutra_evidence"]
+
+[tool.coverage.run]
+branch = true
+source = ["khelsutra_evidence"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false

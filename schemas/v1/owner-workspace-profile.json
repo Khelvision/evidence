@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:OwnerWorkspaceProfileV1",
+  "title": "OwnerWorkspaceProfileV1",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "workspace_id",
+    "owner_type",
+    "sovereignty_boundary",
+    "cross_owner_pooling",
+    "purpose_grants"
+  ],
+  "properties": {
+    "schema_name": { "const": "OwnerWorkspaceProfileV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "workspace_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "owner_type": { "enum": ["individual", "academy", "club", "organization"] },
+    "sovereignty_boundary": { "const": "single_owner" },
+    "authorized_role_count": { "type": "integer", "minimum": 1 },
+    "cross_owner_pooling": { "const": false },
+    "raw_media_location": { "enum": ["owner_local", "owner_cloud", "managed_ephemeral", "mixed"] },
+    "purpose_grants": {
+      "type": "array",
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/purposeGrant" }
+    },
+    "export_supported": { "type": "boolean" },
+    "notes": { "type": "string", "maxLength": 2000 }
+  },
+  "additionalProperties": false
+}

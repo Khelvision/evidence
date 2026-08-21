@@ -1,0 +1,26 @@
+{
+  "schema_name": "ScenarioProfileV1",
+  "schema_version": "1.0.0",
+  "record_id": "scenario-synthetic-match-001",
+  "sample_id": "synthetic-match-001",
+  "visible_courts": 3,
+  "simultaneously_active_games": 2,
+  "target_court_id": "court-a",
+  "camera": {
+    "motion": "fixed",
+    "angle": "corner",
+    "placement": "synthetic-tripod"
+  },
+  "capture": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "cuts": 0,
+    "audio_available": true,
+    "lighting": "even",
+    "occlusion": "partial"
+  },
+  "source_duration_seconds": 600,
+  "adult_rights_cleared": true,
+  "notes": "Synthetic contract fixture; no media exists."
+}

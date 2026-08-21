@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:ModelPackageManifestV1",
+  "title": "ModelPackageManifestV1",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "package_id",
+    "base_model",
+    "files",
+    "lineage",
+    "exportable",
+    "redistribution_status"
+  ],
+  "properties": {
+    "schema_name": { "const": "ModelPackageManifestV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "package_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "base_model": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" },
+    "adapter": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" },
+    "prompt": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" },
+    "scorer": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" }
+    },
+    "lineage": {
+      "type": "array",
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" }
+    },
+    "exportable": { "type": "boolean" },
+    "redistribution_status": { "enum": ["verified_clear", "restricted", "unknown", "not_applicable"] },
+    "runtime_contract": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

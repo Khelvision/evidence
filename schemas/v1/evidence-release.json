@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:EvidenceReleaseV1",
+  "title": "EvidenceReleaseV1",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "release_id",
+    "release_class",
+    "registry",
+    "published_at",
+    "system_run_refs",
+    "sample_ids",
+    "failures_included",
+    "exposed_before_freeze",
+    "media_license_status"
+  ],
+  "properties": {
+    "schema_name": { "const": "EvidenceReleaseV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "release_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "release_class": { "enum": ["demonstration", "blind", "ownership", "coach_agent"] },
+    "registry": { "enum": ["official", "community"] },
+    "published_at": { "type": "string", "format": "date-time" },
+    "task_profile_ref": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" },
+    "system_run_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" }
+    },
+    "sample_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" }
+    },
+    "failures_included": { "type": "boolean" },
+    "exposed_before_freeze": { "type": "boolean" },
+    "media_license_status": { "enum": ["verified_clear", "restricted", "unknown", "not_applicable"] },
+    "media_license_ref": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" },
+    "training_prohibited": { "type": "boolean" },
+    "rehosting_prohibited": { "type": "boolean" },
+    "official_claims": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+    }
+  },
+  "additionalProperties": false
+}

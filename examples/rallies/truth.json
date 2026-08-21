@@ -1,0 +1,31 @@
+{
+  "schema_name": "RallyBoundarySetV1",
+  "schema_version": "1.0.0",
+  "record_id": "truth-synthetic-match-001",
+  "sample_id": "synthetic-match-001",
+  "role": "truth",
+  "fps": 30,
+  "rallies": [
+    {
+      "rally_id": "truth-rally-001",
+      "start_frame": 100,
+      "end_frame": 220,
+      "target_court_id": "court-a",
+      "provenance": {"authority": "human_confirmed"}
+    },
+    {
+      "rally_id": "truth-rally-002",
+      "start_frame": 400,
+      "end_frame": 610,
+      "target_court_id": "court-a",
+      "provenance": {"authority": "human_confirmed"}
+    },
+    {
+      "rally_id": "truth-rally-003",
+      "start_frame": 800,
+      "end_frame": 930,
+      "target_court_id": "court-a",
+      "provenance": {"authority": "human_confirmed"}
+    }
+  ]
+}
