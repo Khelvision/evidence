@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:RallyBoundarySetV1",
+  "title": "RallyBoundarySetV1",
+  "type": "object",
+  "required": ["schema_name", "schema_version", "record_id", "sample_id", "role", "fps", "rallies"],
+  "properties": {
+    "schema_name": { "const": "RallyBoundarySetV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "sample_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "role": { "enum": ["truth", "prediction"] },
+    "fps": { "type": "number", "exclusiveMinimum": 0 },
+    "rallies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rally_id", "start_frame", "end_frame", "target_court_id", "provenance"],
+        "properties": {
+          "rally_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+          "start_frame": { "type": "integer", "minimum": 0 },
+          "end_frame": { "type": "integer", "minimum": 1 },
+          "target_court_id": { "type": "string", "minLength": 1, "maxLength": 120 },
+          "provenance": {
+            "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/observationProvenance"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

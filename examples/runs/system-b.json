@@ -1,0 +1,37 @@
+{
+  "schema_name": "SystemRunV1",
+  "schema_version": "1.0.0",
+  "record_id": "system-run-synthetic-b",
+  "run_id": "synthetic-run-b",
+  "run_class": "synthetic",
+  "system": {
+    "name": "synthetic-system",
+    "version": "b",
+    "digest": {"algorithm": "sha256", "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}
+  },
+  "task_contract": {
+    "task_id": "synthetic-rally-boundaries",
+    "prediction_unit": "rally_boundary",
+    "boundary_tolerance_frames": 15,
+    "scorer_name": "khelsutra-rally-boundary",
+    "scorer_version": "1.0.0"
+  },
+  "samples": [
+    {
+      "sample_id": "synthetic-match-001",
+      "status": "accepted",
+      "prediction_ref": {"artifact_id": "prediction-synthetic-match-001", "digest": {"algorithm": "sha256", "value": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"}},
+      "manual_correction_minutes": 4
+    }
+  ],
+  "scenario_strata": ["multi-active-fixed"],
+  "metrics": [
+    {"name": "tol_f1", "value": 0.7, "unit": "ratio", "stratum": "multi-active-fixed"}
+  ],
+  "timings": [
+    {"phase": "first_stable_rally", "elapsed_seconds": 40},
+    {"phase": "delivery_complete", "elapsed_seconds": 650}
+  ],
+  "failures_included": true,
+  "notes": "Synthetic run intentionally omits cost, yielding paired_quality_only."
+}

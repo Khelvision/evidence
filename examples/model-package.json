@@ -1,0 +1,17 @@
+{
+  "schema_name": "ModelPackageManifestV1",
+  "schema_version": "1.0.0",
+  "record_id": "model-package-synthetic-candidate",
+  "package_id": "synthetic-candidate-v1",
+  "base_model": {"artifact_id": "synthetic-base", "digest": {"algorithm": "sha256", "value": "1111111111111111111111111111111111111111111111111111111111111111"}},
+  "adapter": {"artifact_id": "synthetic-adapter", "digest": {"algorithm": "sha256", "value": "2222222222222222222222222222222222222222222222222222222222222222"}},
+  "prompt": {"artifact_id": "synthetic-prompt", "digest": {"algorithm": "sha256", "value": "3333333333333333333333333333333333333333333333333333333333333333"}},
+  "scorer": {"artifact_id": "synthetic-scorer", "digest": {"algorithm": "sha256", "value": "4444444444444444444444444444444444444444444444444444444444444444"}},
+  "files": [
+    {"artifact_id": "synthetic-manifest", "digest": {"algorithm": "sha256", "value": "5555555555555555555555555555555555555555555555555555555555555555"}, "media_type": "application/json"}
+  ],
+  "lineage": ["synthetic-base-v1"],
+  "exportable": true,
+  "redistribution_status": "restricted",
+  "runtime_contract": "Synthetic local runtime; no weights are distributed."
+}

@@ -1,0 +1,20 @@
+{
+  "schema_name": "CostReceiptV1",
+  "schema_version": "1.0.0",
+  "record_id": "cost-synthetic-run-a",
+  "currency": "USD",
+  "source_seconds": 600,
+  "accepted_source_seconds": 600,
+  "inference_usd": 0.2,
+  "accelerator_seconds": 480,
+  "wall_seconds": 660,
+  "retry_usd": 0.01,
+  "manual_review_minutes": 5,
+  "total_cost_usd": 0.5,
+  "inference_usd_per_source_hour": 1.2,
+  "accelerator_seconds_per_source_hour": 2880,
+  "wall_seconds_per_source_hour": 3960,
+  "manual_minutes_per_source_hour": 30,
+  "total_cost_usd_per_accepted_source_hour": 3,
+  "notes": "Synthetic arithmetic fixture; not a KhelSutra cost claim."
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:common",
+  "title": "KhelSutra Evidence common definitions",
+  "$defs": {
+    "recordId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "digest": {
+      "type": "object",
+      "required": ["algorithm", "value"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "value": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "artifactRef": {
+      "type": "object",
+      "required": ["artifact_id", "digest"],
+      "properties": {
+        "artifact_id": { "$ref": "#/$defs/recordId" },
+        "digest": { "$ref": "#/$defs/digest" },
+        "media_type": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "size_bytes": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "authority": {
+      "enum": [
+        "human_confirmed",
+        "model_observation",
+        "derived_calculation",
+        "coach_assertion",
+        "unknown"
+      ]
+    },
+    "observationProvenance": {
+      "type": "object",
+      "required": ["authority"],
+      "properties": {
+        "authority": { "$ref": "#/$defs/authority" },
+        "model_id": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "confirmed_at": { "type": "string", "format": "date-time" },
+        "evidence_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/artifactRef" },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "phaseTiming": {
+      "type": "object",
+      "required": ["phase", "elapsed_seconds"],
+      "properties": {
+        "phase": {
+          "enum": [
+            "accepted",
+            "prepared",
+            "first_durable_chunk",
+            "upload_complete",
+            "inference_started",
+            "first_stable_rally",
+            "inference_complete",
+            "review_complete",
+            "first_playable",
+            "delivery_complete"
+          ]
+        },
+        "elapsed_seconds": { "type": "number", "minimum": 0 },
+        "observed_at": { "type": "string", "format": "date-time" },
+        "unavailable_reason": { "type": "string", "minLength": 1, "maxLength": 500 }
+      },
+      "additionalProperties": false
+    },
+    "qualityMetric": {
+      "type": "object",
+      "required": ["name", "value"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "value": { "type": "number" },
+        "unit": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "numerator": { "type": "number" },
+        "denominator": { "type": "number", "exclusiveMinimum": 0 },
+        "stratum": { "type": "string", "minLength": 1, "maxLength": 120 }
+      },
+      "additionalProperties": false
+    },
+    "purposeGrant": {
+      "type": "object",
+      "required": ["purpose", "granted"],
+      "properties": {
+        "purpose": {
+          "enum": [
+            "service_operation",
+            "owner_model_improvement",
+            "shared_model_improvement",
+            "research",
+            "public_evidence",
+            "marketing"
+          ]
+        },
+        "granted": { "type": "boolean" },
+        "grant_ref": { "$ref": "#/$defs/artifactRef" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

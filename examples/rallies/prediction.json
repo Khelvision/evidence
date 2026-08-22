@@ -1,0 +1,31 @@
+{
+  "schema_name": "RallyBoundarySetV1",
+  "schema_version": "1.0.0",
+  "record_id": "prediction-synthetic-match-001",
+  "sample_id": "synthetic-match-001",
+  "role": "prediction",
+  "fps": 30,
+  "rallies": [
+    {
+      "rally_id": "prediction-rally-001",
+      "start_frame": 104,
+      "end_frame": 216,
+      "target_court_id": "court-a",
+      "provenance": {"authority": "model_observation", "model_id": "synthetic-model-a", "confidence": 0.9}
+    },
+    {
+      "rally_id": "prediction-rally-002",
+      "start_frame": 395,
+      "end_frame": 620,
+      "target_court_id": "court-a",
+      "provenance": {"authority": "model_observation", "model_id": "synthetic-model-a", "confidence": 0.8}
+    },
+    {
+      "rally_id": "prediction-rally-fp",
+      "start_frame": 680,
+      "end_frame": 720,
+      "target_court_id": "court-a",
+      "provenance": {"authority": "model_observation", "model_id": "synthetic-model-a", "confidence": 0.4}
+    }
+  ]
+}

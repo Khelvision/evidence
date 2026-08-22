@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:ScenarioProfileV1",
+  "title": "ScenarioProfileV1",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "sample_id",
+    "visible_courts",
+    "simultaneously_active_games",
+    "target_court_id",
+    "camera",
+    "capture",
+    "source_duration_seconds"
+  ],
+  "properties": {
+    "schema_name": { "const": "ScenarioProfileV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "sample_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "visible_courts": { "type": "integer", "minimum": 1 },
+    "simultaneously_active_games": { "type": "integer", "minimum": 1 },
+    "target_court_id": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "camera": {
+      "type": "object",
+      "required": ["motion", "angle", "placement"],
+      "properties": {
+        "motion": { "enum": ["fixed", "moving", "mixed"] },
+        "angle": { "enum": ["behind_court", "side", "corner", "overhead", "other"] },
+        "placement": { "type": "string", "minLength": 1, "maxLength": 160 }
+      },
+      "additionalProperties": false
+    },
+    "capture": {
+      "type": "object",
+      "required": ["width", "height", "fps", "cuts", "audio_available"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "fps": { "type": "number", "exclusiveMinimum": 0 },
+        "cuts": { "type": "integer", "minimum": 0 },
+        "audio_available": { "type": "boolean" },
+        "lighting": { "enum": ["even", "uneven", "dim", "mixed", "unknown"] },
+        "occlusion": { "enum": ["none", "partial", "frequent", "unknown"] }
+      },
+      "additionalProperties": false
+    },
+    "source_duration_seconds": { "type": "number", "exclusiveMinimum": 0 },
+    "adult_rights_cleared": { "type": "boolean" },
+    "notes": { "type": "string", "maxLength": 2000 }
+  },
+  "additionalProperties": false
+}

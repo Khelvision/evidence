@@ -1,0 +1,40 @@
+{
+  "schema_name": "CoachAgentRunReceiptV1",
+  "schema_version": "1.0.0",
+  "record_id": "coach-agent-receipt-synthetic-v1",
+  "run_id": "synthetic-coach-agent-run",
+  "instruction": "Show me all the unforced errors of Player A in their last five matches as a video, keeping only the last three shots of each rally.",
+  "plan_id": "synthetic-unforced-error-plan",
+  "plan_digest": {"algorithm": "sha256", "value": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"},
+  "recipe_id": "synthetic-unforced-error-reel",
+  "recipe_digest": {"algorithm": "sha256", "value": "71b773304a2144125ee214cf0520de027ee5e0411956cd589ad25b5da8979330"},
+  "requested_match_count": 5,
+  "available_match_count": 4,
+  "matched_rally_count": 1,
+  "omissions": [
+    {"scope_ref": "match-slot-5", "reason": "inaccessible_match", "detail": "Synthetic example reports fewer than five available matches."}
+  ],
+  "timings": {
+    "intent_to_plan_seconds": 0.1,
+    "plan_to_recipe_seconds": 0.2,
+    "recipe_to_first_playable_seconds": 1.5,
+    "full_completion_seconds": 2
+  },
+  "cost_usd": 0,
+  "result_artifacts": [
+    {"artifact_id": "synthetic-first-playable", "digest": {"algorithm": "sha256", "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"}, "media_type": "video/mp4"}
+  ],
+  "provenance_counts": {
+    "human_confirmed": 1,
+    "model_observation": 3,
+    "derived_calculation": 1,
+    "coach_assertion": 0,
+    "unknown": 0
+  },
+  "perception_rerun": false,
+  "prescriptive_advice_emitted": false,
+  "human_decision_required": true,
+  "completeness_reported": true,
+  "awaiting_next_instruction": true,
+  "first_playable_ref": {"artifact_id": "synthetic-first-playable", "digest": {"algorithm": "sha256", "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"}, "media_type": "video/mp4"}
+}

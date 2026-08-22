@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:CoachAgentRunReceiptV1",
+  "title": "CoachAgentRunReceiptV1",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "run_id",
+    "instruction",
+    "plan_id",
+    "plan_digest",
+    "recipe_id",
+    "recipe_digest",
+    "requested_match_count",
+    "available_match_count",
+    "matched_rally_count",
+    "omissions",
+    "timings",
+    "cost_usd",
+    "result_artifacts",
+    "provenance_counts",
+    "perception_rerun",
+    "prescriptive_advice_emitted",
+    "human_decision_required",
+    "completeness_reported",
+    "awaiting_next_instruction"
+  ],
+  "properties": {
+    "schema_name": { "const": "CoachAgentRunReceiptV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "run_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "instruction": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "plan_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "plan_digest": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/digest" },
+    "recipe_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "recipe_digest": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/digest" },
+    "requested_match_count": { "type": "integer", "minimum": 1 },
+    "available_match_count": { "type": "integer", "minimum": 0 },
+    "matched_rally_count": { "type": "integer", "minimum": 0 },
+    "omissions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scope_ref", "reason"],
+        "properties": {
+          "scope_ref": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "reason": {
+            "enum": [
+              "ambiguous_identity",
+              "inaccessible_match",
+              "unindexed_match",
+              "uncertain_outcome",
+              "missing_shot_metadata",
+              "fewer_than_three_shots",
+              "missing_master",
+              "rights_restricted"
+            ]
+          },
+          "detail": { "type": "string", "maxLength": 500 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "timings": {
+      "type": "object",
+      "required": [
+        "intent_to_plan_seconds",
+        "plan_to_recipe_seconds",
+        "recipe_to_first_playable_seconds",
+        "full_completion_seconds"
+      ],
+      "properties": {
+        "intent_to_plan_seconds": { "type": "number", "minimum": 0 },
+        "plan_to_recipe_seconds": { "type": "number", "minimum": 0 },
+        "recipe_to_first_playable_seconds": { "type": "number", "minimum": 0 },
+        "full_completion_seconds": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "cost_usd": { "type": "number", "minimum": 0 },
+    "result_artifacts": {
+      "type": "array",
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" }
+    },
+    "provenance_counts": {
+      "type": "object",
+      "required": [
+        "human_confirmed",
+        "model_observation",
+        "derived_calculation",
+        "coach_assertion",
+        "unknown"
+      ],
+      "properties": {
+        "human_confirmed": { "type": "integer", "minimum": 0 },
+        "model_observation": { "type": "integer", "minimum": 0 },
+        "derived_calculation": { "type": "integer", "minimum": 0 },
+        "coach_assertion": { "type": "integer", "minimum": 0 },
+        "unknown": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "perception_rerun": { "const": false },
+    "prescriptive_advice_emitted": { "const": false },
+    "human_decision_required": { "const": true },
+    "completeness_reported": { "const": true },
+    "awaiting_next_instruction": { "const": true },
+    "first_playable_ref": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" }
+  },
+  "additionalProperties": false
+}

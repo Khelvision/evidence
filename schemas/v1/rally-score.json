@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:RallyScoreV1",
+  "title": "RallyScoreV1",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "sample_id",
+    "tolerance_frames",
+    "truth_count",
+    "prediction_count",
+    "matched_count",
+    "precision",
+    "recall",
+    "f1",
+    "matches",
+    "unmatched_truth_ids",
+    "unmatched_prediction_ids"
+  ],
+  "properties": {
+    "schema_name": { "const": "RallyScoreV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "sample_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "tolerance_frames": { "type": "integer", "minimum": 0 },
+    "truth_count": { "type": "integer", "minimum": 0 },
+    "prediction_count": { "type": "integer", "minimum": 0 },
+    "matched_count": { "type": "integer", "minimum": 0 },
+    "precision": { "type": "number", "minimum": 0, "maximum": 1 },
+    "recall": { "type": "number", "minimum": 0, "maximum": 1 },
+    "f1": { "type": "number", "minimum": 0, "maximum": 1 },
+    "mean_start_error_frames": { "type": ["number", "null"], "minimum": 0 },
+    "mean_end_error_frames": { "type": ["number", "null"], "minimum": 0 },
+    "matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["truth_id", "prediction_id", "start_error_frames", "end_error_frames"],
+        "properties": {
+          "truth_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+          "prediction_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+          "start_error_frames": { "type": "integer", "minimum": 0 },
+          "end_error_frames": { "type": "integer", "minimum": 0 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "unmatched_truth_ids": {
+      "type": "array",
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" }
+    },
+    "unmatched_prediction_ids": {
+      "type": "array",
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" }
+    }
+  },
+  "additionalProperties": false
+}

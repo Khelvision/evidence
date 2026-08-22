@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:EvidenceRecipeV1",
+  "title": "EvidenceRecipeV1",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "recipe_id",
+    "recipe_digest",
+    "plan_id",
+    "items",
+    "rendition",
+    "regenerable_without_perception"
+  ],
+  "properties": {
+    "schema_name": { "const": "EvidenceRecipeV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "recipe_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "recipe_digest": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/digest" },
+    "plan_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["order", "sample_id", "rally_ref", "shot_refs", "outcome_provenance"],
+        "properties": {
+          "order": { "type": "integer", "minimum": 0 },
+          "sample_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+          "rally_ref": {
+            "type": "object",
+            "required": ["source_ref", "start_frame", "end_frame"],
+            "properties": {
+              "source_ref": {
+                "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef"
+              },
+              "start_frame": { "type": "integer", "minimum": 0 },
+              "end_frame": { "type": "integer", "minimum": 1 }
+            },
+            "additionalProperties": false
+          },
+          "shot_refs": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": ["start_frame", "end_frame", "provenance"],
+              "properties": {
+                "start_frame": { "type": "integer", "minimum": 0 },
+                "end_frame": { "type": "integer", "minimum": 1 },
+                "provenance": {
+                  "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/observationProvenance"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "outcome_provenance": {
+            "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/observationProvenance"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "rendition": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "regenerable_without_perception": { "const": true },
+    "encoder_identity": { "type": "string", "minLength": 1, "maxLength": 240 }
+  },
+  "additionalProperties": false
+}

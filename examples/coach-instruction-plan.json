@@ -1,0 +1,30 @@
+{
+  "schema_name": "CoachInstructionPlanV1",
+  "schema_version": "1.0.0",
+  "record_id": "coach-plan-synthetic-v1",
+  "plan_id": "synthetic-unforced-error-plan",
+  "plan_digest": {"algorithm": "sha256", "value": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"},
+  "actor_role": "coach",
+  "workspace_id": "workspace-synthetic-academy",
+  "instruction": "Show me all the unforced errors of Player A in their last five matches as a video, keeping only the last three shots of each rally.",
+  "scope": {"player_ref": "player-synthetic-a", "completed_matches": 5, "order": "recorded_at_desc", "timezone": "Asia/Kolkata"},
+  "filters": [
+    {"field": "rally_outcome", "operator": "equals", "value": "unforced_error", "accepted_authorities": ["human_confirmed", "model_observation"]}
+  ],
+  "transformations": [
+    {"operation": "keep_last_shots", "count": 3},
+    {"operation": "order_chronologically"},
+    {"operation": "stitch"}
+  ],
+  "permission_checks": [
+    {
+      "purpose": "service_operation",
+      "granted": true,
+      "grant_ref": {"artifact_id": "synthetic-service-grant", "digest": {"algorithm": "sha256", "value": "abababababababababababababababababababababababababababababababab"}}
+    }
+  ],
+  "output": {"kind": "video_reel", "rendition": "sd30", "include_provenance": true, "include_omissions": true},
+  "ambiguities": [],
+  "execution_status": "ready",
+  "human_decision_authority": true
+}

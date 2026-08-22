@@ -1,0 +1,14 @@
+{
+  "schema_name": "OwnershipPortabilityReceiptV1",
+  "schema_version": "1.0.0",
+  "record_id": "portability-synthetic-v1",
+  "receipt_id": "synthetic-portability-v1",
+  "package_id": "synthetic-candidate-v1",
+  "export": {"attempted": true, "passed": true, "artifact_refs": [{"artifact_id": "synthetic-export", "digest": {"algorithm": "sha256", "value": "6666666666666666666666666666666666666666666666666666666666666666"}}]},
+  "restore": {"attempted": true, "passed": true, "artifact_refs": [{"artifact_id": "synthetic-restore", "digest": {"algorithm": "sha256", "value": "7777777777777777777777777777777777777777777777777777777777777777"}}]},
+  "reproduction": {"attempted": true, "passed": true, "sample_count": 1, "tolerance": 0, "max_observed_delta": 0},
+  "promotion": {"attempted": true, "passed": true, "artifact_refs": [{"artifact_id": "synthetic-promotion", "digest": {"algorithm": "sha256", "value": "8888888888888888888888888888888888888888888888888888888888888888"}}]},
+  "rollback": {"attempted": true, "passed": true, "artifact_refs": [{"artifact_id": "synthetic-rollback", "digest": {"algorithm": "sha256", "value": "9999999999999999999999999999999999999999999999999999999999999999"}}]},
+  "vendor_account_required": false,
+  "second_environment": {"runtime": "synthetic-clean-runtime", "provider_class": "local", "clean_environment": true}
+}

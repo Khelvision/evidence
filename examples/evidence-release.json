@@ -1,0 +1,20 @@
+{
+  "schema_name": "EvidenceReleaseV1",
+  "schema_version": "1.0.0",
+  "record_id": "release-synthetic-preview",
+  "release_id": "synthetic-preview-v0",
+  "release_class": "demonstration",
+  "registry": "community",
+  "published_at": "2026-08-21T00:00:00Z",
+  "system_run_refs": [
+    {"artifact_id": "system-run-synthetic-a", "digest": {"algorithm": "sha256", "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}}
+  ],
+  "sample_ids": ["synthetic-match-001"],
+  "failures_included": true,
+  "exposed_before_freeze": true,
+  "media_license_status": "not_applicable",
+  "training_prohibited": true,
+  "rehosting_prohibited": true,
+  "official_claims": [],
+  "limitations": ["Synthetic contract fixture; not KhelSutra product evidence."]
+}
