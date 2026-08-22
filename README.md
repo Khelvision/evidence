@@ -18,6 +18,11 @@ and human authority as first-class data—not prose added after a result looks g
 The checked-in examples are synthetic and exist to exercise the contracts. They are not product evidence,
 not a blind benchmark, and not permission to claim that the north-star coach query ships today.
 
+Delivery status, repository boundaries, gates, and release rows live in the
+[canonical project tracker](docs/PROJECT.md). Producer repositories own their private receipt and
+integration work; this repository owns the public contracts, tooling, registries, release manifests, and
+site source.
+
 ## What is included
 
 - Versioned JSON Schemas for tasks, scenarios, costs, runs, releases, commercialization, owner-model
@@ -88,5 +93,6 @@ mypy src
 pytest
 ```
 
-No GitHub Actions workflow is included. Forgejo is authoritative; any GitHub repository is a disabled-
-Actions backup.
+Forgejo runs the same lint, type, full-suite coverage, wheel, and clean-install gates from
+[`.forgejo/workflows/ci.yml`](.forgejo/workflows/ci.yml). No GitHub Actions workflow is included.
+Forgejo is authoritative; any GitHub repository is a disabled-Actions backup.

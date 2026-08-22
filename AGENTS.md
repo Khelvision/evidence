@@ -9,4 +9,7 @@ Global agent instructions apply. This repository adds the following rules:
 - Official and community registries remain separate in storage, UI, and language.
 - Unknown licensing state never renders as clear.
 - Do not add `.github/workflows`; Forgejo is authoritative and GitHub Actions remain disabled.
+- `docs/PROJECT.md` is the canonical lifecycle and progress tracker for this repository. Every
+  independently shippable PR updates its own row and the changelog; producer-repository work stays
+  owned by that producer and is linked as a dependency rather than silently completed here.
 - Run `ruff check .`, `mypy src`, and `pytest` before publishing a PR.

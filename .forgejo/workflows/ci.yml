@@ -1,21 +1,45 @@
-name: ci
+name: CI
 
 on:
   push:
     branches: [main]
   pull_request:
 
+concurrency:
+  group: evidence-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  quality:
-    runs-on: ubuntu-latest
+  verify:
+    name: Verify framework
+    runs-on: ci-light
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      # Bare action refs resolve through this Forgejo instance's reviewed action mirror.
+      - uses: actions/checkout@v6
+        with:
+          github-server-url: https://avis-pbook.tail651ec3.ts.net
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - run: python -m pip install --upgrade pip
-      - run: python -m pip install -e '.[dev]'
-      - run: ruff check .
-      - run: mypy src
-      - run: pytest
-      - run: evidence verify examples
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Create isolated environment
+        run: python -m venv --clear .venv-ci
+      - name: Install package and development tools
+        run: .venv-ci/bin/python -m pip install -e '.[dev]'
+      - name: Ruff
+        run: .venv-ci/bin/python -m ruff check .
+      - name: Mypy
+        run: .venv-ci/bin/python -m mypy src
+      - name: Full suite with coverage floor
+        run: .venv-ci/bin/python -m pytest
+      - name: Build wheel
+        run: .venv-ci/bin/python -m pip wheel --no-deps --wheel-dir dist .
+      - name: Verify built wheel in a clean environment
+        run: |
+          python -m venv --clear .venv-wheel
+          .venv-wheel/bin/python -m pip install dist/khelsutra_evidence-*.whl
+          .venv-wheel/bin/evidence verify examples
+          .venv-wheel/bin/evidence package examples dist/examples.tar.gz
