@@ -43,6 +43,6 @@ jobs:
         run: |
           python -m venv --clear .venv-wheel
           .venv-wheel/bin/python -m pip install dist/khelsutra_evidence-*.whl
-          .venv-wheel/bin/evidence verify . | tee verify.json
-          test "$(python -c 'import json; print(json.load(open("verify.json"))["documents"])')" = 36
+          .venv-wheel/bin/evidence verify . > .venv-wheel/verify.json
+          .venv-wheel/bin/python -c 'import json; data=json.load(open(".venv-wheel/verify.json")); print(json.dumps(data, sort_keys=True)); assert data == {"documents": 36, "status": "valid"}'
           .venv-wheel/bin/evidence package examples dist/examples.tar.gz
