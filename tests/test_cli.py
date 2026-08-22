@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 from pathlib import Path
 
 import pytest
 
+from khelsutra_evidence import schemas as schema_module
 from khelsutra_evidence.cli import main
 
 
@@ -45,6 +47,34 @@ def test_verify_invalid_and_empty(tmp_path: Path, capsys, load_example) -> None:
     assert main(["verify", str(tmp_path)]) == 2
     error = json.loads(capsys.readouterr().err)
     assert "no JSON documents" in error["message"]
+
+
+def test_verify_schema_resolution_failure_is_structured_error(
+    tmp_path: Path, capsys, load_example, monkeypatch
+) -> None:
+    schemas = deepcopy(schema_module.load_schemas())
+    cost_id = "urn:khelsutra:evidence:schema:v1:CostReceiptV1"
+    schemas[cost_id]["properties"]["record_id"]["$ref"] = (
+        "urn:khelsutra:evidence:schema:v1:commonX#/$defs/recordId"
+    )
+    monkeypatch.setattr(schema_module, "load_schemas", lambda: schemas)
+    schema_module.schema_registry.cache_clear()
+    schema_module.schemas_by_name.cache_clear()
+    path = tmp_path / "cost.json"
+    path.write_text(json.dumps(load_example("cost-receipt.json")), encoding="utf-8")
+
+    try:
+        assert main(["verify", str(path)]) == 2
+    finally:
+        schema_module.schema_registry.cache_clear()
+        schema_module.schemas_by_name.cache_clear()
+
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert json.loads(captured.err) == {
+        "message": "Unresolvable: urn:khelsutra:evidence:schema:v1:commonX#/$defs/recordId",
+        "status": "error",
+    }
 
 
 def test_score_compare_and_package_commands(examples_root: Path, tmp_path: Path, capsys) -> None:

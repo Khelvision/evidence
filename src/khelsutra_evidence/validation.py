@@ -13,8 +13,10 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError
+from referencing import Resource
+from referencing.exceptions import Unresolvable
 
-from .schemas import JsonObject, schemas_by_name, validator_for
+from .schemas import JsonObject, schema_registry, schemas_by_name, validator_for
 
 _UNSAFE_KEYS = {
     "access_token",
@@ -172,7 +174,52 @@ def validate_json_document(document: JsonObject) -> list[ValidationIssue]:
         Draft202012Validator.check_schema(document)
     except SchemaError as exc:
         return [ValidationIssue("$schema", f"invalid JSON Schema: {exc.message}")]
-    return []
+    return _schema_reference_issues(document)
+
+
+def _schema_reference_issues(document: JsonObject) -> list[ValidationIssue]:
+    schema_id = document["$id"]
+    resource = Resource.from_contents(document)
+    registry = schema_registry().with_resource(schema_id, resource).crawl()
+    resolver = registry.resolver(base_uri=schema_id)
+    paths = _object_paths(document)
+    issues: list[ValidationIssue] = []
+
+    def check_schema(current: Resource[Any], current_resolver: Any) -> None:
+        contents = current.contents
+        if isinstance(contents, dict):
+            prefix = paths[id(contents)]
+            for keyword in ("$ref", "$dynamicRef"):
+                reference = contents.get(keyword)
+                if isinstance(reference, str):
+                    path = ".".join((*prefix, keyword))
+                    try:
+                        current_resolver.lookup(reference)
+                    except Unresolvable:
+                        issues.append(
+                            ValidationIssue(
+                                path, f"unresolvable JSON Schema reference {reference!r}"
+                            )
+                        )
+        for subresource in current.subresources():
+            check_schema(subresource, current_resolver.in_subresource(subresource))
+
+    check_schema(resource, resolver)
+    return issues
+
+
+def _object_paths(value: Any, path: tuple[str, ...] = ()) -> dict[int, tuple[str, ...]]:
+    paths: dict[int, tuple[str, ...]] = {}
+    if isinstance(value, dict):
+        paths[id(value)] = path
+        for key, child in value.items():
+            if isinstance(child, (dict, list)):
+                paths.update(_object_paths(child, (*path, key)))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            if isinstance(child, (dict, list)):
+                paths.update(_object_paths(child, (*path, str(index))))
+    return paths
 
 
 def validate_path(root: Path) -> dict[str, list[ValidationIssue]]:

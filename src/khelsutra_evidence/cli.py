@@ -9,6 +9,9 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import TextIO
 
+from jsonschema.exceptions import SchemaError
+from referencing.exceptions import Unresolvable
+
 from .comparison import compare_runs
 from .packaging import package_directory
 from .scoring import score_rallies
@@ -81,7 +84,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             _emit({"status": "packaged", "path": str(args.destination), "sha256": digest})
         else:
             raise AssertionError(f"unhandled command {args.command}")
-    except (OSError, ValueError, json.JSONDecodeError) as exc:
+    except (OSError, ValueError, json.JSONDecodeError, SchemaError, Unresolvable) as exc:
         _emit({"status": "error", "message": str(exc)}, stream=sys.stderr)
         return 2
     return 0

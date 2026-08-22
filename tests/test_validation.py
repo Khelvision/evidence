@@ -60,6 +60,26 @@ def test_json_schema_documents_require_draft_and_identifier() -> None:
     assert any(
         "invalid JSON Schema" in issue.render() for issue in validate_json_document(invalid_schema)
     )
+    schema_with_ref_literal = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "urn:khelsutra:evidence:schema:v1:RefLiteralTestSchema",
+        "type": "object",
+        "examples": [{"$ref": "this-is-instance-data-not-a-schema-reference"}],
+    }
+    assert validate_json_document(schema_with_ref_literal) == []
+
+
+def test_json_schema_documents_reject_unresolvable_references() -> None:
+    root = Path(__file__).resolve().parents[1]
+    schema = json.loads((root / "schemas/v1/cost-receipt.json").read_text(encoding="utf-8"))
+    schema["properties"]["record_id"]["$ref"] = (
+        "urn:khelsutra:evidence:schema:v1:commonX#/$defs/recordId"
+    )
+
+    issues = validate_json_document(schema)
+
+    assert [issue.path for issue in issues] == ["properties.record_id.$ref"]
+    assert "unresolvable JSON Schema reference" in issues[0].message
 
 
 def test_json_paths_ignore_tool_environments_but_not_evidence(tmp_path: Path) -> None:

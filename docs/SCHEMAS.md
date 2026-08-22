@@ -29,4 +29,6 @@ evidence.
 `evidence verify` examines every JSON file under the requested path except explicit VCS, virtual-
 environment, dependency, and tool-cache directories. Evidence instances must declare a known
 `schema_name`; JSON Schema documents must declare Draft 2020-12 plus a string `$id`. Unrecognized JSON
-fails closed instead of being silently omitted from a successful count.
+fails closed instead of being silently omitted from a successful count. Every `$ref` and `$dynamicRef`
+in a schema is resolved against the packaged registry during verification; a missing resource, anchor,
+or JSON Pointer is an invalid schema rather than a green result.

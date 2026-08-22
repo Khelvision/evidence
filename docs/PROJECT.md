@@ -134,6 +134,9 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-22 — Closed the two non-blocking exact-head review residuals before KE-1 merge: schema
+  verification now rejects unresolvable references, and schema-resolution failures at the CLI boundary
+  emit structured `error` JSON with exit code 2 instead of a traceback.
 - 2026-08-22 — Closed independent-review findings before KE-1 merge: scoring now groups rallies by
   court before deterministic matching; every targeted JSON file is classified and validated or rejected;
   publication rejects unrecognized JSON; official/community registries share `EvidenceRegistryV1`; and
