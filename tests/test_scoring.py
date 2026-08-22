@@ -66,6 +66,50 @@ def test_reference_score_never_matches_an_adjacent_court(load_example) -> None:
     assert result["unmatched_prediction_ids"] == ["prediction-rally-001"]
 
 
+def test_reference_score_matches_interleaved_rallies_per_court(load_example) -> None:
+    truth = load_example("rallies/truth.json")
+    prediction = load_example("rallies/prediction.json")
+    truth["rallies"] = [
+        {
+            **truth["rallies"][0],
+            "rally_id": "truth-court-a",
+            "target_court_id": "court-a",
+            "start_frame": 100,
+            "end_frame": 200,
+        },
+        {
+            **truth["rallies"][0],
+            "rally_id": "truth-court-b",
+            "target_court_id": "court-b",
+            "start_frame": 110,
+            "end_frame": 210,
+        },
+    ]
+    prediction["rallies"] = [
+        {
+            **prediction["rallies"][0],
+            "rally_id": "prediction-court-b",
+            "target_court_id": "court-b",
+            "start_frame": 105,
+            "end_frame": 205,
+        },
+        {
+            **prediction["rallies"][0],
+            "rally_id": "prediction-court-a",
+            "target_court_id": "court-a",
+            "start_frame": 108,
+            "end_frame": 208,
+        },
+    ]
+
+    result = score_rallies(truth, prediction, 15)
+
+    assert result["matched_count"] == 2
+    assert result["precision"] == result["recall"] == result["f1"] == 1.0
+    assert result["unmatched_truth_ids"] == []
+    assert result["unmatched_prediction_ids"] == []
+
+
 @pytest.mark.parametrize(
     ("mutation", "message"),
     [
@@ -89,4 +133,13 @@ def test_score_rejects_negative_tolerance_and_wrong_schema(load_example) -> None
         score_rallies(truth, prediction, -1)
     truth = load_example("scenario-profile.json")
     with pytest.raises(ValueError, match="RallyBoundarySetV1"):
+        score_rallies(truth, prediction, 15)
+
+
+def test_score_rejects_semantically_invalid_rally_set(load_example) -> None:
+    truth = load_example("rallies/truth.json")
+    prediction = load_example("rallies/prediction.json")
+    truth["rallies"][0]["end_frame"] = truth["rallies"][0]["start_frame"]
+
+    with pytest.raises(ValueError, match=r"invalid rally set.*must be after start_frame"):
         score_rallies(truth, prediction, 15)

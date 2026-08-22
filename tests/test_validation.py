@@ -9,9 +9,11 @@ from khelsutra_evidence.schemas import load_schemas, schemas_by_name, validator_
 from khelsutra_evidence.validation import (
     canonical_plan_digest,
     canonical_recipe_digest,
+    json_paths,
     load_json,
     safety_issues,
     validate_document,
+    validate_json_document,
     validate_path,
 )
 
@@ -22,8 +24,14 @@ def _messages(document: dict[str, object]) -> list[str]:
 
 def test_all_synthetic_examples_validate(examples_root: Path) -> None:
     assert validate_path(examples_root) == {}
-    assert len(schemas_by_name()) == 16
-    assert len(load_schemas()) == 17
+    assert len(schemas_by_name()) == 17
+    assert len(load_schemas()) == 18
+
+
+def test_public_registries_and_schema_documents_validate() -> None:
+    root = Path(__file__).resolve().parents[1]
+    assert validate_path(root / "registry") == {}
+    assert validate_path(root / "schemas" / "v1") == {}
 
 
 def test_load_json_rejects_non_object(tmp_path: Path) -> None:
@@ -38,6 +46,30 @@ def test_unknown_or_missing_schema_is_rejected() -> None:
     assert "unknown schema" in _messages({"schema_name": "NoSuchSchema"})[0]
     with pytest.raises(ValueError, match="unknown schema_name"):
         validator_for("NoSuchSchema")
+
+
+def test_json_schema_documents_require_draft_and_identifier() -> None:
+    messages = [issue.render() for issue in validate_json_document({"$schema": "other"})]
+    assert any("Draft 2020-12" in message for message in messages)
+    assert any("identifier" in message for message in messages)
+    invalid_schema = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "urn:khelsutra:evidence:schema:v1:InvalidTestSchema",
+        "type": "not-a-json-schema-type",
+    }
+    assert any(
+        "invalid JSON Schema" in issue.render() for issue in validate_json_document(invalid_schema)
+    )
+
+
+def test_json_paths_ignore_tool_environments_but_not_evidence(tmp_path: Path) -> None:
+    evidence = tmp_path / "evidence.json"
+    evidence.write_text("{}", encoding="utf-8")
+    tool_file = tmp_path / ".venv-ci" / "metadata.json"
+    tool_file.parent.mkdir()
+    tool_file.write_text("{}", encoding="utf-8")
+
+    assert json_paths(tmp_path) == [evidence]
 
 
 def test_scenario_active_games_cannot_exceed_visible(load_example) -> None:
@@ -88,6 +120,38 @@ def test_rallies_on_different_courts_may_overlap(load_example) -> None:
         end_frame=200,
     )
     assert not any("must not overlap" in message for message in _messages(document))
+
+
+def test_rally_issue_paths_use_submitted_document_indices(load_example) -> None:
+    document = load_example("rallies/truth.json")
+    document["rallies"] = [
+        {
+            **document["rallies"][0],
+            "rally_id": "rally-court-2",
+            "target_court_id": "court-2",
+            "start_frame": 10,
+            "end_frame": 20,
+        },
+        {
+            **document["rallies"][0],
+            "rally_id": "rally-court-1-first",
+            "target_court_id": "court-1",
+            "start_frame": 100,
+            "end_frame": 200,
+        },
+        {
+            **document["rallies"][0],
+            "rally_id": "rally-court-1-overlap",
+            "target_court_id": "court-1",
+            "start_frame": 150,
+            "end_frame": 260,
+        },
+    ]
+
+    messages = _messages(document)
+
+    assert "rallies.2: rallies must not overlap" in messages
+    assert "rallies.1: rallies must not overlap" not in messages
 
 
 def test_system_run_requires_unique_samples_and_failure_disclosure(load_example) -> None:
@@ -163,6 +227,27 @@ def test_plan_digest_permissions_and_ambiguity_are_checked(load_example) -> None
     assert any("required when a permission is granted" in message for message in messages)
 
 
+def test_plan_rejects_clarification_without_ambiguity(load_example) -> None:
+    document = load_example("coach-instruction-plan.json")
+    document["execution_status"] = "requires_clarification"
+    assert any("cannot require clarification" in message for message in _messages(document))
+
+
+def test_plan_requires_unique_permission_purposes(load_example) -> None:
+    document = load_example("coach-instruction-plan.json")
+    document["permission_checks"].append(document["permission_checks"][0].copy())
+    assert any("purposes must be unique" in message for message in _messages(document))
+
+
+def test_ready_plan_requires_service_operation_grant(load_example) -> None:
+    document = load_example("coach-instruction-plan.json")
+    document["permission_checks"][0] = {
+        "purpose": "service_operation",
+        "granted": False,
+    }
+    assert any("requires a granted service_operation" in message for message in _messages(document))
+
+
 def test_portability_requires_clean_second_environment_and_receipts(load_example) -> None:
     document = load_example("ownership-portability.json")
     document.pop("second_environment")
@@ -201,6 +286,7 @@ def test_model_observation_requires_identity_and_confidence(load_example) -> Non
     [
         {"token": "redacted"},
         {"checkpoint_path": "/private/model"},
+        {"ghp_abcdefghijklmnopqrstuvwxyz": "redacted"},
         "-----BEGIN PRIVATE KEY-----",
         "ghp_abcdefghijklmnopqrstuvwxyz",
         "AIzaabcdefghijklmnopqrstuvwxyz123456789",
@@ -228,3 +314,13 @@ def test_validate_path_reports_invalid_document(tmp_path: Path, load_example) ->
     document["visible_courts"] = 0
     path.write_text(json.dumps(document), encoding="utf-8")
     assert str(path) in validate_path(tmp_path)
+
+
+def test_validate_path_reports_unrecognized_json(tmp_path: Path) -> None:
+    path = tmp_path / "unrecognized.json"
+    path.write_text(json.dumps({"schema_Name": "TaskProfileV1"}), encoding="utf-8")
+
+    failures = validate_path(tmp_path)
+
+    assert str(path) in failures
+    assert failures[str(path)][0].render() == "schema_name: missing string schema_name"

@@ -34,9 +34,17 @@ def test_verify_invalid_and_empty(tmp_path: Path, capsys, load_example) -> None:
     assert main(["verify", str(tmp_path)]) == 1
     assert _json_output(capsys)["status"] == "invalid"
     (tmp_path / "bad.json").unlink()
+    (tmp_path / "unrecognized.json").write_text(
+        json.dumps({"schema_Name": "ScenarioProfileV1"}), encoding="utf-8"
+    )
+    assert main(["verify", str(tmp_path)]) == 1
+    error = _json_output(capsys)
+    assert error["status"] == "invalid"
+    assert "missing string schema_name" in error["files"][str(tmp_path / "unrecognized.json")][0]
+    (tmp_path / "unrecognized.json").unlink()
     assert main(["verify", str(tmp_path)]) == 2
     error = json.loads(capsys.readouterr().err)
-    assert "no schema documents" in error["message"]
+    assert "no JSON documents" in error["message"]
 
 
 def test_score_compare_and_package_commands(examples_root: Path, tmp_path: Path, capsys) -> None:

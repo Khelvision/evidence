@@ -22,6 +22,12 @@ def test_package_is_deterministic(tmp_path: Path, load_example) -> None:
     assert archive_members(first) == ["README.md", "task.json"]
 
 
+def test_synthetic_example_package_has_stable_digest(examples_root: Path, tmp_path: Path) -> None:
+    assert package_directory(examples_root, tmp_path / "examples.tar.gz") == (
+        "060255703e09b244741b6ade70b0ce85e841bf782e26ed5e9030b9be6243338a"
+    )
+
+
 def test_package_rejects_empty_unsupported_large_or_symlink(tmp_path: Path, monkeypatch) -> None:
     source = tmp_path / "source"
     source.mkdir()
@@ -57,6 +63,12 @@ def test_package_rejects_unsafe_or_invalid_json(tmp_path: Path, load_example) ->
     (source / "invalid.json").write_text(json.dumps(invalid), encoding="utf-8")
     with pytest.raises(ValueError, match="publication refused"):
         package_directory(source, tmp_path / "invalid.tar.gz")
+    (source / "invalid.json").unlink()
+    (source / "unrecognized.json").write_text(
+        json.dumps({"schema_Name": "TaskProfileV1"}), encoding="utf-8"
+    )
+    with pytest.raises(ValueError, match="missing string schema_name"):
+        package_directory(source, tmp_path / "unrecognized.tar.gz")
 
 
 def test_package_source_must_be_directory(tmp_path: Path) -> None:

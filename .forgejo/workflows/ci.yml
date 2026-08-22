@@ -31,6 +31,8 @@ jobs:
         run: .venv-ci/bin/python -m pip install -e '.[dev]'
       - name: Ruff
         run: .venv-ci/bin/python -m ruff check .
+      - name: Ruff format
+        run: .venv-ci/bin/python -m ruff format --check .
       - name: Mypy
         run: .venv-ci/bin/python -m mypy src
       - name: Full suite with coverage floor
@@ -41,5 +43,6 @@ jobs:
         run: |
           python -m venv --clear .venv-wheel
           .venv-wheel/bin/python -m pip install dist/khelsutra_evidence-*.whl
-          .venv-wheel/bin/evidence verify examples
+          .venv-wheel/bin/evidence verify . | tee verify.json
+          test "$(python -c 'import json; print(json.load(open("verify.json"))["documents"])')" = 36
           .venv-wheel/bin/evidence package examples dist/examples.tar.gz

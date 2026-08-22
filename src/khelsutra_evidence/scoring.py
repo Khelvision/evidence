@@ -117,8 +117,13 @@ def score_rallies(truth: JsonObject, prediction: JsonObject, tolerance_frames: i
     }
 
 
-def _rally_key(rally: JsonObject) -> tuple[int, int, str]:
-    return int(rally["start_frame"]), int(rally["end_frame"]), str(rally["rally_id"])
+def _rally_key(rally: JsonObject) -> tuple[str, int, int, str]:
+    return (
+        str(rally["target_court_id"]),
+        int(rally["start_frame"]),
+        int(rally["end_frame"]),
+        str(rally["rally_id"]),
+    )
 
 
 def _require_valid_set(document: JsonObject, expected_role: str) -> None:

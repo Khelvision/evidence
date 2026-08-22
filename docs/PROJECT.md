@@ -134,6 +134,10 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-22 — Closed independent-review findings before KE-1 merge: scoring now groups rallies by
+  court before deterministic matching; every targeted JSON file is classified and validated or rejected;
+  publication rejects unrecognized JSON; official/community registries share `EvidenceRegistryV1`; and
+  dependency, error-coordinate, negative-guard, formatting, and deterministic-archive checks are pinned.
 - 2026-08-22 — Established the evidence-repository-owned tracker and marked KE-1 `Complete` in the
   proposed post-merge state. Avi created empty `main` commit
   `dd6b437959fa250ccba5afa13c3089430f5530da`; the framework branch was rebased onto that exact head.

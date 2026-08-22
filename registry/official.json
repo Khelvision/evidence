@@ -1,4 +1,7 @@
 {
+  "schema_name": "EvidenceRegistryV1",
   "schema_version": "1.0.0",
+  "record_id": "registry-official-v1",
+  "registry": "official",
   "releases": []
 }

@@ -8,7 +8,7 @@ import io
 import tarfile
 from pathlib import Path
 
-from .validation import load_json, safety_issues, validate_document
+from .validation import load_json, safety_issues, validate_json_document
 
 _ALLOWED_SUFFIXES = {".json", ".md", ".txt"}
 _MAX_FILE_BYTES = 5 * 1024 * 1024
@@ -66,8 +66,7 @@ def _validate_files(files: list[Path]) -> None:
         else:
             document = load_json(path)
             issues = safety_issues(document)
-            if "schema_name" in document:
-                issues.extend(validate_document(document))
+            issues.extend(validate_json_document(document))
         if issues:
             rendered = "; ".join(issue.render() for issue in issues)
             raise ValueError(f"{path}: publication refused: {rendered}")

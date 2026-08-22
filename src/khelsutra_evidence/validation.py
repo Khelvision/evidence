@@ -11,6 +11,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from jsonschema import Draft202012Validator
+from jsonschema.exceptions import SchemaError
+
 from .schemas import JsonObject, schemas_by_name, validator_for
 
 _UNSAFE_KEYS = {
@@ -89,6 +92,15 @@ _COMMERCIALIZATION_CATEGORIES = {
     "output_redistribution",
 }
 
+_IGNORED_JSON_DIRECTORIES = {
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    "__pycache__",
+    "node_modules",
+}
+
 
 @dataclass(frozen=True)
 class ValidationIssue:
@@ -123,18 +135,50 @@ def validate_document(document: JsonObject) -> list[ValidationIssue]:
     return issues
 
 
-def iter_schema_documents(root: Path) -> Iterator[tuple[Path, JsonObject]]:
-    paths = [root] if root.is_file() else sorted(root.rglob("*.json"))
-    for path in paths:
-        document = load_json(path)
-        if "schema_name" in document:
-            yield path, document
+def json_paths(root: Path) -> list[Path]:
+    if root.is_file():
+        return [root]
+    return [
+        path
+        for path in sorted(root.rglob("*.json"))
+        if not _is_ignored_json_path(path.relative_to(root))
+    ]
+
+
+def _is_ignored_json_path(relative: Path) -> bool:
+    return any(
+        part in _IGNORED_JSON_DIRECTORIES or part.startswith(".venv") or part.endswith(".egg-info")
+        for part in relative.parts[:-1]
+    )
+
+
+def iter_json_documents(root: Path) -> Iterator[tuple[Path, JsonObject]]:
+    for path in json_paths(root):
+        yield path, load_json(path)
+
+
+def validate_json_document(document: JsonObject) -> list[ValidationIssue]:
+    if "$schema" not in document and "$id" not in document:
+        return validate_document(document)
+
+    issues: list[ValidationIssue] = []
+    if document.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
+        issues.append(ValidationIssue("$schema", "must declare JSON Schema Draft 2020-12"))
+    if not isinstance(document.get("$id"), str):
+        issues.append(ValidationIssue("$id", "missing string JSON Schema identifier"))
+    if issues:
+        return issues
+    try:
+        Draft202012Validator.check_schema(document)
+    except SchemaError as exc:
+        return [ValidationIssue("$schema", f"invalid JSON Schema: {exc.message}")]
+    return []
 
 
 def validate_path(root: Path) -> dict[str, list[ValidationIssue]]:
     results: dict[str, list[ValidationIssue]] = {}
-    for path, document in iter_schema_documents(root):
-        issues = validate_document(document)
+    for path, document in iter_json_documents(root):
+        issues = validate_json_document(document)
         if issues:
             results[str(path)] = issues
     return results
@@ -149,6 +193,9 @@ def safety_issues(value: Any, path: str = "$") -> list[ValidationIssue]:
                 issues.append(
                     ValidationIssue(child_path, "private-only field name is not publishable")
                 )
+            for label, pattern in _UNSAFE_PATTERNS:
+                if pattern.search(key):
+                    issues.append(ValidationIssue(child_path, f"field name contains {label}"))
             issues.extend(safety_issues(child, child_path))
     elif isinstance(value, list):
         for index, child in enumerate(value):
@@ -235,9 +282,7 @@ def _commercialization_issues(document: JsonObject) -> list[ValidationIssue]:
                 "components", "missing commercialization categories: " + ", ".join(missing)
             )
         )
-    declared = document.get("overall_status")
-    if declared is None:
-        return issues
+    declared = document["overall_status"]
     statuses = {component["status"] for component in document["components"]}
     expected = (
         "unknown"
@@ -310,15 +355,15 @@ def _rally_set_issues(document: JsonObject) -> list[ValidationIssue]:
     issues: list[ValidationIssue] = []
     ids: set[str] = set()
     ordered = sorted(
-        document["rallies"],
-        key=lambda rally: (
-            rally["target_court_id"],
-            rally["start_frame"],
-            rally["end_frame"],
+        enumerate(document["rallies"]),
+        key=lambda pair: (
+            pair[1]["target_court_id"],
+            pair[1]["start_frame"],
+            pair[1]["end_frame"],
         ),
     )
     previous_end_by_court: dict[str, int] = {}
-    for index, rally in enumerate(ordered):
+    for index, rally in ordered:
         if rally["rally_id"] in ids:
             issues.append(ValidationIssue(f"rallies.{index}.rally_id", "must be unique"))
         ids.add(rally["rally_id"])

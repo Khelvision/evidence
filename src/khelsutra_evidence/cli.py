@@ -13,7 +13,7 @@ from .comparison import compare_runs
 from .packaging import package_directory
 from .scoring import score_rallies
 from .templates import initialize_workspace
-from .validation import load_json, validate_document, validate_path
+from .validation import json_paths, load_json, validate_document, validate_path
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -50,6 +50,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             files = initialize_workspace(args.destination)
             _emit({"status": "created", "files": [str(path) for path in files]})
         elif args.command == "verify":
+            count = len(json_paths(args.path))
+            if count == 0:
+                raise ValueError("no JSON documents found")
             failures = validate_path(args.path)
             if failures:
                 _emit(
@@ -62,9 +65,6 @@ def main(argv: Sequence[str] | None = None) -> int:
                     }
                 )
                 return 1
-            count = sum(1 for _ in _documents(args.path))
-            if count == 0:
-                raise ValueError("no schema documents found")
             _emit({"status": "valid", "documents": count})
         elif args.command == "score":
             result = score_rallies(
@@ -85,18 +85,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         _emit({"status": "error", "message": str(exc)}, stream=sys.stderr)
         return 2
     return 0
-
-
-def _documents(path: Path) -> list[Path]:
-    paths = [path] if path.is_file() else sorted(path.rglob("*.json"))
-    result = []
-    for candidate in paths:
-        try:
-            if "schema_name" in load_json(candidate):
-                result.append(candidate)
-        except (OSError, ValueError, json.JSONDecodeError):
-            continue
-    return result
 
 
 def _require_result_valid(document: dict[str, object]) -> None:
