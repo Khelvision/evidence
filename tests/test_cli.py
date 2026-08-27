@@ -163,6 +163,40 @@ def test_project_refuses_on_stderr_without_emitting_a_record(fixtures_root: Path
     assert [entry["reason"] for entry in refusal["refusals"]] == ["unauthorized_media"]
 
 
+def test_media_preflight_clears_a_granted_release(tmp_path: Path, capsys, load_example) -> None:
+    grants = tmp_path / "grants"
+    grants.mkdir()
+    (grants / "sample-001.json").write_text(
+        json.dumps(load_example("media-grant.json")), encoding="utf-8"
+    )
+    release = load_example("evidence-release.json")
+    release_path = tmp_path / "release.json"
+    release_path.write_text(json.dumps(release), encoding="utf-8")
+
+    assert main(["media-preflight", str(release_path), str(grants)]) == 0
+
+    report = _json_output(capsys)
+    assert report["summary"] == {"requested": 1, "cleared": 1, "blocked": 0}
+
+
+def test_media_preflight_exits_nonzero_when_a_sample_is_not_cleared(
+    tmp_path: Path, capsys, load_example
+) -> None:
+    grants = tmp_path / "grants"
+    grants.mkdir()
+    (grants / "unrelated.json").write_text(
+        json.dumps(load_example("task-profile.json")), encoding="utf-8"
+    )
+    release = load_example("evidence-release.json")
+    release_path = tmp_path / "release.json"
+    release_path.write_text(json.dumps(release), encoding="utf-8")
+
+    assert main(["media-preflight", str(release_path), str(grants)]) == 1
+
+    report = _json_output(capsys)
+    assert report["samples"][0]["gaps"][0]["requirement"] == "no_grant"
+
+
 def test_parser_requires_a_command() -> None:
     with pytest.raises(SystemExit):
         main([])

@@ -1,0 +1,114 @@
+{
+  "copyright_holder_ref": {
+    "artifact_id": "copyright-assignment",
+    "digest": {
+      "algorithm": "sha256",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "media_type": "application/pdf"
+  },
+  "custody": "owner_controlled",
+  "media_ref": {
+    "artifact_id": "media-synthetic-match-001",
+    "digest": {
+      "algorithm": "sha256",
+      "value": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    },
+    "media_type": "video/mp4"
+  },
+  "notes": "Synthetic contract fixture; no media and no real person exists.",
+  "participants": [
+    {
+      "consent_ref": {
+        "artifact_id": "consent-p1",
+        "digest": {
+          "algorithm": "sha256",
+          "value": "1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        "media_type": "application/pdf"
+      },
+      "participant_handle": "p1",
+      "purpose_grants": [
+        {
+          "grant_ref": {
+            "artifact_id": "publication-p1",
+            "digest": {
+              "algorithm": "sha256",
+              "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "media_type": "application/pdf"
+          },
+          "granted": true,
+          "purpose": "public_evidence"
+        },
+        {
+          "grant_ref": {
+            "artifact_id": "service-p1",
+            "digest": {
+              "algorithm": "sha256",
+              "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            "media_type": "application/pdf"
+          },
+          "granted": true,
+          "purpose": "service_operation"
+        }
+      ]
+    },
+    {
+      "consent_ref": {
+        "artifact_id": "consent-p2",
+        "digest": {
+          "algorithm": "sha256",
+          "value": "2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "media_type": "application/pdf"
+      },
+      "participant_handle": "p2",
+      "purpose_grants": [
+        {
+          "grant_ref": {
+            "artifact_id": "publication-p2",
+            "digest": {
+              "algorithm": "sha256",
+              "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "media_type": "application/pdf"
+          },
+          "granted": true,
+          "purpose": "public_evidence"
+        },
+        {
+          "grant_ref": {
+            "artifact_id": "service-p2",
+            "digest": {
+              "algorithm": "sha256",
+              "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            "media_type": "application/pdf"
+          },
+          "granted": true,
+          "purpose": "service_operation"
+        }
+      ]
+    }
+  ],
+  "publication_grant": "verified_clear",
+  "record_id": "media-grant-synthetic-match-001",
+  "rehosting_permitted": false,
+  "sample_id": "synthetic-match-001",
+  "schema_name": "MediaGrantV1",
+  "schema_version": "1.0.0",
+  "training_permitted": false,
+  "venue_permission": {
+    "grant_ref": {
+      "artifact_id": "venue-permission",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "media_type": "application/pdf"
+    },
+    "state": "verified_clear"
+  }
+}

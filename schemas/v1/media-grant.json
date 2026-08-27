@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:MediaGrantV1",
+  "title": "MediaGrantV1",
+  "description": "The rights position for one media sample, held privately by its custodian. It records which grants exist and what each one covers; it never records who anyone is. Participants appear only as opaque handles bound to consent documents by digest, so the grant itself is not a participant register.",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "sample_id",
+    "media_ref",
+    "custody",
+    "copyright_holder_ref",
+    "venue_permission",
+    "participants",
+    "training_permitted",
+    "rehosting_permitted",
+    "publication_grant"
+  ],
+  "properties": {
+    "schema_name": { "const": "MediaGrantV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "sample_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "media_ref": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" },
+    "custody": { "enum": ["owner_controlled", "producer_controlled", "third_party"] },
+    "copyright_holder_ref": {
+      "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef"
+    },
+    "venue_permission": {
+      "type": "object",
+      "required": ["state"],
+      "properties": {
+        "state": { "enum": ["verified_clear", "restricted", "unknown", "not_applicable"] },
+        "grant_ref": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" },
+        "limitations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "participants": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "required": ["participant_handle", "consent_ref", "purpose_grants"],
+        "properties": {
+          "participant_handle": {
+            "type": "string",
+            "pattern": "^p[0-9]{1,4}$",
+            "description": "An opaque within-sample handle. Any mapping to a person stays outside this document."
+          },
+          "consent_ref": {
+            "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef"
+          },
+          "guardian_authorization_required": { "type": "boolean" },
+          "guardian_authorization_ref": {
+            "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef"
+          },
+          "purpose_grants": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/purposeGrant" }
+          },
+          "withdrawn": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "training_permitted": { "type": "boolean" },
+    "rehosting_permitted": { "type": "boolean" },
+    "publication_grant": {
+      "enum": ["verified_clear", "restricted", "unknown", "not_applicable"]
+    },
+    "notes": { "type": "string", "maxLength": 2000 }
+  },
+  "additionalProperties": false
+}

@@ -30,7 +30,8 @@ site source.
 - A reference rally-boundary scorer with deterministic, court-aware one-to-one matching.
 - Comparability verdicts with reasons: `paired`, `paired_quality_only`, `partially_comparable`,
   `descriptive_only`, or `incompatible`.
-- Fail-closed validation, a private-superset-to-public projector, and public-package safety scanning.
+- Fail-closed validation, a private-superset-to-public projector, a media-grant preflight, and
+  public-package safety scanning.
 - Content-addressed coach plans, source-bound reel recipes, and clean-environment portability receipts.
 - A portable conformance suite that pins the contract's normative behaviour in one file.
 - Separate official and community registries.
@@ -46,6 +47,7 @@ python -m venv .venv
 .venv/bin/evidence score examples/rallies/truth.json examples/rallies/prediction.json
 .venv/bin/evidence compare examples/runs/system-a.json examples/runs/system-b.json
 .venv/bin/evidence project examples/private-evidence-record.json --output dist/public.json
+.venv/bin/evidence media-preflight examples/evidence-release.json examples
 .venv/bin/evidence package examples dist/examples.tar.gz
 ```
 
@@ -78,8 +80,8 @@ An official release must expose enough information for an independent reader to 
 
 See [comparability](docs/COMPARABILITY.md), [publication safety](docs/PUBLICATION.md),
 [private superset and public projection](docs/PROJECTION.md),
-[coach-agent authority](docs/COACH_AGENT_AUTHORITY.md), the [conformance suite](docs/CONFORMANCE.md),
-and the [schema guide](docs/SCHEMAS.md).
+[media grants](docs/MEDIA_GRANTS.md), [coach-agent authority](docs/COACH_AGENT_AUTHORITY.md),
+the [conformance suite](docs/CONFORMANCE.md), and the [schema guide](docs/SCHEMAS.md).
 
 ## Reuse and community comparisons
 

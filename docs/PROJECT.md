@@ -85,13 +85,14 @@ stack rows.
 | KE-1 | Publish the initial schemas, CLI, scorer, comparability rationale, examples, community rules, static site source, Forgejo CI, ownership routing, and this tracker | BHI #1063 doctrine | BHI #1063 must land before this PR; exact-head verification is recorded on the PR | Complete | [#1](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/1) |
 | KE-2a | Publish the private-superset/public-projection contract, the projector, and negative fixtures; producer integrations remain in their own repositories | KE-1 | Security review of the envelope classification, refusal reasons, and negative fixtures | Complete | [#3](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/3) |
 | KE-2b | Publish the portable conformance suite that pins normative behaviour, and propose the normativity decision as an ADR | KE-2a | Conformance corpus rendered from the implementation, replayed independently by the Python tests, and free of expectations only Python can meet | Complete | [#4](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/4) |
-| KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2a | Exact media inventory, consent, purpose/publication grant, custody, redaction, and claims review | Blocked | — |
+| KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2a, KE-9 | `evidence media-preflight` clears every sample, plus redaction and claims review | Blocked | — |
 | KE-4 | Publish the frozen v0.2 blind challenge | KE-3 | Rights-cleared frozen inventory, two annotators, frozen scorer/engine, no train/select overlap | Pending | — |
 | KE-5 | Publish the v0.3 owner-adaptation and portability proof | KE-2a | Authorized owner corpus, disjoint held-out ruler, and second clean environment | Pending | — |
 | KE-6 | Publish the v0.4 coach-agent query proof | KE-2a | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
 | KE-7a | Make the site source-driven: render the release index as an allowlisted projection of the registries, refuse what it may not publish, and stamp the exact release data it rendered | KE-1 | Checked-in page byte-identical to the renderer; refusals covered by tests | Complete | [#6](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/6) |
 | KE-7b | Deploy the durable evidence site | KE-7a | Explicit infrastructure/domain approval and a source-driven deployment path | Pending | — |
 | KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
+| KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | — |
 
 ## 6. External gates
 
@@ -143,6 +144,11 @@ stack rows.
   implementation and replayed independently, and it records which expectations are normative and which
   belong to whichever JSON Schema library ran. Whether the contract is *defined* language-neutrally is
   external gate 7 and is not claimed here.
+- [x] The rights gate on a media release is mechanical: `MediaGrantV1` records the rights position for
+  one sample without recording who anyone is, and `evidence media-preflight` reports per sample whether
+  publication, venue permission, participant consent for the `public_evidence` purpose, guardian
+  authorization where required, and non-withdrawal are all in place. Clearing publication does not imply
+  training or rehosting, and no green preflight is a legal opinion.
 - [ ] v0.1 publishes honest demonstrations with exact capture, cost, rights, and failure receipts.
 - [ ] v0.2 publishes frozen blind evidence without train/select leakage.
 - [ ] v0.3 proves owner-held improvement, common-ruler non-regression, export, restore, replay, promotion,
@@ -164,6 +170,7 @@ stack rows.
 - [Comparability verdicts](COMPARABILITY.md)
 - [ADR-0001: how language-neutral is the contract](adr/0001-language-neutral-contract.md)
 - [Conformance suite](CONFORMANCE.md)
+- [Media grants and the publication preflight](MEDIA_GRANTS.md)
 - [Private superset and public projection](PROJECTION.md)
 - [Publication safety](PUBLICATION.md)
 - [Schema guide](SCHEMAS.md)
@@ -172,6 +179,15 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-27 — KE-9 adds `MediaGrantV1` and `evidence media-preflight`, turning KE-3's rights gate from a
+  judgement made at publication time into a per-sample checklist. A grant records the rights position for
+  one sample — publication grant, venue permission, copyright holder, custody, per-participant consent by
+  purpose, guardian authorization where required — and deliberately records no name, age, or contact
+  detail: participants are opaque within-sample handles bound to consent documents by digest, because a
+  rights register that becomes a participant register has made things worse. Six fixtures each withhold
+  exactly one requirement. The report states separately whether a grant permits training and rehosting,
+  since clearing publication implies neither and `MEDIA-LICENSE.md` prohibits both by default. KE-3 stays
+  Blocked; what changed is that its gate is now something a tool can answer.
 - 2026-08-27 — Added section 10, merge receipts: the reviewed head, merge commit, and exact-head CI run
   for every merged row, with the time each turned green next to the time it was merged. KE-8 and KE-7a
   were merged before their gate completed, by 2m05s and 2m59s; both heads then verified green, so the

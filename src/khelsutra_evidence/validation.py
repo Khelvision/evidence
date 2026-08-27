@@ -315,6 +315,7 @@ def _semantic_issues(document: JsonObject) -> list[ValidationIssue]:
         "CoachAgentRunReceiptV1": _agent_receipt_issues,
         "PrivateEvidenceRecordV1": _private_record_issues,
         "ConformanceSuiteV1": _conformance_issues,
+        "MediaGrantV1": _media_grant_issues,
     }
     issues = checks.get(name, lambda _: [])(document)
     if name not in _EMBEDDED_CORPUS_SCHEMAS:
@@ -588,6 +589,32 @@ def _private_record_issues(document: JsonObject) -> list[ValidationIssue]:
         issues.append(
             ValidationIssue("public.schema_name", "must name a published public evidence contract")
         )
+    return issues
+
+
+def _media_grant_issues(document: JsonObject) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
+    handles = [entry["participant_handle"] for entry in document["participants"]]
+    if len(handles) != len(set(handles)):
+        issues.append(ValidationIssue("participants", "participant_handle values must be unique"))
+    venue = document["venue_permission"]
+    if venue["state"] == "verified_clear" and "grant_ref" not in venue:
+        issues.append(
+            ValidationIssue(
+                "venue_permission.grant_ref",
+                "a verified-clear venue permission must name its grant",
+            )
+        )
+    for index, entry in enumerate(document["participants"]):
+        if "guardian_authorization_ref" in entry and not entry.get(
+            "guardian_authorization_required"
+        ):
+            issues.append(
+                ValidationIssue(
+                    f"participants.{index}.guardian_authorization_required",
+                    "must be true when a guardian authorization is bound",
+                )
+            )
     return issues
 
 

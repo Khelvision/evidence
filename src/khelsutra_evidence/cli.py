@@ -13,12 +13,19 @@ from jsonschema.exceptions import SchemaError
 from referencing.exceptions import Unresolvable
 
 from .comparison import compare_runs
+from .media import collect_grants, preflight
 from .packaging import package_directory
 from .projection import canonical_public_bytes, projection_refusals
 from .schemas import JsonObject
 from .scoring import score_rallies
 from .templates import initialize_workspace
-from .validation import json_paths, load_json, validate_document, validate_path
+from .validation import (
+    iter_json_documents,
+    json_paths,
+    load_json,
+    validate_document,
+    validate_path,
+)
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -51,6 +58,12 @@ def _parser() -> argparse.ArgumentParser:
     )
     project.add_argument("record", type=Path)
     project.add_argument("--output", type=Path)
+
+    media = subparsers.add_parser(
+        "media-preflight", help="check that every sample in a release has publishable media grants"
+    )
+    media.add_argument("release", type=Path)
+    media.add_argument("grants", type=Path)
     return parser
 
 
@@ -92,6 +105,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             _emit({"status": "packaged", "path": str(args.destination), "sha256": digest})
         elif args.command == "project":
             return _project(load_json(args.record), args.output)
+        elif args.command == "media-preflight":
+            report = preflight(
+                load_json(args.release), collect_grants(list(iter_json_documents(args.grants)))
+            )
+            _emit(report)
+            return 0 if report["summary"]["blocked"] == 0 else 1
         else:
             raise AssertionError(f"unhandled command {args.command}")
     except (OSError, ValueError, json.JSONDecodeError, SchemaError, Unresolvable) as exc:
