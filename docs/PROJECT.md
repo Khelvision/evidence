@@ -89,7 +89,7 @@ stack rows.
 | KE-4 | Publish the frozen v0.2 blind challenge | KE-3 | Rights-cleared frozen inventory, two annotators, frozen scorer/engine, no train/select overlap | Pending | — |
 | KE-5 | Publish the v0.3 owner-adaptation and portability proof | KE-2a | Authorized owner corpus, disjoint held-out ruler, and second clean environment | Pending | — |
 | KE-6 | Publish the v0.4 coach-agent query proof | KE-2a | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
-| KE-7a | Make the site source-driven: render the release index as an allowlisted projection of the registries, refuse what it may not publish, and stamp the exact release data it rendered | KE-1 | Checked-in page byte-identical to the renderer; refusals covered by tests | Complete | — |
+| KE-7a | Make the site source-driven: render the release index as an allowlisted projection of the registries, refuse what it may not publish, and stamp the exact release data it rendered | KE-1 | Checked-in page byte-identical to the renderer; refusals covered by tests | Complete | [#6](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/6) |
 | KE-7b | Deploy the durable evidence site | KE-7a | Explicit infrastructure/domain approval and a source-driven deployment path | Pending | — |
 | KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
 
