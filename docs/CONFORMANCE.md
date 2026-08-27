@@ -61,6 +61,22 @@ Rust implementation to reproduce this repository's Python library's English woul
 unpassable for everyone but us, which is the opposite of the point. Every other message in the corpus is
 authored here and is normative.
 
+## Comparing results
+
+Compare **parsed JSON values**, never serialized text:
+
+- Numbers are IEEE-754 doubles. `0.6666666666666666` in a `result` is the double nearest two thirds, and
+  an implementation that computes the same double conforms however it chooses to print it. Comparing
+  rendered numerals instead will fail on correct implementations.
+- Object key order is not significant anywhere in a case. Array order **is** significant: `matches`,
+  `issues`, `messages`, `refusals`, `members`, and the sample-id lists in a comparison report are
+  ordered outputs, and `issue_paths` is sorted.
+- `null` and absent are different. `stage` is `null` for a passing `validate_document` case, and
+  `mean_start_error_frames` is `null` when nothing matched; neither may be dropped.
+
+The one place text equality is required is `suite_digest`, which is computed over the canonical encoding
+described above.
+
 ## Deliberate omissions
 
 Provider-token shapes — GitHub, Google, Slack, and AWS credential patterns — are exercised in this
