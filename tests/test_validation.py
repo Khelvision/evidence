@@ -33,8 +33,8 @@ def _messages(document: dict[str, object]) -> list[str]:
 
 def test_all_synthetic_examples_validate(examples_root: Path) -> None:
     assert validate_path(examples_root) == {}
-    assert len(schemas_by_name()) == 18
-    assert len(load_schemas()) == 19
+    assert len(schemas_by_name()) == 19
+    assert len(load_schemas()) == 20
 
 
 def test_public_registries_and_schema_documents_validate() -> None:

@@ -1,0 +1,2751 @@
+{
+  "cases": [
+    {
+      "case_id": "compare-descriptive-only",
+      "expect": {
+        "result": {
+          "cost_comparable": false,
+          "left_only_sample_ids": [
+            "synthetic-match-001"
+          ],
+          "left_run_id": "synthetic-run-a",
+          "quality_comparable": false,
+          "reasons": [
+            "task contract matches but the runs share no sample IDs"
+          ],
+          "record_id": "comparison-00bbe989cc808c43fd60",
+          "right_only_sample_ids": [
+            "synthetic-match-777"
+          ],
+          "right_run_id": "synthetic-run-a-disjoint",
+          "scenario_strata_equal": true,
+          "schema_name": "ComparisonReportV1",
+          "schema_version": "1.0.0",
+          "shared_sample_ids": [],
+          "verdict": "descriptive_only"
+        }
+      },
+      "input": {
+        "left": {
+          "cost_receipt": {
+            "accelerator_seconds": 480,
+            "accelerator_seconds_per_source_hour": 2880,
+            "accepted_source_seconds": 600,
+            "currency": "USD",
+            "inference_usd": 0.2,
+            "inference_usd_per_source_hour": 1.2,
+            "manual_minutes_per_source_hour": 30,
+            "manual_review_minutes": 5,
+            "record_id": "cost-synthetic-run-a",
+            "retry_usd": 0.01,
+            "schema_name": "CostReceiptV1",
+            "schema_version": "1.0.0",
+            "source_seconds": 600,
+            "total_cost_usd": 0.5,
+            "total_cost_usd_per_accepted_source_hour": 3,
+            "wall_seconds": 660,
+            "wall_seconds_per_source_hour": 3960
+          },
+          "failures_included": true,
+          "metrics": [
+            {
+              "denominator": 3,
+              "name": "tol_f1",
+              "numerator": 2,
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.6666666666666666
+            },
+            {
+              "denominator": 0.16666666666666666,
+              "name": "adjacent_court_false_events_per_source_hour",
+              "numerator": 1,
+              "stratum": "multi-active-fixed",
+              "unit": "events/source-hour",
+              "value": 6
+            }
+          ],
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "record_id": "system-run-synthetic-a",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-a",
+          "samples": [
+            {
+              "manual_correction_minutes": 5,
+              "prediction_ref": {
+                "artifact_id": "prediction-synthetic-match-001",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "sample_id": "synthetic-match-001",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "name": "synthetic-system",
+            "version": "a"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "1.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 45,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 700,
+              "phase": "delivery_complete"
+            }
+          ]
+        },
+        "right": {
+          "cost_receipt": {
+            "accelerator_seconds": 480,
+            "accelerator_seconds_per_source_hour": 2880,
+            "accepted_source_seconds": 600,
+            "currency": "USD",
+            "inference_usd": 0.2,
+            "inference_usd_per_source_hour": 1.2,
+            "manual_minutes_per_source_hour": 30,
+            "manual_review_minutes": 5,
+            "record_id": "cost-synthetic-run-a",
+            "retry_usd": 0.01,
+            "schema_name": "CostReceiptV1",
+            "schema_version": "1.0.0",
+            "source_seconds": 600,
+            "total_cost_usd": 0.5,
+            "total_cost_usd_per_accepted_source_hour": 3,
+            "wall_seconds": 660,
+            "wall_seconds_per_source_hour": 3960
+          },
+          "failures_included": true,
+          "metrics": [
+            {
+              "denominator": 3,
+              "name": "tol_f1",
+              "numerator": 2,
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.6666666666666666
+            },
+            {
+              "denominator": 0.16666666666666666,
+              "name": "adjacent_court_false_events_per_source_hour",
+              "numerator": 1,
+              "stratum": "multi-active-fixed",
+              "unit": "events/source-hour",
+              "value": 6
+            }
+          ],
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "record_id": "system-run-synthetic-a-disjoint",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-a-disjoint",
+          "samples": [
+            {
+              "sample_id": "synthetic-match-777",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "name": "synthetic-system",
+            "version": "a"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "1.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 45,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 700,
+              "phase": "delivery_complete"
+            }
+          ]
+        }
+      },
+      "operation": "compare_runs",
+      "title": "A matching contract with no shared samples is descriptive only."
+    },
+    {
+      "case_id": "compare-incompatible-task-contract",
+      "expect": {
+        "result": {
+          "cost_comparable": false,
+          "left_only_sample_ids": [],
+          "left_run_id": "synthetic-run-a",
+          "quality_comparable": false,
+          "reasons": [
+            "task contract differs: scorer_version"
+          ],
+          "record_id": "comparison-06908447e79ef2dbeb4b",
+          "right_only_sample_ids": [],
+          "right_run_id": "synthetic-run-a-other-scorer",
+          "scenario_strata_equal": true,
+          "schema_name": "ComparisonReportV1",
+          "schema_version": "1.0.0",
+          "shared_sample_ids": [
+            "synthetic-match-001"
+          ],
+          "verdict": "incompatible"
+        }
+      },
+      "input": {
+        "left": {
+          "cost_receipt": {
+            "accelerator_seconds": 480,
+            "accelerator_seconds_per_source_hour": 2880,
+            "accepted_source_seconds": 600,
+            "currency": "USD",
+            "inference_usd": 0.2,
+            "inference_usd_per_source_hour": 1.2,
+            "manual_minutes_per_source_hour": 30,
+            "manual_review_minutes": 5,
+            "record_id": "cost-synthetic-run-a",
+            "retry_usd": 0.01,
+            "schema_name": "CostReceiptV1",
+            "schema_version": "1.0.0",
+            "source_seconds": 600,
+            "total_cost_usd": 0.5,
+            "total_cost_usd_per_accepted_source_hour": 3,
+            "wall_seconds": 660,
+            "wall_seconds_per_source_hour": 3960
+          },
+          "failures_included": true,
+          "metrics": [
+            {
+              "denominator": 3,
+              "name": "tol_f1",
+              "numerator": 2,
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.6666666666666666
+            },
+            {
+              "denominator": 0.16666666666666666,
+              "name": "adjacent_court_false_events_per_source_hour",
+              "numerator": 1,
+              "stratum": "multi-active-fixed",
+              "unit": "events/source-hour",
+              "value": 6
+            }
+          ],
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "record_id": "system-run-synthetic-a",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-a",
+          "samples": [
+            {
+              "manual_correction_minutes": 5,
+              "prediction_ref": {
+                "artifact_id": "prediction-synthetic-match-001",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "sample_id": "synthetic-match-001",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "name": "synthetic-system",
+            "version": "a"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "1.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 45,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 700,
+              "phase": "delivery_complete"
+            }
+          ]
+        },
+        "right": {
+          "cost_receipt": {
+            "accelerator_seconds": 480,
+            "accelerator_seconds_per_source_hour": 2880,
+            "accepted_source_seconds": 600,
+            "currency": "USD",
+            "inference_usd": 0.2,
+            "inference_usd_per_source_hour": 1.2,
+            "manual_minutes_per_source_hour": 30,
+            "manual_review_minutes": 5,
+            "record_id": "cost-synthetic-run-a",
+            "retry_usd": 0.01,
+            "schema_name": "CostReceiptV1",
+            "schema_version": "1.0.0",
+            "source_seconds": 600,
+            "total_cost_usd": 0.5,
+            "total_cost_usd_per_accepted_source_hour": 3,
+            "wall_seconds": 660,
+            "wall_seconds_per_source_hour": 3960
+          },
+          "failures_included": true,
+          "metrics": [
+            {
+              "denominator": 3,
+              "name": "tol_f1",
+              "numerator": 2,
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.6666666666666666
+            },
+            {
+              "denominator": 0.16666666666666666,
+              "name": "adjacent_court_false_events_per_source_hour",
+              "numerator": 1,
+              "stratum": "multi-active-fixed",
+              "unit": "events/source-hour",
+              "value": 6
+            }
+          ],
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "record_id": "system-run-synthetic-a-other-scorer",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-a-other-scorer",
+          "samples": [
+            {
+              "manual_correction_minutes": 5,
+              "prediction_ref": {
+                "artifact_id": "prediction-synthetic-match-001",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "sample_id": "synthetic-match-001",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "name": "synthetic-system",
+            "version": "a"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "2.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 45,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 700,
+              "phase": "delivery_complete"
+            }
+          ]
+        }
+      },
+      "operation": "compare_runs",
+      "title": "A different scorer version makes two runs incompatible."
+    },
+    {
+      "case_id": "compare-paired-quality-only",
+      "expect": {
+        "result": {
+          "cost_comparable": false,
+          "left_only_sample_ids": [],
+          "left_run_id": "synthetic-run-a",
+          "quality_comparable": true,
+          "reasons": [
+            "task, scorer, samples, and strata match; cost evidence is incomplete"
+          ],
+          "record_id": "comparison-3e82a50d37d0d5549285",
+          "right_only_sample_ids": [],
+          "right_run_id": "synthetic-run-b",
+          "scenario_strata_equal": true,
+          "schema_name": "ComparisonReportV1",
+          "schema_version": "1.0.0",
+          "shared_sample_ids": [
+            "synthetic-match-001"
+          ],
+          "verdict": "paired_quality_only"
+        }
+      },
+      "input": {
+        "left": {
+          "cost_receipt": {
+            "accelerator_seconds": 480,
+            "accelerator_seconds_per_source_hour": 2880,
+            "accepted_source_seconds": 600,
+            "currency": "USD",
+            "inference_usd": 0.2,
+            "inference_usd_per_source_hour": 1.2,
+            "manual_minutes_per_source_hour": 30,
+            "manual_review_minutes": 5,
+            "record_id": "cost-synthetic-run-a",
+            "retry_usd": 0.01,
+            "schema_name": "CostReceiptV1",
+            "schema_version": "1.0.0",
+            "source_seconds": 600,
+            "total_cost_usd": 0.5,
+            "total_cost_usd_per_accepted_source_hour": 3,
+            "wall_seconds": 660,
+            "wall_seconds_per_source_hour": 3960
+          },
+          "failures_included": true,
+          "metrics": [
+            {
+              "denominator": 3,
+              "name": "tol_f1",
+              "numerator": 2,
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.6666666666666666
+            },
+            {
+              "denominator": 0.16666666666666666,
+              "name": "adjacent_court_false_events_per_source_hour",
+              "numerator": 1,
+              "stratum": "multi-active-fixed",
+              "unit": "events/source-hour",
+              "value": 6
+            }
+          ],
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "record_id": "system-run-synthetic-a",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-a",
+          "samples": [
+            {
+              "manual_correction_minutes": 5,
+              "prediction_ref": {
+                "artifact_id": "prediction-synthetic-match-001",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "sample_id": "synthetic-match-001",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "name": "synthetic-system",
+            "version": "a"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "1.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 45,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 700,
+              "phase": "delivery_complete"
+            }
+          ]
+        },
+        "right": {
+          "failures_included": true,
+          "metrics": [
+            {
+              "name": "tol_f1",
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.7
+            }
+          ],
+          "notes": "Synthetic run intentionally omits cost, yielding paired_quality_only.",
+          "record_id": "system-run-synthetic-b",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-b",
+          "samples": [
+            {
+              "manual_correction_minutes": 4,
+              "prediction_ref": {
+                "artifact_id": "prediction-synthetic-match-001",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+                }
+              },
+              "sample_id": "synthetic-match-001",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            "name": "synthetic-system",
+            "version": "b"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "1.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 40,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 650,
+              "phase": "delivery_complete"
+            }
+          ]
+        }
+      },
+      "operation": "compare_runs",
+      "title": "Matching quality evidence without complete cost evidence pairs on quality only."
+    },
+    {
+      "case_id": "compare-paired-runs",
+      "expect": {
+        "result": {
+          "cost_comparable": true,
+          "left_only_sample_ids": [],
+          "left_run_id": "synthetic-run-a",
+          "quality_comparable": true,
+          "reasons": [
+            "task, scorer, samples, strata, and cost evidence are compatible"
+          ],
+          "record_id": "comparison-ff17451deaf8a7df346f",
+          "right_only_sample_ids": [],
+          "right_run_id": "synthetic-run-a-twin",
+          "scenario_strata_equal": true,
+          "schema_name": "ComparisonReportV1",
+          "schema_version": "1.0.0",
+          "shared_sample_ids": [
+            "synthetic-match-001"
+          ],
+          "verdict": "paired"
+        }
+      },
+      "input": {
+        "left": {
+          "cost_receipt": {
+            "accelerator_seconds": 480,
+            "accelerator_seconds_per_source_hour": 2880,
+            "accepted_source_seconds": 600,
+            "currency": "USD",
+            "inference_usd": 0.2,
+            "inference_usd_per_source_hour": 1.2,
+            "manual_minutes_per_source_hour": 30,
+            "manual_review_minutes": 5,
+            "record_id": "cost-synthetic-run-a",
+            "retry_usd": 0.01,
+            "schema_name": "CostReceiptV1",
+            "schema_version": "1.0.0",
+            "source_seconds": 600,
+            "total_cost_usd": 0.5,
+            "total_cost_usd_per_accepted_source_hour": 3,
+            "wall_seconds": 660,
+            "wall_seconds_per_source_hour": 3960
+          },
+          "failures_included": true,
+          "metrics": [
+            {
+              "denominator": 3,
+              "name": "tol_f1",
+              "numerator": 2,
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.6666666666666666
+            },
+            {
+              "denominator": 0.16666666666666666,
+              "name": "adjacent_court_false_events_per_source_hour",
+              "numerator": 1,
+              "stratum": "multi-active-fixed",
+              "unit": "events/source-hour",
+              "value": 6
+            }
+          ],
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "record_id": "system-run-synthetic-a",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-a",
+          "samples": [
+            {
+              "manual_correction_minutes": 5,
+              "prediction_ref": {
+                "artifact_id": "prediction-synthetic-match-001",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "sample_id": "synthetic-match-001",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "name": "synthetic-system",
+            "version": "a"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "1.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 45,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 700,
+              "phase": "delivery_complete"
+            }
+          ]
+        },
+        "right": {
+          "cost_receipt": {
+            "accelerator_seconds": 480,
+            "accelerator_seconds_per_source_hour": 2880,
+            "accepted_source_seconds": 600,
+            "currency": "USD",
+            "inference_usd": 0.2,
+            "inference_usd_per_source_hour": 1.2,
+            "manual_minutes_per_source_hour": 30,
+            "manual_review_minutes": 5,
+            "record_id": "cost-synthetic-run-a",
+            "retry_usd": 0.01,
+            "schema_name": "CostReceiptV1",
+            "schema_version": "1.0.0",
+            "source_seconds": 600,
+            "total_cost_usd": 0.5,
+            "total_cost_usd_per_accepted_source_hour": 3,
+            "wall_seconds": 660,
+            "wall_seconds_per_source_hour": 3960
+          },
+          "failures_included": true,
+          "metrics": [
+            {
+              "denominator": 3,
+              "name": "tol_f1",
+              "numerator": 2,
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.6666666666666666
+            },
+            {
+              "denominator": 0.16666666666666666,
+              "name": "adjacent_court_false_events_per_source_hour",
+              "numerator": 1,
+              "stratum": "multi-active-fixed",
+              "unit": "events/source-hour",
+              "value": 6
+            }
+          ],
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "record_id": "system-run-synthetic-a-twin",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-a-twin",
+          "samples": [
+            {
+              "manual_correction_minutes": 5,
+              "prediction_ref": {
+                "artifact_id": "prediction-synthetic-match-001",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "sample_id": "synthetic-match-001",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "name": "synthetic-system",
+            "version": "a"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "1.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 45,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 700,
+              "phase": "delivery_complete"
+            }
+          ]
+        }
+      },
+      "operation": "compare_runs",
+      "title": "Matching task, samples, strata, and cost evidence pair fully."
+    },
+    {
+      "case_id": "compare-partially-comparable",
+      "expect": {
+        "result": {
+          "cost_comparable": true,
+          "left_only_sample_ids": [],
+          "left_run_id": "synthetic-run-a",
+          "quality_comparable": true,
+          "reasons": [
+            "only a strict subset of sample IDs is shared"
+          ],
+          "record_id": "comparison-9943536ea41c29b3ed1b",
+          "right_only_sample_ids": [
+            "synthetic-match-002"
+          ],
+          "right_run_id": "synthetic-run-a-extra",
+          "scenario_strata_equal": true,
+          "schema_name": "ComparisonReportV1",
+          "schema_version": "1.0.0",
+          "shared_sample_ids": [
+            "synthetic-match-001"
+          ],
+          "verdict": "partially_comparable"
+        }
+      },
+      "input": {
+        "left": {
+          "cost_receipt": {
+            "accelerator_seconds": 480,
+            "accelerator_seconds_per_source_hour": 2880,
+            "accepted_source_seconds": 600,
+            "currency": "USD",
+            "inference_usd": 0.2,
+            "inference_usd_per_source_hour": 1.2,
+            "manual_minutes_per_source_hour": 30,
+            "manual_review_minutes": 5,
+            "record_id": "cost-synthetic-run-a",
+            "retry_usd": 0.01,
+            "schema_name": "CostReceiptV1",
+            "schema_version": "1.0.0",
+            "source_seconds": 600,
+            "total_cost_usd": 0.5,
+            "total_cost_usd_per_accepted_source_hour": 3,
+            "wall_seconds": 660,
+            "wall_seconds_per_source_hour": 3960
+          },
+          "failures_included": true,
+          "metrics": [
+            {
+              "denominator": 3,
+              "name": "tol_f1",
+              "numerator": 2,
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.6666666666666666
+            },
+            {
+              "denominator": 0.16666666666666666,
+              "name": "adjacent_court_false_events_per_source_hour",
+              "numerator": 1,
+              "stratum": "multi-active-fixed",
+              "unit": "events/source-hour",
+              "value": 6
+            }
+          ],
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "record_id": "system-run-synthetic-a",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-a",
+          "samples": [
+            {
+              "manual_correction_minutes": 5,
+              "prediction_ref": {
+                "artifact_id": "prediction-synthetic-match-001",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "sample_id": "synthetic-match-001",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "name": "synthetic-system",
+            "version": "a"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "1.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 45,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 700,
+              "phase": "delivery_complete"
+            }
+          ]
+        },
+        "right": {
+          "cost_receipt": {
+            "accelerator_seconds": 480,
+            "accelerator_seconds_per_source_hour": 2880,
+            "accepted_source_seconds": 600,
+            "currency": "USD",
+            "inference_usd": 0.2,
+            "inference_usd_per_source_hour": 1.2,
+            "manual_minutes_per_source_hour": 30,
+            "manual_review_minutes": 5,
+            "record_id": "cost-synthetic-run-a",
+            "retry_usd": 0.01,
+            "schema_name": "CostReceiptV1",
+            "schema_version": "1.0.0",
+            "source_seconds": 600,
+            "total_cost_usd": 0.5,
+            "total_cost_usd_per_accepted_source_hour": 3,
+            "wall_seconds": 660,
+            "wall_seconds_per_source_hour": 3960
+          },
+          "failures_included": true,
+          "metrics": [
+            {
+              "denominator": 3,
+              "name": "tol_f1",
+              "numerator": 2,
+              "stratum": "multi-active-fixed",
+              "unit": "ratio",
+              "value": 0.6666666666666666
+            },
+            {
+              "denominator": 0.16666666666666666,
+              "name": "adjacent_court_false_events_per_source_hour",
+              "numerator": 1,
+              "stratum": "multi-active-fixed",
+              "unit": "events/source-hour",
+              "value": 6
+            }
+          ],
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "record_id": "system-run-synthetic-a-extra",
+          "run_class": "synthetic",
+          "run_id": "synthetic-run-a-extra",
+          "samples": [
+            {
+              "manual_correction_minutes": 5,
+              "prediction_ref": {
+                "artifact_id": "prediction-synthetic-match-001",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "sample_id": "synthetic-match-001",
+              "status": "accepted"
+            },
+            {
+              "sample_id": "synthetic-match-002",
+              "status": "accepted"
+            }
+          ],
+          "scenario_strata": [
+            "multi-active-fixed"
+          ],
+          "schema_name": "SystemRunV1",
+          "schema_version": "1.0.0",
+          "system": {
+            "digest": {
+              "algorithm": "sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "name": "synthetic-system",
+            "version": "a"
+          },
+          "task_contract": {
+            "boundary_tolerance_frames": 15,
+            "prediction_unit": "rally_boundary",
+            "scorer_name": "khelsutra-rally-boundary",
+            "scorer_version": "1.0.0",
+            "task_id": "synthetic-rally-boundaries"
+          },
+          "timings": [
+            {
+              "elapsed_seconds": 45,
+              "phase": "first_stable_rally"
+            },
+            {
+              "elapsed_seconds": 700,
+              "phase": "delivery_complete"
+            }
+          ]
+        }
+      },
+      "operation": "compare_runs",
+      "title": "A strict subset of shared samples is only partially comparable."
+    },
+    {
+      "case_id": "digest-coach-instruction-plan",
+      "expect": {
+        "digest": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"
+      },
+      "input": {
+        "document": {
+          "actor_role": "coach",
+          "ambiguities": [],
+          "execution_status": "ready",
+          "filters": [
+            {
+              "accepted_authorities": [
+                "human_confirmed",
+                "model_observation"
+              ],
+              "field": "rally_outcome",
+              "operator": "equals",
+              "value": "unforced_error"
+            }
+          ],
+          "human_decision_authority": true,
+          "instruction": "Show me all the unforced errors of Player A in their last five matches as a video, keeping only the last three shots of each rally.",
+          "output": {
+            "include_omissions": true,
+            "include_provenance": true,
+            "kind": "video_reel",
+            "rendition": "sd30"
+          },
+          "permission_checks": [
+            {
+              "grant_ref": {
+                "artifact_id": "synthetic-service-grant",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "abababababababababababababababababababababababababababababababab"
+                }
+              },
+              "granted": true,
+              "purpose": "service_operation"
+            }
+          ],
+          "plan_digest": {
+            "algorithm": "sha256",
+            "value": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"
+          },
+          "plan_id": "synthetic-unforced-error-plan",
+          "record_id": "coach-plan-synthetic-v1",
+          "schema_name": "CoachInstructionPlanV1",
+          "schema_version": "1.0.0",
+          "scope": {
+            "completed_matches": 5,
+            "order": "recorded_at_desc",
+            "player_ref": "player-synthetic-a",
+            "timezone": "Asia/Kolkata"
+          },
+          "transformations": [
+            {
+              "count": 3,
+              "operation": "keep_last_shots"
+            },
+            {
+              "operation": "order_chronologically"
+            },
+            {
+              "operation": "stitch"
+            }
+          ],
+          "workspace_id": "workspace-synthetic-academy"
+        }
+      },
+      "operation": "plan_digest",
+      "title": "The canonical plan digest over the plan's normative fields."
+    },
+    {
+      "case_id": "digest-evidence-recipe",
+      "expect": {
+        "digest": "71b773304a2144125ee214cf0520de027ee5e0411956cd589ad25b5da8979330"
+      },
+      "input": {
+        "document": {
+          "encoder_identity": "synthetic-encoder",
+          "items": [
+            {
+              "order": 0,
+              "outcome_provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_ref": {
+                "end_frame": 610,
+                "source_ref": {
+                  "artifact_id": "synthetic-match-001",
+                  "digest": {
+                    "algorithm": "sha256",
+                    "value": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+                  }
+                },
+                "start_frame": 400
+              },
+              "sample_id": "synthetic-match-001",
+              "shot_refs": [
+                {
+                  "end_frame": 550,
+                  "provenance": {
+                    "authority": "model_observation",
+                    "confidence": 0.82,
+                    "model_id": "synthetic-shot-model"
+                  },
+                  "start_frame": 520
+                },
+                {
+                  "end_frame": 580,
+                  "provenance": {
+                    "authority": "model_observation",
+                    "confidence": 0.86,
+                    "model_id": "synthetic-shot-model"
+                  },
+                  "start_frame": 551
+                },
+                {
+                  "end_frame": 610,
+                  "provenance": {
+                    "authority": "model_observation",
+                    "confidence": 0.79,
+                    "model_id": "synthetic-shot-model"
+                  },
+                  "start_frame": 581
+                }
+              ]
+            }
+          ],
+          "plan_id": "synthetic-unforced-error-plan",
+          "recipe_digest": {
+            "algorithm": "sha256",
+            "value": "71b773304a2144125ee214cf0520de027ee5e0411956cd589ad25b5da8979330"
+          },
+          "recipe_id": "synthetic-unforced-error-reel",
+          "record_id": "recipe-synthetic-v1",
+          "regenerable_without_perception": true,
+          "rendition": "sd30",
+          "schema_name": "EvidenceRecipeV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "recipe_digest",
+      "title": "The canonical recipe digest over plan, items, and rendition."
+    },
+    {
+      "case_id": "package-deterministic-archive",
+      "expect": {
+        "members": [
+          "README.md",
+          "task.json"
+        ],
+        "sha256": "57eb63b351b055e32aeeb3748d3322e0d60024ea92415920c0c41935bb48dc37"
+      },
+      "input": {
+        "files": [
+          {
+            "name": "README.md",
+            "text": "# Safe synthetic package\n"
+          },
+          {
+            "name": "task.json",
+            "text": "{\"boundary_tolerance_frames\": 15, \"notes\": \"Synthetic contract fixture; not product evidence.\", \"prediction_unit\": \"rally_boundary\", \"record_id\": \"task-profile-synthetic-v1\", \"sample_ids\": [\"synthetic-match-001\"], \"schema_name\": \"TaskProfileV1\", \"schema_version\": \"1.0.0\", \"scorer\": {\"name\": \"khelsutra-rally-boundary\", \"version\": \"1.0.0\"}, \"sport\": \"badminton\", \"task_id\": \"synthetic-rally-boundaries\"}"
+          }
+        ]
+      },
+      "operation": "package_archive",
+      "title": "A public package has stable members and a stable archive digest."
+    },
+    {
+      "case_id": "package-refuses-unsafe-value",
+      "expect": {
+        "error": "task.json: publication refused: $.notes: contains private IPv4 endpoint"
+      },
+      "input": {
+        "files": [
+          {
+            "name": "task.json",
+            "text": "{\"boundary_tolerance_frames\": 15, \"notes\": \"Rendered by the worker at http://192.168.1.2:9000.\", \"prediction_unit\": \"rally_boundary\", \"record_id\": \"task-profile-synthetic-v1\", \"sample_ids\": [\"synthetic-match-001\"], \"schema_name\": \"TaskProfileV1\", \"schema_version\": \"1.0.0\", \"scorer\": {\"name\": \"khelsutra-rally-boundary\", \"version\": \"1.0.0\"}, \"sport\": \"badminton\", \"task_id\": \"synthetic-rally-boundaries\"}"
+          }
+        ]
+      },
+      "operation": "package_archive",
+      "title": "Packaging refuses a document carrying a private endpoint."
+    },
+    {
+      "case_id": "project-publishes-authorized-record",
+      "expect": {
+        "public_record_digest": "bf64cb036fd292f96c0ef60ec077adcdb349d145994913c0bcca1492ba746eac",
+        "refusals": []
+      },
+      "input": {
+        "record": {
+          "media_authorizations": [
+            {
+              "artifact_id": "synthetic-first-playable",
+              "consent_ref": {
+                "artifact_id": "synthetic-consent-record",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "1111111111111111111111111111111111111111111111111111111111111111"
+                },
+                "media_type": "application/pdf"
+              },
+              "custody": "owner_controlled",
+              "guardian_authorization_ref": {
+                "artifact_id": "synthetic-guardian-authorization",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "media_type": "application/pdf"
+              },
+              "publication_grant": "verified_clear",
+              "purpose_grants": [
+                {
+                  "grant_ref": {
+                    "artifact_id": "synthetic-publication-grant",
+                    "digest": {
+                      "algorithm": "sha256",
+                      "value": "3333333333333333333333333333333333333333333333333333333333333333"
+                    },
+                    "media_type": "application/pdf"
+                  },
+                  "granted": true,
+                  "purpose": "public_evidence"
+                },
+                {
+                  "granted": false,
+                  "purpose": "marketing"
+                }
+              ]
+            }
+          ],
+          "private_extensions": {
+            "internal_job_reference": "synthetic-internal-job-6f2a41c8",
+            "operator_note": "Synthetic producer note that is never projected."
+          },
+          "producer": {
+            "receipt_id": "synthetic-producer-receipt",
+            "repository": "synthetic-producer-repository",
+            "revision": "0123456789abcdef0123456789abcdef01234567"
+          },
+          "projection": {
+            "projected_at": "2026-08-27T00:00:00Z",
+            "public_record_digest": {
+              "algorithm": "sha256",
+              "value": "bf64cb036fd292f96c0ef60ec077adcdb349d145994913c0bcca1492ba746eac"
+            }
+          },
+          "public": {
+            "available_match_count": 4,
+            "awaiting_next_instruction": true,
+            "completeness_reported": true,
+            "cost_usd": 0,
+            "first_playable_ref": {
+              "artifact_id": "synthetic-first-playable",
+              "digest": {
+                "algorithm": "sha256",
+                "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+              },
+              "media_type": "video/mp4"
+            },
+            "human_decision_required": true,
+            "instruction": "Show me all the unforced errors of Player A in their last five matches as a video, keeping only the last three shots of each rally.",
+            "matched_rally_count": 1,
+            "omissions": [
+              {
+                "detail": "Synthetic example reports fewer than five available matches.",
+                "reason": "inaccessible_match",
+                "scope_ref": "match-slot-5"
+              }
+            ],
+            "perception_rerun": false,
+            "plan_digest": {
+              "algorithm": "sha256",
+              "value": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"
+            },
+            "plan_id": "synthetic-unforced-error-plan",
+            "prescriptive_advice_emitted": false,
+            "provenance_counts": {
+              "coach_assertion": 0,
+              "derived_calculation": 1,
+              "human_confirmed": 1,
+              "model_observation": 3,
+              "unknown": 0
+            },
+            "recipe_digest": {
+              "algorithm": "sha256",
+              "value": "71b773304a2144125ee214cf0520de027ee5e0411956cd589ad25b5da8979330"
+            },
+            "recipe_id": "synthetic-unforced-error-reel",
+            "record_id": "coach-agent-receipt-synthetic-v1",
+            "requested_match_count": 5,
+            "result_artifacts": [
+              {
+                "artifact_id": "synthetic-first-playable",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+                },
+                "media_type": "video/mp4"
+              }
+            ],
+            "run_id": "synthetic-coach-agent-run",
+            "schema_name": "CoachAgentRunReceiptV1",
+            "schema_version": "1.0.0",
+            "timings": {
+              "full_completion_seconds": 2,
+              "intent_to_plan_seconds": 0.1,
+              "plan_to_recipe_seconds": 0.2,
+              "recipe_to_first_playable_seconds": 1.5
+            }
+          },
+          "record_id": "private-evidence-record-synthetic-v1",
+          "schema_name": "PrivateEvidenceRecordV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "project_record",
+      "title": "An authorised private record projects to its declared public digest."
+    },
+    {
+      "case_id": "project-refuses-echoed-private-value",
+      "expect": {
+        "refusals": [
+          {
+            "message": "repeats a private_extensions value; a value that belongs in public evidence is not a private extension",
+            "path": "public.omissions[0].detail",
+            "reason": "private_value_echo"
+          }
+        ]
+      },
+      "input": {
+        "record": {
+          "media_authorizations": [
+            {
+              "artifact_id": "synthetic-first-playable",
+              "consent_ref": {
+                "artifact_id": "synthetic-consent-record",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "1111111111111111111111111111111111111111111111111111111111111111"
+                },
+                "media_type": "application/pdf"
+              },
+              "custody": "owner_controlled",
+              "guardian_authorization_ref": {
+                "artifact_id": "synthetic-guardian-authorization",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "media_type": "application/pdf"
+              },
+              "publication_grant": "verified_clear",
+              "purpose_grants": [
+                {
+                  "grant_ref": {
+                    "artifact_id": "synthetic-publication-grant",
+                    "digest": {
+                      "algorithm": "sha256",
+                      "value": "3333333333333333333333333333333333333333333333333333333333333333"
+                    },
+                    "media_type": "application/pdf"
+                  },
+                  "granted": true,
+                  "purpose": "public_evidence"
+                },
+                {
+                  "granted": false,
+                  "purpose": "marketing"
+                }
+              ]
+            }
+          ],
+          "private_extensions": {
+            "internal_job_reference": "synthetic-internal-job-6f2a41c8",
+            "operator_note": "Synthetic producer note that is never projected."
+          },
+          "producer": {
+            "receipt_id": "synthetic-producer-receipt",
+            "repository": "synthetic-producer-repository",
+            "revision": "0123456789abcdef0123456789abcdef01234567"
+          },
+          "projection": {
+            "projected_at": "2026-08-27T00:00:00Z",
+            "public_record_digest": {
+              "algorithm": "sha256",
+              "value": "11d04747d3053ae6dc091ad22f4504b6e6b07d27a11ce955d6c41ab84ea7556f"
+            }
+          },
+          "public": {
+            "available_match_count": 4,
+            "awaiting_next_instruction": true,
+            "completeness_reported": true,
+            "cost_usd": 0,
+            "first_playable_ref": {
+              "artifact_id": "synthetic-first-playable",
+              "digest": {
+                "algorithm": "sha256",
+                "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+              },
+              "media_type": "video/mp4"
+            },
+            "human_decision_required": true,
+            "instruction": "Show me all the unforced errors of Player A in their last five matches as a video, keeping only the last three shots of each rally.",
+            "matched_rally_count": 1,
+            "omissions": [
+              {
+                "detail": "Withheld for synthetic-internal-job-6f2a41c8.",
+                "reason": "inaccessible_match",
+                "scope_ref": "match-slot-5"
+              }
+            ],
+            "perception_rerun": false,
+            "plan_digest": {
+              "algorithm": "sha256",
+              "value": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"
+            },
+            "plan_id": "synthetic-unforced-error-plan",
+            "prescriptive_advice_emitted": false,
+            "provenance_counts": {
+              "coach_assertion": 0,
+              "derived_calculation": 1,
+              "human_confirmed": 1,
+              "model_observation": 3,
+              "unknown": 0
+            },
+            "recipe_digest": {
+              "algorithm": "sha256",
+              "value": "71b773304a2144125ee214cf0520de027ee5e0411956cd589ad25b5da8979330"
+            },
+            "recipe_id": "synthetic-unforced-error-reel",
+            "record_id": "coach-agent-receipt-synthetic-v1",
+            "requested_match_count": 5,
+            "result_artifacts": [
+              {
+                "artifact_id": "synthetic-first-playable",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+                },
+                "media_type": "video/mp4"
+              }
+            ],
+            "run_id": "synthetic-coach-agent-run",
+            "schema_name": "CoachAgentRunReceiptV1",
+            "schema_version": "1.0.0",
+            "timings": {
+              "full_completion_seconds": 2,
+              "intent_to_plan_seconds": 0.1,
+              "plan_to_recipe_seconds": 0.2,
+              "recipe_to_first_playable_seconds": 1.5
+            }
+          },
+          "record_id": "private-record-private-value-echo",
+          "schema_name": "PrivateEvidenceRecordV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "project_record",
+      "title": "A private extension value repeated in the projection is refused."
+    },
+    {
+      "case_id": "project-refuses-unbound-digest",
+      "expect": {
+        "refusals": [
+          {
+            "message": "must equal the canonical public record digest bf64cb036fd292f96c0ef60ec077adcdb349d145994913c0bcca1492ba746eac",
+            "path": "projection.public_record_digest.value",
+            "reason": "projection_digest_mismatch"
+          }
+        ]
+      },
+      "input": {
+        "record": {
+          "media_authorizations": [
+            {
+              "artifact_id": "synthetic-first-playable",
+              "consent_ref": {
+                "artifact_id": "synthetic-consent-record",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "1111111111111111111111111111111111111111111111111111111111111111"
+                },
+                "media_type": "application/pdf"
+              },
+              "custody": "owner_controlled",
+              "guardian_authorization_ref": {
+                "artifact_id": "synthetic-guardian-authorization",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "media_type": "application/pdf"
+              },
+              "publication_grant": "verified_clear",
+              "purpose_grants": [
+                {
+                  "grant_ref": {
+                    "artifact_id": "synthetic-publication-grant",
+                    "digest": {
+                      "algorithm": "sha256",
+                      "value": "3333333333333333333333333333333333333333333333333333333333333333"
+                    },
+                    "media_type": "application/pdf"
+                  },
+                  "granted": true,
+                  "purpose": "public_evidence"
+                },
+                {
+                  "granted": false,
+                  "purpose": "marketing"
+                }
+              ]
+            }
+          ],
+          "private_extensions": {
+            "internal_job_reference": "synthetic-internal-job-6f2a41c8",
+            "operator_note": "Synthetic producer note that is never projected."
+          },
+          "producer": {
+            "receipt_id": "synthetic-producer-receipt",
+            "repository": "synthetic-producer-repository",
+            "revision": "0123456789abcdef0123456789abcdef01234567"
+          },
+          "projection": {
+            "projected_at": "2026-08-27T00:00:00Z",
+            "public_record_digest": {
+              "algorithm": "sha256",
+              "value": "4444444444444444444444444444444444444444444444444444444444444444"
+            }
+          },
+          "public": {
+            "available_match_count": 4,
+            "awaiting_next_instruction": true,
+            "completeness_reported": true,
+            "cost_usd": 0,
+            "first_playable_ref": {
+              "artifact_id": "synthetic-first-playable",
+              "digest": {
+                "algorithm": "sha256",
+                "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+              },
+              "media_type": "video/mp4"
+            },
+            "human_decision_required": true,
+            "instruction": "Show me all the unforced errors of Player A in their last five matches as a video, keeping only the last three shots of each rally.",
+            "matched_rally_count": 1,
+            "omissions": [
+              {
+                "detail": "Synthetic example reports fewer than five available matches.",
+                "reason": "inaccessible_match",
+                "scope_ref": "match-slot-5"
+              }
+            ],
+            "perception_rerun": false,
+            "plan_digest": {
+              "algorithm": "sha256",
+              "value": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"
+            },
+            "plan_id": "synthetic-unforced-error-plan",
+            "prescriptive_advice_emitted": false,
+            "provenance_counts": {
+              "coach_assertion": 0,
+              "derived_calculation": 1,
+              "human_confirmed": 1,
+              "model_observation": 3,
+              "unknown": 0
+            },
+            "recipe_digest": {
+              "algorithm": "sha256",
+              "value": "71b773304a2144125ee214cf0520de027ee5e0411956cd589ad25b5da8979330"
+            },
+            "recipe_id": "synthetic-unforced-error-reel",
+            "record_id": "coach-agent-receipt-synthetic-v1",
+            "requested_match_count": 5,
+            "result_artifacts": [
+              {
+                "artifact_id": "synthetic-first-playable",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+                },
+                "media_type": "video/mp4"
+              }
+            ],
+            "run_id": "synthetic-coach-agent-run",
+            "schema_name": "CoachAgentRunReceiptV1",
+            "schema_version": "1.0.0",
+            "timings": {
+              "full_completion_seconds": 2,
+              "intent_to_plan_seconds": 0.1,
+              "plan_to_recipe_seconds": 0.2,
+              "recipe_to_first_playable_seconds": 1.5
+            }
+          },
+          "record_id": "private-record-projection-digest-mismatch",
+          "schema_name": "PrivateEvidenceRecordV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "project_record",
+      "title": "A declared public digest that does not bind the projected bytes is refused."
+    },
+    {
+      "case_id": "project-refuses-unlisted-media",
+      "expect": {
+        "refusals": [
+          {
+            "message": "media artifact 'synthetic-first-playable' has no media authorization",
+            "path": "public.first_playable_ref",
+            "reason": "unauthorized_media"
+          }
+        ]
+      },
+      "input": {
+        "record": {
+          "media_authorizations": [],
+          "private_extensions": {
+            "internal_job_reference": "synthetic-internal-job-6f2a41c8",
+            "operator_note": "Synthetic producer note that is never projected."
+          },
+          "producer": {
+            "receipt_id": "synthetic-producer-receipt",
+            "repository": "synthetic-producer-repository",
+            "revision": "0123456789abcdef0123456789abcdef01234567"
+          },
+          "projection": {
+            "projected_at": "2026-08-27T00:00:00Z",
+            "public_record_digest": {
+              "algorithm": "sha256",
+              "value": "bf64cb036fd292f96c0ef60ec077adcdb349d145994913c0bcca1492ba746eac"
+            }
+          },
+          "public": {
+            "available_match_count": 4,
+            "awaiting_next_instruction": true,
+            "completeness_reported": true,
+            "cost_usd": 0,
+            "first_playable_ref": {
+              "artifact_id": "synthetic-first-playable",
+              "digest": {
+                "algorithm": "sha256",
+                "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+              },
+              "media_type": "video/mp4"
+            },
+            "human_decision_required": true,
+            "instruction": "Show me all the unforced errors of Player A in their last five matches as a video, keeping only the last three shots of each rally.",
+            "matched_rally_count": 1,
+            "omissions": [
+              {
+                "detail": "Synthetic example reports fewer than five available matches.",
+                "reason": "inaccessible_match",
+                "scope_ref": "match-slot-5"
+              }
+            ],
+            "perception_rerun": false,
+            "plan_digest": {
+              "algorithm": "sha256",
+              "value": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"
+            },
+            "plan_id": "synthetic-unforced-error-plan",
+            "prescriptive_advice_emitted": false,
+            "provenance_counts": {
+              "coach_assertion": 0,
+              "derived_calculation": 1,
+              "human_confirmed": 1,
+              "model_observation": 3,
+              "unknown": 0
+            },
+            "recipe_digest": {
+              "algorithm": "sha256",
+              "value": "71b773304a2144125ee214cf0520de027ee5e0411956cd589ad25b5da8979330"
+            },
+            "recipe_id": "synthetic-unforced-error-reel",
+            "record_id": "coach-agent-receipt-synthetic-v1",
+            "requested_match_count": 5,
+            "result_artifacts": [
+              {
+                "artifact_id": "synthetic-first-playable",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+                },
+                "media_type": "video/mp4"
+              }
+            ],
+            "run_id": "synthetic-coach-agent-run",
+            "schema_name": "CoachAgentRunReceiptV1",
+            "schema_version": "1.0.0",
+            "timings": {
+              "full_completion_seconds": 2,
+              "intent_to_plan_seconds": 0.1,
+              "plan_to_recipe_seconds": 0.2,
+              "recipe_to_first_playable_seconds": 1.5
+            }
+          },
+          "record_id": "private-record-unlisted-media",
+          "schema_name": "PrivateEvidenceRecordV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "project_record",
+      "title": "Published media without an authorization is refused."
+    },
+    {
+      "case_id": "safety-accepts-synthetic-public-value",
+      "expect": {
+        "issues": []
+      },
+      "input": {
+        "value": {
+          "notes": "Synthetic contract fixture; not product evidence."
+        }
+      },
+      "operation": "public_safety",
+      "title": "An ordinary synthetic public value raises no issue."
+    },
+    {
+      "case_id": "safety-rejects-local-unix-path",
+      "expect": {
+        "issues": [
+          "$: contains local Unix path"
+        ]
+      },
+      "input": {
+        "value": "Master unavailable at /home/operator/masters/match-5.mp4."
+      },
+      "operation": "public_safety",
+      "title": "A local filesystem path is not publishable."
+    },
+    {
+      "case_id": "safety-rejects-loopback-and-tailnet-endpoints",
+      "expect": {
+        "issues": [
+          "$[0]: contains loopback endpoint",
+          "$[1]: contains tailnet endpoint"
+        ]
+      },
+      "input": {
+        "value": [
+          "http://localhost:8000",
+          "internal.example.ts.net"
+        ]
+      },
+      "operation": "public_safety",
+      "title": "Loopback and tailnet endpoints are not publishable."
+    },
+    {
+      "case_id": "safety-rejects-private-ipv4-endpoint",
+      "expect": {
+        "issues": [
+          "$: contains private IPv4 endpoint"
+        ]
+      },
+      "input": {
+        "value": "Rendered by the worker at http://192.168.1.2:9000."
+      },
+      "operation": "public_safety",
+      "title": "A private IPv4 endpoint is not publishable."
+    },
+    {
+      "case_id": "safety-rejects-private-only-field-name",
+      "expect": {
+        "issues": [
+          "$.checkpoint_path: private-only field name is not publishable"
+        ]
+      },
+      "input": {
+        "value": {
+          "checkpoint_path": "redacted"
+        }
+      },
+      "operation": "public_safety",
+      "title": "A private-only field name is not publishable even when its value looks harmless."
+    },
+    {
+      "case_id": "safety-rejects-signed-url-credential",
+      "expect": {
+        "issues": [
+          "$: contains signed URL credential"
+        ]
+      },
+      "input": {
+        "value": "https://example.invalid/object?X-Amz-Signature=not-public"
+      },
+      "operation": "public_safety",
+      "title": "A signed-URL credential parameter is not publishable."
+    },
+    {
+      "case_id": "score-does-not-match-across-courts",
+      "expect": {
+        "result": {
+          "f1": 0.0,
+          "matched_count": 0,
+          "matches": [],
+          "mean_end_error_frames": null,
+          "mean_start_error_frames": null,
+          "precision": 0.0,
+          "prediction_count": 3,
+          "recall": 0.0,
+          "record_id": "score-synthetic-match-001",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "RallyScoreV1",
+          "schema_version": "1.0.0",
+          "tolerance_frames": 15,
+          "truth_count": 3,
+          "unmatched_prediction_ids": [
+            "cross-court-prediction-0",
+            "cross-court-prediction-1",
+            "cross-court-prediction-2"
+          ],
+          "unmatched_truth_ids": [
+            "truth-rally-001",
+            "truth-rally-002",
+            "truth-rally-003"
+          ]
+        }
+      },
+      "input": {
+        "prediction": {
+          "fps": 30,
+          "rallies": [
+            {
+              "end_frame": 220,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.9,
+                "model_id": "synthetic-model"
+              },
+              "rally_id": "cross-court-prediction-0",
+              "start_frame": 100,
+              "target_court_id": "court-a-other"
+            },
+            {
+              "end_frame": 610,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.9,
+                "model_id": "synthetic-model"
+              },
+              "rally_id": "cross-court-prediction-1",
+              "start_frame": 400,
+              "target_court_id": "court-a-other"
+            },
+            {
+              "end_frame": 930,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.9,
+                "model_id": "synthetic-model"
+              },
+              "rally_id": "cross-court-prediction-2",
+              "start_frame": 800,
+              "target_court_id": "court-a-other"
+            }
+          ],
+          "record_id": "rally-set-cross-court-prediction",
+          "role": "prediction",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "RallyBoundarySetV1",
+          "schema_version": "1.0.0"
+        },
+        "tolerance_frames": 15,
+        "truth": {
+          "fps": 30,
+          "rallies": [
+            {
+              "end_frame": 220,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-001",
+              "start_frame": 100,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 610,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-002",
+              "start_frame": 400,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 930,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-003",
+              "start_frame": 800,
+              "target_court_id": "court-a"
+            }
+          ],
+          "record_id": "truth-synthetic-match-001",
+          "role": "truth",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "RallyBoundarySetV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "score_rallies",
+      "title": "Identical boundaries on a different court are not a match."
+    },
+    {
+      "case_id": "score-rejects-mismatched-sample-id",
+      "expect": {
+        "error": "truth and prediction sample_id values differ"
+      },
+      "input": {
+        "prediction": {
+          "fps": 30,
+          "rallies": [
+            {
+              "end_frame": 216,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.9,
+                "model_id": "synthetic-model-a"
+              },
+              "rally_id": "prediction-rally-001",
+              "start_frame": 104,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 620,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.8,
+                "model_id": "synthetic-model-a"
+              },
+              "rally_id": "prediction-rally-002",
+              "start_frame": 395,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 720,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.4,
+                "model_id": "synthetic-model-a"
+              },
+              "rally_id": "prediction-rally-fp",
+              "start_frame": 680,
+              "target_court_id": "court-a"
+            }
+          ],
+          "record_id": "prediction-synthetic-match-001",
+          "role": "prediction",
+          "sample_id": "synthetic-match-999",
+          "schema_name": "RallyBoundarySetV1",
+          "schema_version": "1.0.0"
+        },
+        "tolerance_frames": 15,
+        "truth": {
+          "fps": 30,
+          "rallies": [
+            {
+              "end_frame": 220,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-001",
+              "start_frame": 100,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 610,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-002",
+              "start_frame": 400,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 930,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-003",
+              "start_frame": 800,
+              "target_court_id": "court-a"
+            }
+          ],
+          "record_id": "truth-synthetic-match-001",
+          "role": "truth",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "RallyBoundarySetV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "score_rallies",
+      "title": "Truth and prediction must describe the same sample."
+    },
+    {
+      "case_id": "score-synthetic-sample-tolerance-15",
+      "expect": {
+        "result": {
+          "f1": 0.6666666666666666,
+          "matched_count": 2,
+          "matches": [
+            {
+              "end_error_frames": 4,
+              "prediction_id": "prediction-rally-001",
+              "start_error_frames": 4,
+              "truth_id": "truth-rally-001"
+            },
+            {
+              "end_error_frames": 10,
+              "prediction_id": "prediction-rally-002",
+              "start_error_frames": 5,
+              "truth_id": "truth-rally-002"
+            }
+          ],
+          "mean_end_error_frames": 7.0,
+          "mean_start_error_frames": 4.5,
+          "precision": 0.6666666666666666,
+          "prediction_count": 3,
+          "recall": 0.6666666666666666,
+          "record_id": "score-synthetic-match-001",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "RallyScoreV1",
+          "schema_version": "1.0.0",
+          "tolerance_frames": 15,
+          "truth_count": 3,
+          "unmatched_prediction_ids": [
+            "prediction-rally-fp"
+          ],
+          "unmatched_truth_ids": [
+            "truth-rally-003"
+          ]
+        }
+      },
+      "input": {
+        "prediction": {
+          "fps": 30,
+          "rallies": [
+            {
+              "end_frame": 216,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.9,
+                "model_id": "synthetic-model-a"
+              },
+              "rally_id": "prediction-rally-001",
+              "start_frame": 104,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 620,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.8,
+                "model_id": "synthetic-model-a"
+              },
+              "rally_id": "prediction-rally-002",
+              "start_frame": 395,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 720,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.4,
+                "model_id": "synthetic-model-a"
+              },
+              "rally_id": "prediction-rally-fp",
+              "start_frame": 680,
+              "target_court_id": "court-a"
+            }
+          ],
+          "record_id": "prediction-synthetic-match-001",
+          "role": "prediction",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "RallyBoundarySetV1",
+          "schema_version": "1.0.0"
+        },
+        "tolerance_frames": 15,
+        "truth": {
+          "fps": 30,
+          "rallies": [
+            {
+              "end_frame": 220,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-001",
+              "start_frame": 100,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 610,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-002",
+              "start_frame": 400,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 930,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-003",
+              "start_frame": 800,
+              "target_court_id": "court-a"
+            }
+          ],
+          "record_id": "truth-synthetic-match-001",
+          "role": "truth",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "RallyBoundarySetV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "score_rallies",
+      "title": "Reference scoring of the synthetic sample at a 15-frame tolerance."
+    },
+    {
+      "case_id": "validate-adaptation-heldout-overlaps-training",
+      "expect": {
+        "issue_paths": [
+          "heldout_sample_ids"
+        ],
+        "messages": [
+          "heldout_sample_ids: must be disjoint from training_sample_ids"
+        ],
+        "stage": "semantic",
+        "valid": false
+      },
+      "input": {
+        "document": {
+          "adaptation_id": "synthetic-owner-adaptation-v1",
+          "annotation_minutes": 40,
+          "approved_examples": 30,
+          "base_package_id": "synthetic-base-v1",
+          "candidate_package_id": "synthetic-candidate-v1",
+          "common_ruler_delta": {
+            "name": "tol_f1_delta",
+            "stratum": "common-ruler",
+            "unit": "ratio",
+            "value": -0.01
+          },
+          "correction_minutes_per_source_hour_after": 12,
+          "correction_minutes_per_source_hour_before": 20,
+          "decision": "rejected",
+          "decision_authority": "owner",
+          "distinct_training_sessions": 2,
+          "heldout_sample_ids": [
+            "synthetic-train-001",
+            "synthetic-train-002"
+          ],
+          "notes": "Synthetic example: the human may reject a candidate despite an owner-ruler lift.",
+          "overlap_check_passed": true,
+          "owner_metric_after": {
+            "name": "tol_f1",
+            "stratum": "owner-heldout",
+            "unit": "ratio",
+            "value": 0.7
+          },
+          "owner_metric_before": {
+            "name": "tol_f1",
+            "stratum": "owner-heldout",
+            "unit": "ratio",
+            "value": 0.6
+          },
+          "record_id": "adaptation-synthetic-v1",
+          "schema_name": "OwnerAdaptationRunV1",
+          "schema_version": "1.0.0",
+          "training_cost_usd": 0,
+          "training_sample_ids": [
+            "synthetic-train-001",
+            "synthetic-train-002"
+          ],
+          "training_wall_seconds": 300,
+          "workspace_id": "workspace-synthetic-academy"
+        }
+      },
+      "operation": "validate_document",
+      "title": "Held-out samples must be disjoint from training samples."
+    },
+    {
+      "case_id": "validate-commercialization-duplicate-and-missing-category",
+      "expect": {
+        "issue_paths": [
+          "components"
+        ],
+        "messages": [
+          "components: commercialization categories must be unique",
+          "components: missing commercialization categories: output_redistribution"
+        ],
+        "stage": "semantic",
+        "valid": false
+      },
+      "input": {
+        "document": {
+          "components": [
+            {
+              "category": "application_code",
+              "status": "verified_clear",
+              "subject": "synthetic framework"
+            },
+            {
+              "category": "base_model",
+              "status": "not_applicable",
+              "subject": "synthetic model"
+            },
+            {
+              "category": "checkpoint",
+              "limitations": [
+                "No weights are distributed."
+              ],
+              "status": "restricted",
+              "subject": "synthetic package"
+            },
+            {
+              "category": "training_data",
+              "status": "not_applicable",
+              "subject": "synthetic inputs"
+            },
+            {
+              "category": "evaluation_data",
+              "status": "verified_clear",
+              "subject": "synthetic labels"
+            },
+            {
+              "category": "media",
+              "status": "not_applicable",
+              "subject": "no media"
+            },
+            {
+              "category": "hosted_api",
+              "status": "not_applicable",
+              "subject": "local execution"
+            },
+            {
+              "category": "codec",
+              "status": "not_applicable",
+              "subject": "no rendering"
+            },
+            {
+              "category": "application_code",
+              "status": "verified_clear",
+              "subject": "JSON fixtures"
+            }
+          ],
+          "overall_status": "restricted",
+          "record_id": "commercialization-synthetic-v1",
+          "reviewed_at": "2026-08-21T00:00:00Z",
+          "schema_name": "CommercializationReadinessV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "validate_document",
+      "title": "All nine commercialization categories must be present exactly once."
+    },
+    {
+      "case_id": "validate-cost-rate-not-derived-from-raw",
+      "expect": {
+        "issue_paths": [
+          "inference_usd_per_source_hour"
+        ],
+        "messages": [
+          "inference_usd_per_source_hour: must equal raw numerator/denominator (1.2)"
+        ],
+        "stage": "semantic",
+        "valid": false
+      },
+      "input": {
+        "document": {
+          "accelerator_seconds": 480,
+          "accelerator_seconds_per_source_hour": 2880,
+          "accepted_source_seconds": 600,
+          "currency": "USD",
+          "inference_usd": 0.2,
+          "inference_usd_per_source_hour": 99.0,
+          "manual_minutes_per_source_hour": 30,
+          "manual_review_minutes": 5,
+          "notes": "Synthetic arithmetic fixture; not a KhelSutra cost claim.",
+          "record_id": "cost-synthetic-run-a",
+          "retry_usd": 0.01,
+          "schema_name": "CostReceiptV1",
+          "schema_version": "1.0.0",
+          "source_seconds": 600,
+          "total_cost_usd": 0.5,
+          "total_cost_usd_per_accepted_source_hour": 3,
+          "wall_seconds": 660,
+          "wall_seconds_per_source_hour": 3960
+        }
+      },
+      "operation": "validate_document",
+      "title": "A derived cost rate must equal its raw numerator over its denominator."
+    },
+    {
+      "case_id": "validate-model-observation-missing-identity",
+      "expect": {
+        "issue_paths": [
+          "$.rallies[0].provenance"
+        ],
+        "messages": [
+          "$.rallies[0].provenance: model_observation requires model_id",
+          "$.rallies[0].provenance: model_observation requires confidence"
+        ],
+        "stage": "semantic",
+        "valid": false
+      },
+      "input": {
+        "document": {
+          "fps": 30,
+          "rallies": [
+            {
+              "end_frame": 216,
+              "provenance": {
+                "authority": "model_observation"
+              },
+              "rally_id": "prediction-rally-001",
+              "start_frame": 104,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 620,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.8,
+                "model_id": "synthetic-model-a"
+              },
+              "rally_id": "prediction-rally-002",
+              "start_frame": 395,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 720,
+              "provenance": {
+                "authority": "model_observation",
+                "confidence": 0.4,
+                "model_id": "synthetic-model-a"
+              },
+              "rally_id": "prediction-rally-fp",
+              "start_frame": 680,
+              "target_court_id": "court-a"
+            }
+          ],
+          "record_id": "prediction-synthetic-match-001",
+          "role": "prediction",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "RallyBoundarySetV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "validate_document",
+      "title": "A model observation must carry its model identity and confidence."
+    },
+    {
+      "case_id": "validate-private-record-accepted",
+      "expect": {
+        "issue_paths": [],
+        "messages": [],
+        "stage": null,
+        "valid": true
+      },
+      "input": {
+        "document": {
+          "media_authorizations": [
+            {
+              "artifact_id": "synthetic-first-playable",
+              "consent_ref": {
+                "artifact_id": "synthetic-consent-record",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "1111111111111111111111111111111111111111111111111111111111111111"
+                },
+                "media_type": "application/pdf"
+              },
+              "custody": "owner_controlled",
+              "guardian_authorization_ref": {
+                "artifact_id": "synthetic-guardian-authorization",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "2222222222222222222222222222222222222222222222222222222222222222"
+                },
+                "media_type": "application/pdf"
+              },
+              "publication_grant": "verified_clear",
+              "purpose_grants": [
+                {
+                  "grant_ref": {
+                    "artifact_id": "synthetic-publication-grant",
+                    "digest": {
+                      "algorithm": "sha256",
+                      "value": "3333333333333333333333333333333333333333333333333333333333333333"
+                    },
+                    "media_type": "application/pdf"
+                  },
+                  "granted": true,
+                  "purpose": "public_evidence"
+                },
+                {
+                  "granted": false,
+                  "purpose": "marketing"
+                }
+              ]
+            }
+          ],
+          "private_extensions": {
+            "internal_job_reference": "synthetic-internal-job-6f2a41c8",
+            "operator_note": "Synthetic producer note that is never projected."
+          },
+          "producer": {
+            "receipt_id": "synthetic-producer-receipt",
+            "repository": "synthetic-producer-repository",
+            "revision": "0123456789abcdef0123456789abcdef01234567"
+          },
+          "projection": {
+            "projected_at": "2026-08-27T00:00:00Z",
+            "public_record_digest": {
+              "algorithm": "sha256",
+              "value": "bf64cb036fd292f96c0ef60ec077adcdb349d145994913c0bcca1492ba746eac"
+            }
+          },
+          "public": {
+            "available_match_count": 4,
+            "awaiting_next_instruction": true,
+            "completeness_reported": true,
+            "cost_usd": 0,
+            "first_playable_ref": {
+              "artifact_id": "synthetic-first-playable",
+              "digest": {
+                "algorithm": "sha256",
+                "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+              },
+              "media_type": "video/mp4"
+            },
+            "human_decision_required": true,
+            "instruction": "Show me all the unforced errors of Player A in their last five matches as a video, keeping only the last three shots of each rally.",
+            "matched_rally_count": 1,
+            "omissions": [
+              {
+                "detail": "Synthetic example reports fewer than five available matches.",
+                "reason": "inaccessible_match",
+                "scope_ref": "match-slot-5"
+              }
+            ],
+            "perception_rerun": false,
+            "plan_digest": {
+              "algorithm": "sha256",
+              "value": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"
+            },
+            "plan_id": "synthetic-unforced-error-plan",
+            "prescriptive_advice_emitted": false,
+            "provenance_counts": {
+              "coach_assertion": 0,
+              "derived_calculation": 1,
+              "human_confirmed": 1,
+              "model_observation": 3,
+              "unknown": 0
+            },
+            "recipe_digest": {
+              "algorithm": "sha256",
+              "value": "71b773304a2144125ee214cf0520de027ee5e0411956cd589ad25b5da8979330"
+            },
+            "recipe_id": "synthetic-unforced-error-reel",
+            "record_id": "coach-agent-receipt-synthetic-v1",
+            "requested_match_count": 5,
+            "result_artifacts": [
+              {
+                "artifact_id": "synthetic-first-playable",
+                "digest": {
+                  "algorithm": "sha256",
+                  "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+                },
+                "media_type": "video/mp4"
+              }
+            ],
+            "run_id": "synthetic-coach-agent-run",
+            "schema_name": "CoachAgentRunReceiptV1",
+            "schema_version": "1.0.0",
+            "timings": {
+              "full_completion_seconds": 2,
+              "intent_to_plan_seconds": 0.1,
+              "plan_to_recipe_seconds": 0.2,
+              "recipe_to_first_playable_seconds": 1.5
+            }
+          },
+          "record_id": "private-evidence-record-synthetic-v1",
+          "schema_name": "PrivateEvidenceRecordV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "validate_document",
+      "title": "A synthetic private evidence record validates with no issues."
+    },
+    {
+      "case_id": "validate-rally-overlap-on-one-court",
+      "expect": {
+        "issue_paths": [
+          "rallies.3"
+        ],
+        "messages": [
+          "rallies.3: rallies must not overlap"
+        ],
+        "stage": "semantic",
+        "valid": false
+      },
+      "input": {
+        "document": {
+          "fps": 30,
+          "rallies": [
+            {
+              "end_frame": 220,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-001",
+              "start_frame": 100,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 610,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-002",
+              "start_frame": 400,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 930,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "truth-rally-003",
+              "start_frame": 800,
+              "target_court_id": "court-a"
+            },
+            {
+              "end_frame": 220,
+              "provenance": {
+                "authority": "human_confirmed"
+              },
+              "rally_id": "overlapping-rally",
+              "start_frame": 101,
+              "target_court_id": "court-a"
+            }
+          ],
+          "record_id": "truth-synthetic-match-001",
+          "role": "truth",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "RallyBoundarySetV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "validate_document",
+      "title": "Rallies on the same court must not overlap."
+    },
+    {
+      "case_id": "validate-release-blind-cannot-be-exposed",
+      "expect": {
+        "issue_paths": [
+          "exposed_before_freeze"
+        ],
+        "messages": [
+          "exposed_before_freeze: blind releases cannot be exposed before freeze"
+        ],
+        "stage": "semantic",
+        "valid": false
+      },
+      "input": {
+        "document": {
+          "exposed_before_freeze": true,
+          "failures_included": true,
+          "limitations": [
+            "Synthetic contract fixture; not KhelSutra product evidence."
+          ],
+          "media_license_status": "not_applicable",
+          "official_claims": [],
+          "published_at": "2026-08-21T00:00:00Z",
+          "record_id": "release-synthetic-preview",
+          "registry": "community",
+          "rehosting_prohibited": true,
+          "release_class": "blind",
+          "release_id": "synthetic-preview-v0",
+          "sample_ids": [
+            "synthetic-match-001"
+          ],
+          "schema_name": "EvidenceReleaseV1",
+          "schema_version": "1.0.0",
+          "system_run_refs": [
+            {
+              "artifact_id": "system-run-synthetic-a",
+              "digest": {
+                "algorithm": "sha256",
+                "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+            }
+          ],
+          "training_prohibited": true
+        }
+      },
+      "operation": "validate_document",
+      "title": "A blind release cannot be marked exposed before freeze."
+    },
+    {
+      "case_id": "validate-scenario-active-exceeds-visible",
+      "expect": {
+        "issue_paths": [
+          "simultaneously_active_games"
+        ],
+        "messages": [
+          "simultaneously_active_games: cannot exceed the number of visible courts"
+        ],
+        "stage": "semantic",
+        "valid": false
+      },
+      "input": {
+        "document": {
+          "adult_rights_cleared": true,
+          "camera": {
+            "angle": "corner",
+            "motion": "fixed",
+            "placement": "synthetic-tripod"
+          },
+          "capture": {
+            "audio_available": true,
+            "cuts": 0,
+            "fps": 30,
+            "height": 1080,
+            "lighting": "even",
+            "occlusion": "partial",
+            "width": 1920
+          },
+          "notes": "Synthetic contract fixture; no media exists.",
+          "record_id": "scenario-synthetic-match-001",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "ScenarioProfileV1",
+          "schema_version": "1.0.0",
+          "simultaneously_active_games": 4,
+          "source_duration_seconds": 600,
+          "target_court_id": "court-a",
+          "visible_courts": 3
+        }
+      },
+      "operation": "validate_document",
+      "title": "Simultaneously active games cannot exceed the visible courts."
+    },
+    {
+      "case_id": "validate-scenario-profile-accepted",
+      "expect": {
+        "issue_paths": [],
+        "messages": [],
+        "stage": null,
+        "valid": true
+      },
+      "input": {
+        "document": {
+          "adult_rights_cleared": true,
+          "camera": {
+            "angle": "corner",
+            "motion": "fixed",
+            "placement": "synthetic-tripod"
+          },
+          "capture": {
+            "audio_available": true,
+            "cuts": 0,
+            "fps": 30,
+            "height": 1080,
+            "lighting": "even",
+            "occlusion": "partial",
+            "width": 1920
+          },
+          "notes": "Synthetic contract fixture; no media exists.",
+          "record_id": "scenario-synthetic-match-001",
+          "sample_id": "synthetic-match-001",
+          "schema_name": "ScenarioProfileV1",
+          "schema_version": "1.0.0",
+          "simultaneously_active_games": 2,
+          "source_duration_seconds": 600,
+          "target_court_id": "court-a",
+          "visible_courts": 3
+        }
+      },
+      "operation": "validate_document",
+      "title": "A synthetic scenario profile validates with no issues."
+    },
+    {
+      "case_id": "validate-undeclared-field-is-rejected",
+      "expect": {
+        "issue_paths": [
+          ""
+        ],
+        "messages": [
+          "Additional properties are not allowed ('internal_owner' was unexpected)"
+        ],
+        "stage": "schema",
+        "valid": false
+      },
+      "input": {
+        "document": {
+          "boundary_tolerance_frames": 15,
+          "internal_owner": "unclassified",
+          "notes": "Synthetic contract fixture; not product evidence.",
+          "prediction_unit": "rally_boundary",
+          "record_id": "task-profile-synthetic-v1",
+          "sample_ids": [
+            "synthetic-match-001"
+          ],
+          "schema_name": "TaskProfileV1",
+          "schema_version": "1.0.0",
+          "scorer": {
+            "name": "khelsutra-rally-boundary",
+            "version": "1.0.0"
+          },
+          "sport": "badminton",
+          "task_id": "synthetic-rally-boundaries"
+        }
+      },
+      "operation": "validate_document",
+      "title": "Public contracts are closed; an undeclared field fails validation."
+    },
+    {
+      "case_id": "validate-unknown-schema-name-fails-closed",
+      "expect": {
+        "issue_paths": [
+          "schema_name"
+        ],
+        "messages": [
+          "schema_name: unknown schema 'NotAContractV1'"
+        ],
+        "stage": "structural",
+        "valid": false
+      },
+      "input": {
+        "document": {
+          "schema_name": "NotAContractV1",
+          "schema_version": "1.0.0"
+        }
+      },
+      "operation": "validate_document",
+      "title": "An unrecognised schema name fails closed instead of being skipped."
+    }
+  ],
+  "contract_version": "v1",
+  "record_id": "khelsutra-evidence-conformance-v1",
+  "schema_name": "ConformanceSuiteV1",
+  "schema_version": "1.0.0",
+  "suite_digest": {
+    "algorithm": "sha256",
+    "value": "412d9488a803cb73bb1a45aefc9930192d3be1ed6360af71ae220aff71abe638"
+  },
+  "suite_id": "khelsutra-evidence-conformance-v1"
+}

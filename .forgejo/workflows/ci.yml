@@ -44,5 +44,5 @@ jobs:
           python -m venv --clear .venv-wheel
           .venv-wheel/bin/python -m pip install dist/khelsutra_evidence-*.whl
           .venv-wheel/bin/evidence verify . > .venv-wheel/verify.json
-          .venv-wheel/bin/python -c 'import json; data=json.load(open(".venv-wheel/verify.json")); print(json.dumps(data, sort_keys=True)); assert data == {"documents": 46, "status": "valid"}'
+          .venv-wheel/bin/python -c 'import json; data=json.load(open(".venv-wheel/verify.json")); print(json.dumps(data, sort_keys=True)); assert data == {"documents": 48, "status": "valid"}'
           .venv-wheel/bin/evidence package examples dist/examples.tar.gz

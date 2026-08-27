@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:ConformanceSuiteV1",
+  "title": "ConformanceSuiteV1",
+  "description": "An implementation-neutral corpus of cases that pins the normative behaviour of the v1 evidence contract. Cases carry their documents inline so the suite is one portable artifact.",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "suite_id",
+    "contract_version",
+    "suite_digest",
+    "cases"
+  ],
+  "properties": {
+    "schema_name": { "const": "ConformanceSuiteV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "suite_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "contract_version": { "const": "v1" },
+    "suite_digest": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/digest" },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/case" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "case": {
+      "type": "object",
+      "required": ["case_id", "operation", "title", "input", "expect"],
+      "properties": {
+        "case_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+        "operation": {
+          "enum": [
+            "validate_document",
+            "score_rallies",
+            "compare_runs",
+            "plan_digest",
+            "recipe_digest",
+            "public_safety",
+            "project_record",
+            "package_archive"
+          ]
+        },
+        "title": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "input": { "type": "object" },
+        "expect": { "type": "object" }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": { "properties": { "operation": { "const": "validate_document" } } },
+          "then": {
+            "properties": {
+              "input": {
+                "required": ["document"],
+                "properties": { "document": { "type": "object" } },
+                "additionalProperties": false
+              },
+              "expect": {
+                "required": ["valid", "stage", "issue_paths", "messages"],
+                "properties": {
+                  "valid": { "type": "boolean" },
+                  "stage": { "enum": ["structural", "schema", "semantic", null] },
+                  "issue_paths": {
+                    "type": "array",
+                    "items": { "type": "string", "maxLength": 300 }
+                  },
+                  "messages": { "$ref": "#/$defs/renderedIssues" }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "operation": { "const": "score_rallies" } } },
+          "then": {
+            "properties": {
+              "input": {
+                "required": ["truth", "prediction", "tolerance_frames"],
+                "properties": {
+                  "truth": { "type": "object" },
+                  "prediction": { "type": "object" },
+                  "tolerance_frames": { "type": "integer" }
+                },
+                "additionalProperties": false
+              },
+              "expect": { "$ref": "#/$defs/resultOrError" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "operation": { "const": "compare_runs" } } },
+          "then": {
+            "properties": {
+              "input": {
+                "required": ["left", "right"],
+                "properties": { "left": { "type": "object" }, "right": { "type": "object" } },
+                "additionalProperties": false
+              },
+              "expect": { "$ref": "#/$defs/resultOrError" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "operation": { "enum": ["plan_digest", "recipe_digest"] } }
+          },
+          "then": {
+            "properties": {
+              "input": {
+                "required": ["document"],
+                "properties": { "document": { "type": "object" } },
+                "additionalProperties": false
+              },
+              "expect": {
+                "required": ["digest"],
+                "properties": {
+                  "digest": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/sha256" }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "operation": { "const": "public_safety" } } },
+          "then": {
+            "properties": {
+              "input": {
+                "required": ["value"],
+                "properties": { "value": true },
+                "additionalProperties": false
+              },
+              "expect": {
+                "required": ["issues"],
+                "properties": { "issues": { "$ref": "#/$defs/renderedIssues" } },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "operation": { "const": "project_record" } } },
+          "then": {
+            "properties": {
+              "input": {
+                "required": ["record"],
+                "properties": { "record": { "type": "object" } },
+                "additionalProperties": false
+              },
+              "expect": {
+                "required": ["refusals"],
+                "properties": {
+                  "refusals": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["reason", "path", "message"],
+                      "properties": {
+                        "reason": { "type": "string", "minLength": 1, "maxLength": 80 },
+                        "path": { "type": "string", "maxLength": 300 },
+                        "message": { "type": "string", "minLength": 1, "maxLength": 500 }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "public_record_digest": {
+                    "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/sha256"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "operation": { "const": "package_archive" } } },
+          "then": {
+            "properties": {
+              "input": {
+                "required": ["files"],
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": ["name", "text"],
+                      "properties": {
+                        "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+                        "text": { "type": "string", "maxLength": 200000 }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "expect": {
+                "minProperties": 1,
+                "properties": {
+                  "members": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+                  "sha256": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/sha256" },
+                  "error": { "type": "string", "minLength": 1, "maxLength": 500 }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "renderedIssues": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 800 }
+    },
+    "resultOrError": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "result": { "type": "object" },
+        "error": { "type": "string", "minLength": 1, "maxLength": 500 }
+      },
+      "additionalProperties": false
+    }
+  }
+}
