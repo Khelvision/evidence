@@ -97,7 +97,7 @@ stack rows.
 | KE-7b | Deploy the durable evidence site | KE-7a | Explicit infrastructure/domain approval and a source-driven deployment path | Pending | — |
 | KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
 | KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | [#8](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/8) |
-| KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | — |
+| KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | [#9](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/9) |
 
 ## 6. External gates
 
