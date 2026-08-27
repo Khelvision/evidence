@@ -83,7 +83,7 @@ stack rows.
 | ID | Deliverable | Depends on | Gate | Status | PR |
 |---|---|---|---|---|---|
 | KE-1 | Publish the initial schemas, CLI, scorer, comparability rationale, examples, community rules, static site source, Forgejo CI, ownership routing, and this tracker | BHI #1063 doctrine | BHI #1063 must land before this PR; exact-head verification is recorded on the PR | Complete | [#1](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/1) |
-| KE-2a | Publish the private-superset/public-projection contract, the projector, and negative fixtures; producer integrations remain in their own repositories | KE-1 | Security review of the envelope classification, refusal reasons, and negative fixtures | Complete | — |
+| KE-2a | Publish the private-superset/public-projection contract, the projector, and negative fixtures; producer integrations remain in their own repositories | KE-1 | Security review of the envelope classification, refusal reasons, and negative fixtures | Complete | [#3](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/3) |
 | KE-2b | Publish the language-neutral contract statement and portable conformance suite so Python is a supported verification route rather than a prerequisite | KE-2a | Architecture decision accepted by Avi; conformance corpus consumed by the Python tests | Pending | [issue #2](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/issues/2) |
 | KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2a | Exact media inventory, consent, purpose/publication grant, custody, redaction, and claims review | Blocked | — |
 | KE-4 | Publish the frozen v0.2 blind challenge | KE-3 | Rights-cleared frozen inventory, two annotators, frozen scorer/engine, no train/select overlap | Pending | — |
