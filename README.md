@@ -34,7 +34,8 @@ site source.
 - Content-addressed coach plans, source-bound reel recipes, and clean-environment portability receipts.
 - A portable conformance suite that pins the contract's normative behaviour in one file.
 - Separate official and community registries.
-- Static evidence-site source that can be published only after infrastructure approval.
+- Static evidence-site source whose release index is generated from the registries, not typed
+  beside them; publishable only after infrastructure approval.
 
 ## Install and run
 
