@@ -90,6 +90,7 @@ stack rows.
 | KE-5 | Publish the v0.3 owner-adaptation and portability proof | KE-2a | Authorized owner corpus, disjoint held-out ruler, and second clean environment | Pending | — |
 | KE-6 | Publish the v0.4 coach-agent query proof | KE-2a | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
 | KE-7 | Publish the durable evidence site and release index | KE-1 | Explicit infrastructure/domain approval and source-driven deployment | Pending | — |
+| KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | — |
 
 ## 6. External gates
 
@@ -126,6 +127,10 @@ stack rows.
 - [ ] The exact Forgejo `main` head has **not** propagated to the GitHub backup. `Khelsutra/evidence` on
   GitHub still has zero branches; the push mirror is blocked by external gate 8.
 - [x] External builders can validate, score, compare, and package their own evidence locally.
+- [x] A worked walkthrough takes an outside builder from an empty directory to a packaged public
+  archive, including a real refusal. CI executes every command in it and checks every documented output
+  against what the command actually printed, so the walkthrough cannot drift into a claim the tool does
+  not support.
 - [x] Private projection fails closed on unclassified envelope fields, public schema drift, undeclared
   public fields, secret/credential/private-endpoint/local-path/private-identifier field shapes, echoed
   private values, an unbound public digest, and media without a verified-clear publication grant. It
@@ -147,6 +152,7 @@ stack rows.
 
 ## 8. References
 
+- [Walkthrough](WALKTHROUGH.md)
 - [Coach-agent authority](COACH_AGENT_AUTHORITY.md)
 - [Comparability verdicts](COMPARABILITY.md)
 - [ADR-0001: how language-neutral is the contract](adr/0001-language-neutral-contract.md)
@@ -159,6 +165,13 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-27 — KE-8 adds [WALKTHROUGH.md](WALKTHROUGH.md): one builder taking a single evening session
+  from an empty directory to a packaged public archive, through scoring that withholds credit for a
+  rally found on the wrong court, a `paired_quality_only` verdict that says exactly how far the
+  comparison carries, and a projection refused for a staging path left in the notes.
+  `tests/test_walkthrough.py` executes every command block in file order and requires each documented
+  output to be a subset of what the command really printed, so the walkthrough may abridge an output
+  but may not invent one. That check caught an invented digest in the first draft.
 - 2026-08-27 — KE-2b publishes `conformance/v1/manifest.json`, a single `ConformanceSuiteV1` document
   with 33 inline cases across eight operations, plus [CONFORMANCE.md](CONFORMANCE.md) and
   [ADR-0001](adr/0001-language-neutral-contract.md). The suite is rendered by

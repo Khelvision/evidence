@@ -51,6 +51,9 @@ python -m venv .venv
 `evidence project` turns a private record into the exact public bytes it authorizes, and refuses rather
 than redacts. The published file's SHA-256 equals the digest the private record declares.
 
+New here? The [walkthrough](docs/WALKTHROUGH.md) takes one builder from an empty directory to a
+packaged public archive, refusals included.
+
 Create a synthetic starter workspace:
 
 ```bash
