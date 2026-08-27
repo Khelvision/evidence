@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from copy import deepcopy
 from pathlib import Path
@@ -130,6 +131,36 @@ def test_score_prints_result_and_bad_json_is_reported(
     bad.write_text("{", encoding="utf-8")
     assert main(["verify", str(bad)]) == 2
     assert json.loads(capsys.readouterr().err)["status"] == "error"
+
+
+def test_project_writes_the_declared_public_record(
+    examples_root: Path, tmp_path: Path, capsysbinary
+) -> None:
+    record_path = examples_root / "private-evidence-record.json"
+    declared = json.loads(record_path.read_text(encoding="utf-8"))["projection"][
+        "public_record_digest"
+    ]["value"]
+
+    assert main(["project", str(record_path)]) == 0
+    streamed = capsysbinary.readouterr().out
+    assert hashlib.sha256(streamed).hexdigest() == declared
+
+    output = tmp_path / "published" / "public.json"
+    assert main(["project", str(record_path), "--output", str(output)]) == 0
+    assert hashlib.sha256(output.read_bytes()).hexdigest() == declared
+    assert streamed == output.read_bytes()
+
+
+def test_project_refuses_on_stderr_without_emitting_a_record(fixtures_root: Path, capsys) -> None:
+    fixture = fixtures_root / "projection" / "unauthorized-media-grant.json"
+
+    assert main(["project", str(fixture)]) == 1
+
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    refusal = json.loads(captured.err)
+    assert refusal["status"] == "refused"
+    assert [entry["reason"] for entry in refusal["refusals"]] == ["unauthorized_media"]
 
 
 def test_parser_requires_a_command() -> None:

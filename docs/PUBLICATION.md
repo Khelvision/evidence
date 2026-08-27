@@ -1,12 +1,14 @@
 # Publication safety
 
-Public evidence is designed to be a deterministic allowlisted projection from a more detailed private
-receipt. Unknown private fields fail closed; publication is not a manual redaction exercise. The private
-projector is a separate gated integration: this framework preview validates only already-projected public
-documents and must not be pointed at an arbitrary private receipt.
+Public evidence is a deterministic allowlisted projection from a more detailed private receipt. Unknown
+private fields fail closed; publication is not a manual redaction exercise. The envelope, the projector,
+and its refusal reasons are published in [private superset and public projection](PROJECTION.md); a
+producer's own receipts, storage, and CI stay in the producer's repository.
 
-`evidence package` validates every JSON document, rejects symbolic links and unsupported file types, scans
-field names and values for common secrets/private paths/endpoints, and writes a deterministic archive.
+`evidence project` refuses a private record that would leak, drift, echo private material, or publish media
+without a verified-clear grant. `evidence package` validates every JSON document, rejects symbolic links and
+unsupported file types, scans field names and values for common secrets/private paths/endpoints, and writes
+a deterministic archive.
 
 The scan is deliberately conservative and cannot prove privacy or licensing. A first official release
 still needs human review of:

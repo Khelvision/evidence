@@ -1,0 +1,126 @@
+{
+  "media_authorizations": [
+    {
+      "artifact_id": "synthetic-first-playable",
+      "consent_ref": {
+        "artifact_id": "synthetic-consent-record",
+        "digest": {
+          "algorithm": "sha256",
+          "value": "1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        "media_type": "application/pdf"
+      },
+      "custody": "owner_controlled",
+      "guardian_authorization_ref": {
+        "artifact_id": "synthetic-guardian-authorization",
+        "digest": {
+          "algorithm": "sha256",
+          "value": "2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "media_type": "application/pdf"
+      },
+      "publication_grant": "verified_clear",
+      "purpose_grants": [
+        {
+          "grant_ref": {
+            "artifact_id": "synthetic-publication-grant",
+            "digest": {
+              "algorithm": "sha256",
+              "value": "3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "media_type": "application/pdf"
+          },
+          "granted": true,
+          "purpose": "public_evidence"
+        },
+        {
+          "granted": false,
+          "purpose": "marketing"
+        }
+      ]
+    }
+  ],
+  "private_extensions": {
+    "internal_job_reference": "synthetic-internal-job-6f2a41c8",
+    "operator_note": "Synthetic producer note that is never projected."
+  },
+  "producer": {
+    "receipt_id": "synthetic-producer-receipt",
+    "repository": "synthetic-producer-repository",
+    "revision": "0123456789abcdef0123456789abcdef01234567"
+  },
+  "projection": {
+    "projected_at": "2026-08-27T00:00:00Z",
+    "public_record_digest": {
+      "algorithm": "sha256",
+      "value": "705c3c9278e0a5660d55385252fa7fbfd3472a905638cb15d0505971633c91d7"
+    }
+  },
+  "public": {
+    "available_match_count": 4,
+    "awaiting_next_instruction": true,
+    "completeness_reported": true,
+    "cost_usd": 0,
+    "first_playable_ref": {
+      "artifact_id": "synthetic-first-playable",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+      },
+      "media_type": "video/mp4"
+    },
+    "human_decision_required": true,
+    "instruction": "Render the reel from the worker at http://192.168.1.2:9000.",
+    "matched_rally_count": 1,
+    "omissions": [
+      {
+        "detail": "Master unavailable at /home/operator/masters/match-5.mp4.",
+        "reason": "inaccessible_match",
+        "scope_ref": "match-slot-5"
+      }
+    ],
+    "perception_rerun": false,
+    "plan_digest": {
+      "algorithm": "sha256",
+      "value": "22215244686b064e1cbf1e922b20f302eafe4682bfb86669c478f64178b31b6d"
+    },
+    "plan_id": "synthetic-unforced-error-plan",
+    "prescriptive_advice_emitted": false,
+    "provenance_counts": {
+      "coach_assertion": 0,
+      "derived_calculation": 1,
+      "human_confirmed": 1,
+      "model_observation": 3,
+      "unknown": 0
+    },
+    "recipe_digest": {
+      "algorithm": "sha256",
+      "value": "71b773304a2144125ee214cf0520de027ee5e0411956cd589ad25b5da8979330"
+    },
+    "recipe_id": "synthetic-unforced-error-reel",
+    "record_id": "coach-agent-receipt-synthetic-v1",
+    "requested_match_count": 5,
+    "result_artifacts": [
+      {
+        "artifact_id": "synthetic-first-playable",
+        "digest": {
+          "algorithm": "sha256",
+          "value": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+        },
+        "media_type": "video/mp4"
+      }
+    ],
+    "run_id": "synthetic-coach-agent-run",
+    "schema_name": "CoachAgentRunReceiptV1",
+    "schema_version": "1.0.0",
+    "timings": {
+      "full_completion_seconds": 2,
+      "intent_to_plan_seconds": 0.1,
+      "plan_to_recipe_seconds": 0.2,
+      "recipe_to_first_playable_seconds": 1.5
+    }
+  },
+  "record_id": "private-record-unsafe-public-value",
+  "schema_name": "PrivateEvidenceRecordV1",
+  "schema_version": "1.0.0"
+}
