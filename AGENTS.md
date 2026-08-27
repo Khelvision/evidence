@@ -12,4 +12,7 @@ Global agent instructions apply. This repository adds the following rules:
 - `docs/PROJECT.md` is the canonical lifecycle and progress tracker for this repository. Every
   independently shippable PR updates its own row and the changelog; producer-repository work stays
   owned by that producer and is linked as a dependency rather than silently completed here.
+- Every merged row gets a row in `docs/PROJECT.md` section 10 recording its reviewed head, merge
+  commit, exact-head CI run, and whether that run was terminal green before the merge. A receipts
+  table nobody is asked to maintain becomes the same kind of stale assertion it exists to prevent.
 - Run `ruff check .`, `mypy src`, and `pytest` before publishing a PR.
