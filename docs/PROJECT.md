@@ -172,6 +172,12 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-27 — Added section 10, merge receipts: the reviewed head, merge commit, and exact-head CI run
+  for every merged row, with the time each turned green next to the time it was merged. KE-8 and KE-7a
+  were merged before their gate completed, by 2m05s and 2m59s; both heads then verified green, so the
+  record is that the gate was skipped rather than that anything shipped broken. The two red runs on
+  KE-2b's head are annotated as runner-host disk contention, since a red board that reached no gate step
+  says nothing about the diff.
 - 2026-08-27 — KE-7a makes the site source-driven and splits deployment out as KE-7b. The release index
   in `site/index.html` is now a deterministic allowlisted projection of the registries rendered by
   `tools/render_site.py`, ending in the SHA-256 of exactly that projection; `tests/test_site.py` fails if
@@ -229,3 +235,28 @@ stack rows.
   comparison, packaging, and synthetic workspace creation. Added Forgejo-native exact-head CI and
   CODEOWNERS routing to Avi; no GitHub Actions workflow was added. Removed age as a proxy for consent
   or publication authority; exact grants remain mandatory.
+
+## 10. Merge receipts
+
+The merge gate is exact-head terminal-green CI: the reviewed head must be green before Avi merges it.
+This table records what actually happened for every merged row, including where the gate was met only
+after the merge. Times are IST.
+
+| Row | PR | Reviewed head | Merge commit | Exact-head CI | Green | Merged | Gate met first |
+|---|---|---|---|---|---|---|---|
+| KE-1 | #1 | `f04634a` | `e467f03` | [run 4](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/4) success | 2026-08-22 18:35 | 2026-08-22 22:21 | yes |
+| KE-2a | #3 | `391be05` | `dc092b0` | [run 7](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/7) success | 07:28:26 | 07:46:20 | yes |
+| KE-2b | #4 | `d38fed6` | `7986788` | [run 13](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/13) success | 09:10:16 | 12:22:22 | yes |
+| KE-8 | #5 | `d13202c` | `f04a78e` | [run 17](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/17) success | 12:27:30 | 12:25:25 | **no — green 2m05s after** |
+| KE-7a | #6 | `be6f30b` | `82e3f02` | [run 20](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/20) success | 12:37:10 | 12:34:11 | **no — green 2m59s after** |
+
+Every reviewed head in this table verified green, and each had passed the full local gate before its
+pull request opened, so no merged tree is in question. What the two `no` rows record is that the gate
+was not consulted, which is a different fact and worth keeping: a green board read afterwards cannot
+tell you whether it was green at the moment someone pressed merge.
+
+Runs 4105 and 4107 on `d38fed6` are red and are not defects. Both died inside `pip install` with
+`context deadline exceeded` against the Docker socket, reaching no gate step, while three heavyweight
+containers from another repository were resident on the runner host — io `full avg10` 7.33 rising to
+20.14 against cpu `full avg10` 0.00. The same head passed in 30 s once that eased. A red board on this
+repository is worth reading before it is believed.
