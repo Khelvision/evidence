@@ -9,14 +9,21 @@ The v1 contracts are grouped into:
 - commercialization and cost;
 - release, official/community registry, and comparison;
 - owner workspace, model package, adaptation, and portability;
-- coach instruction, evidence recipe, and agent-run receipt; and
-- the private superset envelope that projects into a public record.
+- coach instruction, evidence recipe, and agent-run receipt;
+- the private superset envelope that projects into a public record; and
+- the conformance suite that pins normative behaviour.
 
 `PrivateEvidenceRecordV1` is the only contract a producer holds privately. It wraps exactly one public
 document plus the private material and media authority behind it; see
 [private superset and public projection](PROJECTION.md). `evidence verify` asks whether a record is
 well formed, so a well-formed record that may not be published still verifies; `evidence project` is
 where publishability is decided.
+
+`ConformanceSuiteV1` is a corpus rather than evidence. It carries documents inline as test data,
+including deliberately invalid ones, so provenance rules apply to an embedded document when a runner
+validates it and not to the corpus that quotes it. Its `suite_digest` is checked during verification, so
+`evidence verify conformance/v1/manifest.json` proves the corpus is intact. See
+[the conformance suite](CONFORMANCE.md).
 
 `RallyBoundarySetV1` and `RallyScoreV1` are reference-scoring transport contracts used by the CLI.
 `EvidenceRegistryV1` gives the official and community release indexes one validated shape with an

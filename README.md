@@ -32,6 +32,7 @@ site source.
   `descriptive_only`, or `incompatible`.
 - Fail-closed validation, a private-superset-to-public projector, and public-package safety scanning.
 - Content-addressed coach plans, source-bound reel recipes, and clean-environment portability receipts.
+- A portable conformance suite that pins the contract's normative behaviour in one file.
 - Separate official and community registries.
 - Static evidence-site source that can be published only after infrastructure approval.
 
@@ -73,7 +74,8 @@ An official release must expose enough information for an independent reader to 
 
 See [comparability](docs/COMPARABILITY.md), [publication safety](docs/PUBLICATION.md),
 [private superset and public projection](docs/PROJECTION.md),
-[coach-agent authority](docs/COACH_AGENT_AUTHORITY.md), and the [schema guide](docs/SCHEMAS.md).
+[coach-agent authority](docs/COACH_AGENT_AUTHORITY.md), the [conformance suite](docs/CONFORMANCE.md),
+and the [schema guide](docs/SCHEMAS.md).
 
 ## Reuse and community comparisons
 
@@ -96,6 +98,7 @@ coaching conclusion.
 ruff check .
 mypy src
 pytest
+python tools/render_conformance.py   # after a deliberate behaviour change
 ```
 
 Forgejo runs the same lint, type, full-suite coverage, wheel, and clean-install gates from

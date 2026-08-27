@@ -94,6 +94,11 @@ _COMMERCIALIZATION_CATEGORIES = {
     "output_redistribution",
 }
 
+# A conformance corpus quotes documents as test data, including deliberately invalid ones.
+# Provenance rules apply to an embedded document when a runner validates it, not to the corpus
+# that quotes it.
+_EMBEDDED_CORPUS_SCHEMAS = {"ConformanceSuiteV1"}
+
 _IGNORED_JSON_DIRECTORIES = {
     ".git",
     ".mypy_cache",
@@ -266,6 +271,13 @@ def canonical_recipe_digest(document: JsonObject) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def canonical_suite_digest(document: JsonObject) -> str:
+    encoded = json.dumps(
+        document["cases"], sort_keys=True, separators=(",", ":"), ensure_ascii=False
+    ).encode()
+    return hashlib.sha256(encoded).hexdigest()
+
+
 def canonical_plan_digest(document: JsonObject) -> str:
     fields = (
         "plan_id",
@@ -302,9 +314,11 @@ def _semantic_issues(document: JsonObject) -> list[ValidationIssue]:
         "EvidenceRecipeV1": _recipe_issues,
         "CoachAgentRunReceiptV1": _agent_receipt_issues,
         "PrivateEvidenceRecordV1": _private_record_issues,
+        "ConformanceSuiteV1": _conformance_issues,
     }
     issues = checks.get(name, lambda _: [])(document)
-    issues.extend(_authority_issues(document))
+    if name not in _EMBEDDED_CORPUS_SCHEMAS:
+        issues.extend(_authority_issues(document))
     return issues
 
 
@@ -573,6 +587,21 @@ def _private_record_issues(document: JsonObject) -> list[ValidationIssue]:
     if document["public"].get("schema_name") not in schemas_by_name():
         issues.append(
             ValidationIssue("public.schema_name", "must name a published public evidence contract")
+        )
+    return issues
+
+
+def _conformance_issues(document: JsonObject) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
+    case_ids = [case["case_id"] for case in document["cases"]]
+    if len(case_ids) != len(set(case_ids)):
+        issues.append(ValidationIssue("cases", "case_id values must be unique"))
+    if case_ids != sorted(case_ids):
+        issues.append(ValidationIssue("cases", "cases must be ordered by case_id"))
+    expected = canonical_suite_digest(document)
+    if document["suite_digest"]["value"] != expected:
+        issues.append(
+            ValidationIssue("suite_digest.value", f"must equal canonical suite digest {expected}")
         )
     return issues
 
