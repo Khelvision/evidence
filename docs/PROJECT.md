@@ -92,7 +92,7 @@ stack rows.
 | KE-7a | Make the site source-driven: render the release index as an allowlisted projection of the registries, refuse what it may not publish, and stamp the exact release data it rendered | KE-1 | Checked-in page byte-identical to the renderer; refusals covered by tests | Complete | [#6](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/6) |
 | KE-7b | Deploy the durable evidence site | KE-7a | Explicit infrastructure/domain approval and a source-driven deployment path | Pending | — |
 | KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
-| KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | — |
+| KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | [#8](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/8) |
 
 ## 6. External gates
 
