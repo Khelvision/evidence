@@ -30,7 +30,7 @@ site source.
 - A reference rally-boundary scorer with deterministic, court-aware one-to-one matching.
 - Comparability verdicts with reasons: `paired`, `paired_quality_only`, `partially_comparable`,
   `descriptive_only`, or `incompatible`.
-- Fail-closed validation and public-package safety scanning.
+- Fail-closed validation, a private-superset-to-public projector, and public-package safety scanning.
 - Content-addressed coach plans, source-bound reel recipes, and clean-environment portability receipts.
 - Separate official and community registries.
 - Static evidence-site source that can be published only after infrastructure approval.
@@ -43,8 +43,12 @@ python -m venv .venv
 .venv/bin/evidence verify examples
 .venv/bin/evidence score examples/rallies/truth.json examples/rallies/prediction.json
 .venv/bin/evidence compare examples/runs/system-a.json examples/runs/system-b.json
+.venv/bin/evidence project examples/private-evidence-record.json --output dist/public.json
 .venv/bin/evidence package examples dist/examples.tar.gz
 ```
+
+`evidence project` turns a private record into the exact public bytes it authorizes, and refuses rather
+than redacts. The published file's SHA-256 equals the digest the private record declares.
 
 Create a synthetic starter workspace:
 
@@ -68,6 +72,7 @@ An official release must expose enough information for an independent reader to 
 8. whether the agent assembled evidence without issuing an unlabeled coaching prescription.
 
 See [comparability](docs/COMPARABILITY.md), [publication safety](docs/PUBLICATION.md),
+[private superset and public projection](docs/PROJECTION.md),
 [coach-agent authority](docs/COACH_AGENT_AUTHORITY.md), and the [schema guide](docs/SCHEMAS.md).
 
 ## Reuse and community comparisons

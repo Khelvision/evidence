@@ -14,6 +14,8 @@ from referencing.exceptions import Unresolvable
 
 from .comparison import compare_runs
 from .packaging import package_directory
+from .projection import canonical_public_bytes, projection_refusals
+from .schemas import JsonObject
 from .scoring import score_rallies
 from .templates import initialize_workspace
 from .validation import json_paths, load_json, validate_document, validate_path
@@ -43,6 +45,12 @@ def _parser() -> argparse.ArgumentParser:
     package = subparsers.add_parser("package", help="validate and create a deterministic archive")
     package.add_argument("source", type=Path)
     package.add_argument("destination", type=Path)
+
+    project = subparsers.add_parser(
+        "project", help="project a private evidence record into its public record"
+    )
+    project.add_argument("record", type=Path)
+    project.add_argument("--output", type=Path)
     return parser
 
 
@@ -82,11 +90,36 @@ def main(argv: Sequence[str] | None = None) -> int:
         elif args.command == "package":
             digest = package_directory(args.source, args.destination)
             _emit({"status": "packaged", "path": str(args.destination), "sha256": digest})
+        elif args.command == "project":
+            return _project(load_json(args.record), args.output)
         else:
             raise AssertionError(f"unhandled command {args.command}")
     except (OSError, ValueError, json.JSONDecodeError, SchemaError, Unresolvable) as exc:
         _emit({"status": "error", "message": str(exc)}, stream=sys.stderr)
         return 2
+    return 0
+
+
+def _project(record: JsonObject, output: Path | None) -> int:
+    refusals = projection_refusals(record)
+    if refusals:
+        _emit(
+            {
+                "status": "refused",
+                "refusals": [
+                    {"reason": refusal.reason, "path": refusal.path, "message": refusal.message}
+                    for refusal in refusals
+                ],
+            },
+            stream=sys.stderr,
+        )
+        return 1
+    payload = canonical_public_bytes(record["public"])
+    if output is None:
+        sys.stdout.buffer.write(payload)
+        return 0
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_bytes(payload)
     return 0
 
 

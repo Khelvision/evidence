@@ -1,7 +1,7 @@
 # KhelSutra evidence delivery program
 
 > **Status:** `IN PROGRESS` · **Owner:** Avi Dullu · **Created:** 2026-08-22 ·
-> **Last updated:** 2026-08-22
+> **Last updated:** 2026-08-27
 >
 > **Lifecycle:** `DRAFT -> IN PROGRESS -> DONE -> ARCHIVED`
 >
@@ -83,11 +83,12 @@ stack rows.
 | ID | Deliverable | Depends on | Gate | Status | PR |
 |---|---|---|---|---|---|
 | KE-1 | Publish the initial schemas, CLI, scorer, comparability rationale, examples, community rules, static site source, Forgejo CI, ownership routing, and this tracker | BHI #1063 doctrine | BHI #1063 must land before this PR; exact-head verification is recorded on the PR | Complete | [#1](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/1) |
-| KE-2 | Publish the private-superset/public-projection contract and negative fixtures; producer integrations remain in their own repositories | KE-1 | Security review of the allowlist and private-field fixture | Pending | — |
-| KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2 | Exact media inventory, consent, purpose/publication grant, custody, redaction, and claims review | Blocked | — |
+| KE-2a | Publish the private-superset/public-projection contract, the projector, and negative fixtures; producer integrations remain in their own repositories | KE-1 | Security review of the envelope classification, refusal reasons, and negative fixtures | Complete | — |
+| KE-2b | Publish the language-neutral contract statement and portable conformance suite so Python is a supported verification route rather than a prerequisite | KE-2a | Architecture decision accepted by Avi; conformance corpus consumed by the Python tests | Pending | [issue #2](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/issues/2) |
+| KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2a | Exact media inventory, consent, purpose/publication grant, custody, redaction, and claims review | Blocked | — |
 | KE-4 | Publish the frozen v0.2 blind challenge | KE-3 | Rights-cleared frozen inventory, two annotators, frozen scorer/engine, no train/select overlap | Pending | — |
-| KE-5 | Publish the v0.3 owner-adaptation and portability proof | KE-2 | Authorized owner corpus, disjoint held-out ruler, and second clean environment | Pending | — |
-| KE-6 | Publish the v0.4 coach-agent query proof | KE-2 | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
+| KE-5 | Publish the v0.3 owner-adaptation and portability proof | KE-2a | Authorized owner corpus, disjoint held-out ruler, and second clean environment | Pending | — |
+| KE-6 | Publish the v0.4 coach-agent query proof | KE-2a | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
 | KE-7 | Publish the durable evidence site and release index | KE-1 | Explicit infrastructure/domain approval and source-driven deployment | Pending | — |
 
 ## 6. External gates
@@ -104,17 +105,29 @@ stack rows.
 5. Paid inference or training requires a separate exact run plan, budget, durable observer/evidence, and
    verified provider zero state.
 6. Site publication requires explicit infrastructure authority and a source-driven deployment path.
+7. The Forgejo-to-GitHub backup mirror is failing and needs an owner decision on GitHub. Every scheduled
+   push since KE-1 has been rejected: `PushRejected ... GH013: Repository rule violations found for
+   refs/heads/codex/initial-evidence-framework ... GITHUB PUSH PROTECTION ... Push cannot contain
+   secrets`, last attempted 2026-08-27T04:39:32+05:30. The flagged strings are the synthetic
+   secret-shaped values in `tests/test_validation.py`, which exist so the public-safety scanner can be
+   tested against them. They are reachable from merged history, so changing the current tip cannot clear
+   them; only an owner action on the GitHub backup can. Agents do not push to GitHub.
 
 ## 7. Definition of Done
 
 - [x] KE-1 contains the initial contracts, tooling, synthetic examples, registries, site source, and
   tracker, and the package installs and runs from a clean environment. This proposed diff projects the
   state after PR #1 lands.
-- [ ] After KE-1 lands, verify the exact Forgejo `main` head propagated to the GitHub backup with
-  Actions disabled.
+- [x] GitHub Actions is disabled on the GitHub backup: `repos/Khelsutra/evidence/actions/permissions`
+  returned `{"enabled": false}` and the repository reports no workflows, verified 2026-08-27.
+- [ ] The exact Forgejo `main` head has **not** propagated to the GitHub backup. `Khelsutra/evidence` on
+  GitHub still has zero branches; the push mirror is blocked by external gate 7.
 - [x] External builders can validate, score, compare, and package their own evidence locally.
-- [ ] Private projection fails on schema drift, unknown fields, secrets, private endpoints, identifiers,
-  paths, hidden labels, and unauthorized media.
+- [x] Private projection fails closed on unclassified envelope fields, public schema drift, undeclared
+  public fields, secret/credential/private-endpoint/local-path/private-identifier field shapes, echoed
+  private values, an unbound public digest, and media without a verified-clear publication grant. It
+  cannot detect an identifier hidden in free text or media that omits its `media_type`; those remain the
+  human review in [publication safety](PUBLICATION.md).
 - [ ] v0.1 publishes honest demonstrations with exact capture, cost, rights, and failure receipts.
 - [ ] v0.2 publishes frozen blind evidence without train/select leakage.
 - [ ] v0.3 proves owner-held improvement, common-ruler non-regression, export, restore, replay, promotion,
@@ -127,6 +140,7 @@ stack rows.
 
 - [Coach-agent authority](COACH_AGENT_AUTHORITY.md)
 - [Comparability verdicts](COMPARABILITY.md)
+- [Private superset and public projection](PROJECTION.md)
 - [Publication safety](PUBLICATION.md)
 - [Schema guide](SCHEMAS.md)
 - [Media terms](../MEDIA-LICENSE.md)
@@ -134,6 +148,19 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-27 — Split KE-2 into KE-2a (private superset and public projection) and KE-2b (language-neutral
+  contract and portable conformance suite, tracked on issue #2), because the two ship independently and
+  only the first is delivered here. KE-2a adds `PrivateEvidenceRecordV1`, the `evidence project`
+  command, eight negative fixtures that each refuse for exactly one declared reason, and
+  [PROJECTION.md](PROJECTION.md). The projected bytes are canonical, so a published record's SHA-256
+  equals the digest its private record declares. Narrowed the private-projection Definition of Done item
+  to what the projector actually proves and named the residue as human review; the previous wording
+  implied it could find an identifier in free text and unlabelled media, which it cannot. Recorded the
+  blocked GitHub backup mirror as external gate 7 with its exact rejection, and split the backup
+  Definition of Done item so the verified Actions-disabled half is no longer held hostage by the
+  unverified propagation half. Test values that look like credentials are now assembled at run time so
+  new commits stop adding push-protection matches; this does not clear the matches already in merged
+  history.
 - 2026-08-22 — Closed the two non-blocking exact-head review residuals before KE-1 merge: schema
   verification now rejects unresolvable references, and schema-resolution failures at the CLI boundary
   emit structured `error` JSON with exit code 2 instead of a traceback.

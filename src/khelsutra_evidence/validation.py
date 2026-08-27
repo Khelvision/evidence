@@ -301,6 +301,7 @@ def _semantic_issues(document: JsonObject) -> list[ValidationIssue]:
         "CoachInstructionPlanV1": _plan_issues,
         "EvidenceRecipeV1": _recipe_issues,
         "CoachAgentRunReceiptV1": _agent_receipt_issues,
+        "PrivateEvidenceRecordV1": _private_record_issues,
     }
     issues = checks.get(name, lambda _: [])(document)
     issues.extend(_authority_issues(document))
@@ -560,6 +561,18 @@ def _agent_receipt_issues(document: JsonObject) -> list[ValidationIssue]:
     if first_playable is not None and first_playable not in document["result_artifacts"]:
         issues.append(
             ValidationIssue("first_playable_ref", "must also be listed in result_artifacts")
+        )
+    return issues
+
+
+def _private_record_issues(document: JsonObject) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
+    artifact_ids = [entry["artifact_id"] for entry in document["media_authorizations"]]
+    if len(artifact_ids) != len(set(artifact_ids)):
+        issues.append(ValidationIssue("media_authorizations", "artifact_id values must be unique"))
+    if document["public"].get("schema_name") not in schemas_by_name():
+        issues.append(
+            ValidationIssue("public.schema_name", "must name a published public evidence contract")
         )
     return issues
 
