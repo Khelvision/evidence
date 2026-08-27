@@ -63,7 +63,11 @@ repository's KE-1 through KE-7 delivery state.
 ## 4. Release ladder
 
 - **v0.1 demonstrations:** rights-cleared samples covering clean single court, imperfect fixed capture,
-  and multiple active games. They are exposed examples, never blind evidence.
+  and multiple active games. They are exposed examples, never blind evidence. **Owner decision,
+  2026-08-27: v0.1 is `evidence_only`** — it publishes measurements derived from the footage and not the
+  footage, so it cannot be independently re-scored and says so in `ReleaseDistributionV1` rather than in
+  prose. The owner holds the rights either way; this is a scope choice, not a rights limitation, and the
+  declaration carries an upgrade path to `media_included`.
 - **v0.2 blind challenge:** a frozen, rights-cleared multi-stratum inventory, two annotators, frozen
   scorer and engine, no train/select overlap, and every failure retained.
 - **v0.3 ownership proof:** base-versus-owner-adapted evidence on disjoint held-out data plus portable
@@ -85,7 +89,7 @@ stack rows.
 | KE-1 | Publish the initial schemas, CLI, scorer, comparability rationale, examples, community rules, static site source, Forgejo CI, ownership routing, and this tracker | BHI #1063 doctrine | BHI #1063 must land before this PR; exact-head verification is recorded on the PR | Complete | [#1](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/1) |
 | KE-2a | Publish the private-superset/public-projection contract, the projector, and negative fixtures; producer integrations remain in their own repositories | KE-1 | Security review of the envelope classification, refusal reasons, and negative fixtures | Complete | [#3](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/3) |
 | KE-2b | Publish the portable conformance suite that pins normative behaviour, and propose the normativity decision as an ADR | KE-2a | Conformance corpus rendered from the implementation, replayed independently by the Python tests, and free of expectations only Python can meet | Complete | [#4](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/4) |
-| KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2a, KE-9 | `evidence media-preflight` clears every sample, plus redaction and claims review | Blocked | — |
+| KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2a, KE-9, KE-10 | `evidence media-preflight` clears every sample under the declared distribution, plus redaction and claims review | Blocked | — |
 | KE-4 | Publish the frozen v0.2 blind challenge | KE-3 | Rights-cleared frozen inventory, two annotators, frozen scorer/engine, no train/select overlap | Pending | — |
 | KE-5 | Publish the v0.3 owner-adaptation and portability proof | KE-2a | Authorized owner corpus, disjoint held-out ruler, and second clean environment | Pending | — |
 | KE-6 | Publish the v0.4 coach-agent query proof | KE-2a | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
@@ -93,6 +97,7 @@ stack rows.
 | KE-7b | Deploy the durable evidence site | KE-7a | Explicit infrastructure/domain approval and a source-driven deployment path | Pending | — |
 | KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
 | KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | [#8](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/8) |
+| KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | — |
 
 ## 6. External gates
 
@@ -170,7 +175,7 @@ stack rows.
 - [Comparability verdicts](COMPARABILITY.md)
 - [ADR-0001: how language-neutral is the contract](adr/0001-language-neutral-contract.md)
 - [Conformance suite](CONFORMANCE.md)
-- [Media grants and the publication preflight](MEDIA_GRANTS.md)
+- [Media grants, distribution modes, and the publication preflight](MEDIA_GRANTS.md)
 - [Private superset and public projection](PROJECTION.md)
 - [Publication safety](PUBLICATION.md)
 - [Schema guide](SCHEMAS.md)
@@ -179,6 +184,17 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-27 — KE-10 adds `ReleaseDistributionV1` and teaches the preflight about it, recording the owner
+  decision that v0.1 is `evidence_only`. A release now states machine-readably whether it hands over its
+  source media, and an evidence-only declaration may not claim `independent_rescoring_possible` and must
+  name what it withholds — the central limitation of publishing this way, enforced rather than
+  footnoted. Evidence-only relaxes exactly one preflight requirement, the media publication grant,
+  because a release that hands over no footage does not exercise the right to publish it; consent,
+  guardian authorization, withdrawal, and venue permission all still block, since the people in the
+  footage are still being measured in public. The report names `relaxed_requirements`, so a green result
+  never hides which check was skipped, and a release with no declaration is read as handing over media.
+  `EvidenceReleaseV1` is untouched: a released schema is immutable, so the new fact took a new contract
+  rather than a field on an old one.
 - 2026-08-27 — KE-9 adds `MediaGrantV1` and `evidence media-preflight`, turning KE-3's rights gate from a
   judgement made at publication time into a per-sample checklist. A grant records the rights position for
   one sample — publication grant, venue permission, copyright holder, custody, per-participant consent by

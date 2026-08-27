@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:ReleaseDistributionV1",
+  "title": "ReleaseDistributionV1",
+  "description": "What a release actually hands a reader, and what it withholds. A release that publishes measurements without the footage they were measured from is a different artifact from one that publishes both, and a reader must be able to tell which they are holding without being told in prose.",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "release_id",
+    "distribution",
+    "independent_rescoring_possible",
+    "withheld",
+    "rationale"
+  ],
+  "properties": {
+    "schema_name": { "const": "ReleaseDistributionV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "release_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "distribution": { "enum": ["media_included", "evidence_only"] },
+    "independent_rescoring_possible": { "type": "boolean" },
+    "withheld": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 300 }
+    },
+    "rationale": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "upgrade_path": { "type": "string", "maxLength": 500 }
+  },
+  "additionalProperties": false
+}

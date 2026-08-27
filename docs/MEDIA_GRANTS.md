@@ -5,12 +5,35 @@ right to publish it exists only as a set of documents somebody obtained. `MediaG
 rights position, and `evidence media-preflight` compares it against a proposed release.
 
 ```bash
-evidence media-preflight release.json grants/
+evidence media-preflight release.json grants/ [--distribution distribution.json]
 ```
 
 Exit 0 when every sample in the release is cleared, 1 when any is not, 2 on malformed input. The report
 names, per sample, exactly what is missing — so "get the media grants" becomes a checklist instead of a
 judgement made at publication time.
+
+## Two ways to publish, and only one of them hands over footage
+
+A release that publishes measurements derived from footage is a different artifact from one that
+publishes the footage too, and `ReleaseDistributionV1` makes a reader able to tell which they hold
+without being told in prose.
+
+| `distribution` | What a reader gets | What the preflight requires |
+|---|---|---|
+| `media_included` | the evidence and the source media | every requirement below |
+| `evidence_only` | the evidence, keyed by sample ID | every requirement **except** the media publication grant |
+
+`evidence_only` relaxes exactly one thing: a release that hands over no footage does not exercise the
+right to publish that footage. Everything about the people in it still applies — they are still being
+measured in public, and consent, guardian authorization, and withdrawal all still block. The report
+names `relaxed_requirements` explicitly, so a green result never hides which check was skipped.
+
+Without a `--distribution` document the strictest reading applies and the release is read as handing
+over media. Publishing less than that is a claim somebody has to put on the record.
+
+An `evidence_only` declaration may not claim `independent_rescoring_possible`, and must name what it
+withholds. Both are enforced, because "you cannot re-run our scorer against the original video" is the
+central limitation of publishing this way and should not be left to a footnote.
 
 ## The grant records rights, not people
 
