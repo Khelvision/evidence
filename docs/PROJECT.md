@@ -89,7 +89,8 @@ stack rows.
 | KE-4 | Publish the frozen v0.2 blind challenge | KE-3 | Rights-cleared frozen inventory, two annotators, frozen scorer/engine, no train/select overlap | Pending | — |
 | KE-5 | Publish the v0.3 owner-adaptation and portability proof | KE-2a | Authorized owner corpus, disjoint held-out ruler, and second clean environment | Pending | — |
 | KE-6 | Publish the v0.4 coach-agent query proof | KE-2a | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
-| KE-7 | Publish the durable evidence site and release index | KE-1 | Explicit infrastructure/domain approval and source-driven deployment | Pending | — |
+| KE-7a | Make the site source-driven: render the release index as an allowlisted projection of the registries, refuse what it may not publish, and stamp the exact release data it rendered | KE-1 | Checked-in page byte-identical to the renderer; refusals covered by tests | Complete | [#6](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/6) |
+| KE-7b | Deploy the durable evidence site | KE-7a | Explicit infrastructure/domain approval and a source-driven deployment path | Pending | — |
 | KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
 
 ## 6. External gates
@@ -147,11 +148,17 @@ stack rows.
 - [ ] v0.3 proves owner-held improvement, common-ruler non-regression, export, restore, replay, promotion,
   and rollback.
 - [ ] v0.4 proves the canonical query, completeness accounting, recipe regeneration, and human authority.
-- [ ] The durable site renders only allowlisted source data and records its exact release revision.
+- [x] The site source renders its release index only from an allowlisted projection of the registries.
+  It refuses an unallowlisted field, an unsafe value, or a registry that fails its own contract; it
+  escapes registry data so it cannot become markup; and it stamps the SHA-256 of the exact projection it
+  rendered. CI fails if the checked-in page drifts from that projection. The page no longer asserts its
+  own emptiness in prose beside the data.
+- [ ] No durable site is deployed and no domain is claimed. Publication remains external gate 6.
 - [ ] Every required row is Complete; blocked or deferred work remains incomplete until shipped.
 
 ## 8. References
 
+- [Site source](SITE.md)
 - [Walkthrough](WALKTHROUGH.md)
 - [Coach-agent authority](COACH_AGENT_AUTHORITY.md)
 - [Comparability verdicts](COMPARABILITY.md)
@@ -165,6 +172,15 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-27 — KE-7a makes the site source-driven and splits deployment out as KE-7b. The release index
+  in `site/index.html` is now a deterministic allowlisted projection of the registries rendered by
+  `tools/render_site.py`, ending in the SHA-256 of exactly that projection; `tests/test_site.py` fails if
+  the checked-in page drifts from it. The renderer refuses an unallowlisted release or digest field, a
+  value that fails the public-safety scan, and a registry that fails its contract or declares the wrong
+  discriminator, and it escapes registry data so markup in a release id cannot become markup on the page.
+  The hand-typed sentence "there are no official KhelSutra quality releases yet" was removed: the first
+  registry entry would have made it false with nothing to notice, and the page now says the registries
+  are empty because they are. Deployment is unchanged and still needs external gate 6.
 - 2026-08-27 — KE-8 adds [WALKTHROUGH.md](WALKTHROUGH.md): one builder taking a single evening session
   from an empty directory to a packaged public archive, through scoring that withholds credit for a
   rally found on the wrong court, a `paired_quality_only` verdict that says exactly how far the

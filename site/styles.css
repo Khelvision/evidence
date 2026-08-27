@@ -24,3 +24,16 @@ article { border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; 
 article h3 { margin-top: 0; }
 article p, section > p { color: var(--muted); line-height: 1.65; }
 strong { color: var(--ink); }
+
+/* Release index — the only data-bearing section, rendered by tools/render_site.py. */
+.registry { border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem 1.5rem; background: var(--card); margin-top: 1rem; }
+.registry h3 { margin-top: 0; }
+.registry[data-registry="official"] { border-left: .45rem solid var(--accent); }
+.registry[data-registry="community"] { border-left: .45rem solid var(--line); }
+.registry .empty { color: var(--muted); font-style: italic; }
+.registry table { width: 100%; border-collapse: collapse; margin-top: .75rem; display: block; overflow-x: auto; }
+.registry th { text-align: left; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); padding: .4rem .6rem .4rem 0; }
+.registry td { padding: .5rem .6rem .5rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.registry code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; word-break: break-all; }
+.provenance { color: var(--muted); font-size: .9rem; margin-top: 1rem; }
+.provenance code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; word-break: break-all; }
