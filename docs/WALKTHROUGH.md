@@ -253,7 +253,10 @@ evidence compare hall-evidence/run-swiftcourt.json hall-evidence/run-courtwatch.
 {
   "cost_comparable": false,
   "quality_comparable": true,
-  "reasons": ["task, scorer, samples, and strata match; cost evidence is incomplete"],
+  "reasons": [
+    "task, scorer, samples, and strata match; cost evidence is incomplete",
+    "operation mode is undisclosed for both runs; a number produced by a model and one produced by a person are different claims"
+  ],
   "shared_sample_ids": ["hall-2026-03-14"],
   "verdict": "paired_quality_only"
 }
@@ -263,6 +266,10 @@ They scored better than you on this sample. The verdict tells you precisely how 
 carries: `paired_quality_only` means you may compare quality and may **not** say anything about their
 cost, because they did not publish one. Had they used a different scorer version the verdict would be
 `incompatible`, and the two numbers would not belong on the same axis at all.
+
+The second reason is there because neither run said how its output was produced. A score a model
+produced and a score a person produced are different claims, and the report will not let that pass
+unremarked — see [how a system's output was produced](SYSTEM_PROVENANCE.md).
 
 A verdict is a statement about whether two artifacts can be compared. It never certifies a model, a
 vendor, or a coaching conclusion.

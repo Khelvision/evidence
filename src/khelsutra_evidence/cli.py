@@ -12,7 +12,7 @@ from typing import TextIO
 from jsonschema.exceptions import SchemaError
 from referencing.exceptions import Unresolvable
 
-from .comparison import compare_runs
+from .comparison import collect_provenance, compare_runs
 from .media import collect_grants, preflight
 from .packaging import package_directory
 from .projection import canonical_public_bytes, projection_refusals
@@ -48,6 +48,11 @@ def _parser() -> argparse.ArgumentParser:
     compare.add_argument("left", type=Path)
     compare.add_argument("right", type=Path)
     compare.add_argument("--output", type=Path)
+    compare.add_argument(
+        "--provenance",
+        type=Path,
+        help="directory of SystemProvenanceV1 documents saying how each run's output was produced",
+    )
 
     package = subparsers.add_parser("package", help="validate and create a deterministic archive")
     package.add_argument("source", type=Path)
@@ -102,7 +107,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             _require_result_valid(result)
             _write_or_emit(result, args.output)
         elif args.command == "compare":
-            result = compare_runs(load_json(args.left), load_json(args.right))
+            declared = (
+                collect_provenance(iter_json_documents(args.provenance)) if args.provenance else {}
+            )
+            result = compare_runs(load_json(args.left), load_json(args.right), declared)
             _require_result_valid(result)
             _write_or_emit(result, args.output)
         elif args.command == "package":

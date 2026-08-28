@@ -24,7 +24,7 @@ def test_package_is_deterministic(tmp_path: Path, load_example) -> None:
 
 def test_synthetic_example_package_has_stable_digest(examples_root: Path, tmp_path: Path) -> None:
     assert package_directory(examples_root, tmp_path / "examples.tar.gz") == (
-        "9ef863b84c716260312ae5bfc4ea5316d16ba655577f9b75bf15a60a15fc075d"
+        "72b4aeff91972555222351d4af23bd80e2a7cc10eb69bdff3f9f707e9a713851"
     )
 
 

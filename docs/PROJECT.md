@@ -98,6 +98,7 @@ stack rows.
 | KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
 | KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | [#8](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/8) |
 | KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | [#9](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/9) |
+| KE-11 | Publish the system-provenance contract so a comparison states whether each side's output was produced by a model or a person, and refuse to publish a conclusion about somebody else's system | KE-1 | Comparison names both modes or names the undisclosed side; publication refused for any basis but `vendor_stated` | Complete | — |
 | KE-9b | Fail closed on duplicate grants and missing `grant_ref` when a purpose is granted, and refuse private grant/record schemas in `evidence package` | KE-9 | Duplicate grants block the sample; a granted purpose without `grant_ref` is a fixture-covered gap; packaging `MediaGrantV1` / `PrivateEvidenceRecordV1` is refused | In progress | this PR |
 
 ## 6. External gates
@@ -114,10 +115,19 @@ stack rows.
 5. Paid inference or training requires a separate exact run plan, budget, durable observer/evidence, and
    verified provider zero state.
 6. Site publication requires explicit infrastructure authority and a source-driven deployment path.
-7. ADR-0001 is `Proposed`, not accepted. Until Avi decides, this repository does not claim that the
+7. Competitive measurement decays, and re-measuring it costs money. Comparable systems change without
+   notice, and the only way to keep a like-for-like reading is to periodically buy access again and
+   re-run the same clips. That is a spend decision and an owner decision, so it is recorded here as a
+   standing check rather than automated: **at each monthly review, decide whether to re-purchase
+   competitor access for a fresh measurement pass.** Agents do not buy anything. A comparison older than
+   the marketing programme's six-month claim expiry is an unsourced claim, and this repository's job is
+   to make that visible rather than to let a stale number keep travelling. Findings from such a pass
+   inform this framework's own metrics and the detector; conclusions about another vendor's system stay
+   out of public packages, which `SystemProvenanceV1` now enforces.
+8. ADR-0001 is `Proposed`, not accepted. Until Avi decides, this repository does not claim that the
    contract is defined language-neutrally; it claims only that a portable suite pins the behaviour.
    Tracked on [issue #2](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/issues/2).
-8. The Forgejo-to-GitHub backup mirror is failing and needs an owner decision on GitHub. Every scheduled
+9. The Forgejo-to-GitHub backup mirror is failing and needs an owner decision on GitHub. Every scheduled
    push since KE-1 has been rejected: `PushRejected ... GH013: Repository rule violations found for
    refs/heads/codex/initial-evidence-framework ... GITHUB PUSH PROTECTION ... Push cannot contain
    secrets`, last attempted 2026-08-27T04:39:32+05:30. The flagged strings are the synthetic
@@ -133,7 +143,7 @@ stack rows.
 - [x] GitHub Actions is disabled on the GitHub backup: `repos/Khelsutra/evidence/actions/permissions`
   returned `{"enabled": false}` and the repository reports no workflows, verified 2026-08-27.
 - [ ] The exact Forgejo `main` head has **not** propagated to the GitHub backup. `Khelsutra/evidence` on
-  GitHub still has zero branches; the push mirror is blocked by external gate 8.
+  GitHub still has zero branches; the push mirror is blocked by external gate 9.
 - [x] External builders can validate, score, compare, and package their own evidence locally.
 - [x] A worked walkthrough takes an outside builder from an empty directory to a packaged public
   archive, including a real refusal. CI executes every command in it and checks every documented output
@@ -171,6 +181,7 @@ stack rows.
 ## 8. References
 
 - [Site source](SITE.md)
+- [System provenance](SYSTEM_PROVENANCE.md)
 - [Walkthrough](WALKTHROUGH.md)
 - [Coach-agent authority](COACH_AGENT_AUTHORITY.md)
 - [Comparability verdicts](COMPARABILITY.md)
@@ -185,6 +196,18 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-28 — KE-11 adds `SystemProvenanceV1`, so a comparison can say whether each side's output came
+  from a model or a person. A score of 0.90 means one thing automated and another when somebody watched
+  the video and typed the boundaries; both can be correct, and putting them on one axis silently is the
+  claim this framework exists to prevent. A human mode must state `human_minutes_per_source_hour`, the
+  number that makes two systems commensurable — the difference between a result that scales and a result
+  that is somebody's afternoon. `disclosure_basis` separates repeating what a vendor stated from
+  concluding it yourself, and binds a receipt to the first two. `evidence package` refuses any basis but
+  `vendor_stated`: a conclusion you reached about somebody else's product may be true, well evidenced,
+  and still not belong in a public evidence package. The verdict does not move — comparing a model to a
+  person is a real comparison, and the framework refuses only to let it happen quietly. Recorded as
+  external gate 7 the standing owner check on re-purchasing competitor access, because a comparison
+  nobody re-measures becomes an unsourced claim.
 - 2026-08-28 — Locked the conflicting-grants property that KE-9b's fix established. KE-9's defect was
   order-dependent — a blocking grant followed by a clearing one cleared the sample — so a single
   arrangement passing proves little. The new cases assert that no arrangement clears: either order,

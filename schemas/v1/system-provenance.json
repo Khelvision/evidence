@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:SystemProvenanceV1",
+  "title": "SystemProvenanceV1",
+  "description": "How a system run's output was actually produced. A number produced by a model and a number produced by a person watching video are different kinds of claim, and a comparison that puts them on one axis without saying so is misleading even when both numbers are correct. This contract also records how the producer knows: repeating what a vendor stated is not the same as concluding it from observation.",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "record_id",
+    "run_id",
+    "operation_mode",
+    "disclosure_basis"
+  ],
+  "properties": {
+    "schema_name": { "const": "SystemProvenanceV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "run_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "operation_mode": {
+      "enum": ["automated", "human_in_the_loop", "human_produced", "undisclosed"]
+    },
+    "disclosure_basis": { "enum": ["vendor_stated", "observed", "inferred", "unknown"] },
+    "human_minutes_per_source_hour": { "type": "number", "minimum": 0 },
+    "turnaround_hours": { "type": "number", "minimum": 0 },
+    "evidence_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/artifactRef" }
+    },
+    "notes": { "type": "string", "maxLength": 2000 }
+  },
+  "additionalProperties": false
+}

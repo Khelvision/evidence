@@ -28,7 +28,8 @@ def test_partial_for_sample_or_stratum_difference(load_example) -> None:
     right["scenario_strata"] = ["single-clean"]
     result = compare_runs(left, right)
     assert result["verdict"] == "partially_comparable"
-    assert len(result["reasons"]) == 3
+    # three comparability reasons, plus the operation-mode disclosure every report now carries
+    assert len(result["reasons"]) == 4
 
 
 def test_descriptive_when_no_samples_overlap(load_example) -> None:

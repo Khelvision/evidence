@@ -1,0 +1,20 @@
+{
+  "disclosure_basis": "vendor_stated",
+  "evidence_refs": [
+    {
+      "artifact_id": "synthetic-operation-statement",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "media_type": "application/pdf"
+    }
+  ],
+  "human_minutes_per_source_hour": 0,
+  "notes": "Synthetic contract fixture; no real system or vendor is described.",
+  "operation_mode": "automated",
+  "record_id": "system-provenance-synthetic-a",
+  "run_id": "synthetic-run-a",
+  "schema_name": "SystemProvenanceV1",
+  "schema_version": "1.0.0"
+}

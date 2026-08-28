@@ -74,6 +74,14 @@ def _validate_files(files: list[Path]) -> None:
                     f"{path}: publication refused: {schema_name} is a private contract and "
                     "cannot enter a public package"
                 )
+            if schema_name == "SystemProvenanceV1":
+                basis = document.get("disclosure_basis")
+                if basis != "vendor_stated":
+                    raise ValueError(
+                        f"{path}: publication refused: a {basis!r} disclosure is this producer's "
+                        "conclusion about a system rather than what its vendor stated, which is a "
+                        "competitive claim and does not belong in a public evidence package"
+                    )
         if issues:
             rendered = "; ".join(issue.render() for issue in issues)
             raise ValueError(f"{path}: publication refused: {rendered}")
