@@ -23,31 +23,24 @@ def test_package_is_deterministic(tmp_path: Path, load_example) -> None:
 
 
 def test_synthetic_example_package_has_stable_digest(examples_root: Path, tmp_path: Path) -> None:
-    source = tmp_path / "public"
-    source.mkdir()
-    (source / "task.json").write_text(
-        (examples_root / "task-profile.json").read_text(encoding="utf-8"), encoding="utf-8"
+    assert package_directory(examples_root, tmp_path / "examples.tar.gz") == (
+        "9ef863b84c716260312ae5bfc4ea5316d16ba655577f9b75bf15a60a15fc075d"
     )
-    (source / "README.md").write_text("# Safe synthetic package\n", encoding="utf-8")
-    first = tmp_path / "first.tar.gz"
-    digest = package_directory(source, first)
-    assert digest == package_directory(source, tmp_path / "second.tar.gz")
-    assert len(digest) == 64
 
 
 def test_package_refuses_private_grant_and_record_schemas(
-    examples_root: Path, tmp_path: Path
+    private_examples_root: Path, tmp_path: Path
 ) -> None:
     source = tmp_path / "source"
     source.mkdir()
     (source / "grant.json").write_text(
-        (examples_root / "media-grant.json").read_text(encoding="utf-8"), encoding="utf-8"
+        (private_examples_root / "media-grant.json").read_text(encoding="utf-8"), encoding="utf-8"
     )
     with pytest.raises(ValueError, match="MediaGrantV1 is a private contract"):
         package_directory(source, tmp_path / "grant.tar.gz")
     (source / "grant.json").unlink()
     (source / "record.json").write_text(
-        (examples_root / "private-evidence-record.json").read_text(encoding="utf-8"),
+        (private_examples_root / "private-evidence-record.json").read_text(encoding="utf-8"),
         encoding="utf-8",
     )
     with pytest.raises(ValueError, match="PrivateEvidenceRecordV1 is a private contract"):

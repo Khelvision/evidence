@@ -188,7 +188,14 @@ stack rows.
 - 2026-08-28 — KE-9b makes duplicate media grants and a granted purpose without `grant_ref` fail
   closed, and refuses `MediaGrantV1` / `PrivateEvidenceRecordV1` inside `evidence package`. KE-9's
   preflight remains the rights checklist; this row stops last-wins clearance and accidental public
-  packaging of private grants.
+  packaging of private grants. All three were live fail-open defects in KE-9: a blocking grant followed
+  by a clearing one for the same sample cleared the sample, a granted purpose with no bound document
+  raised nothing though `CoachInstructionPlanV1` had enforced exactly that rule since KE-1, and a
+  private contract packaged without complaint. Landing the refusal also required moving the two private
+  contract examples out of `examples/` into `private-examples/`, because a directory the framework
+  refuses to package is not an example set: `evidence package examples` is a CI step and a README
+  quick-start command, and both are honest again. The deterministic-archive digest pin, dropped while
+  `examples/` was unpackageable, is restored.
 - 2026-08-27 — KE-10 adds `ReleaseDistributionV1` and teaches the preflight about it, recording the owner
   decision that v0.1 is `evidence_only`. A release now states machine-readably whether it hands over its
   source media, and an evidence-only declaration may not claim `independent_rescoring_possible` and must

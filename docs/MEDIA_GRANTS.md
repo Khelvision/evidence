@@ -45,7 +45,10 @@ That is deliberate. A document listing who appears in which footage is itself th
 and this framework's own scanner treats participant identifiers as unpublishable. A rights register that
 becomes a participant register has made things worse, not better.
 
-`MediaGrantV1` is a private contract. It belongs with the producer's receipts, not in a public package.
+`MediaGrantV1` is a private contract. It belongs with the producer's receipts, not in a public package,
+and `evidence package` refuses it outright rather than trusting that nobody will try. The shipped example
+lives in [`private-examples/`](../private-examples/README.md) for the same reason: an `examples/`
+directory holding a private contract is an example set the framework cannot package.
 
 ## What blocks a sample
 

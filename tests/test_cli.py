@@ -107,13 +107,8 @@ def test_score_compare_and_package_commands(examples_root: Path, tmp_path: Path,
         == 0
     )
     assert json.loads(compare_path.read_text(encoding="utf-8"))["verdict"] == "paired_quality_only"
-    public = tmp_path / "public"
-    public.mkdir()
-    (public / "task.json").write_text(
-        (examples_root / "task-profile.json").read_text(encoding="utf-8"), encoding="utf-8"
-    )
     archive = tmp_path / "examples.tar.gz"
-    assert main(["package", str(public), str(archive)]) == 0
+    assert main(["package", str(examples_root), str(archive)]) == 0
     assert _json_output(capsys)["status"] == "packaged"
     assert archive.exists()
 
@@ -139,9 +134,9 @@ def test_score_prints_result_and_bad_json_is_reported(
 
 
 def test_project_writes_the_declared_public_record(
-    examples_root: Path, tmp_path: Path, capsysbinary
+    private_examples_root: Path, tmp_path: Path, capsysbinary
 ) -> None:
-    record_path = examples_root / "private-evidence-record.json"
+    record_path = private_examples_root / "private-evidence-record.json"
     declared = json.loads(record_path.read_text(encoding="utf-8"))["projection"][
         "public_record_digest"
     ]["value"]
