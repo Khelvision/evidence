@@ -1,7 +1,7 @@
 # KhelSutra evidence delivery program
 
 > **Status:** `IN PROGRESS` · **Owner:** Avi Dullu · **Created:** 2026-08-22 ·
-> **Last updated:** 2026-08-28
+> **Last updated:** 2026-08-28 (KE-9b merge receipt)
 >
 > **Lifecycle:** `DRAFT -> IN PROGRESS -> DONE -> ARCHIVED`
 >
@@ -99,7 +99,7 @@ stack rows.
 | KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | [#8](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/8) |
 | KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | [#9](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/9) |
 | KE-11 | Publish the system-provenance contract so a comparison states whether each side's output was produced by a model or a person, and refuse to publish a conclusion about somebody else's system | KE-1 | Comparison names both modes or names the undisclosed side; publication refused for any basis but `vendor_stated` | Complete | [#12](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/12) |
-| KE-9b | Fail closed on duplicate grants and missing `grant_ref` when a purpose is granted, and refuse private grant/record schemas in `evidence package` | KE-9 | Duplicate grants block the sample; a granted purpose without `grant_ref` is a fixture-covered gap; packaging `MediaGrantV1` / `PrivateEvidenceRecordV1` is refused | In progress | this PR |
+| KE-9b | Fail closed on duplicate grants and missing `grant_ref` when a purpose is granted, and refuse private grant/record schemas in `evidence package` | KE-9 | Duplicate grants block the sample; a granted purpose without `grant_ref` is a fixture-covered gap; packaging `MediaGrantV1` / `PrivateEvidenceRecordV1` is refused | Complete | [#10](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/10) |
 
 ## 6. External gates
 
@@ -196,6 +196,9 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-28 — KE-9b merge receipt: the fail-closed duplicate-grant / `grant_ref` / private-package
+  row landed as [#10](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/10) (`05f9d3b` →
+  `2b99707`). The progress table no longer says `this PR`.
 - 2026-08-28 — KE-11 adds `SystemProvenanceV1`, so a comparison can say whether each side's output came
   from a model or a person. A score of 0.90 means one thing automated and another when somebody watched
   the video and typed the boundaries; both can be correct, and putting them on one axis silently is the
@@ -324,6 +327,7 @@ after the merge. Times are IST.
 | KE-2b | #4 | `d38fed6` | `7986788` | [run 13](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/13) success | 09:10:16 | 12:22:22 | yes |
 | KE-8 | #5 | `d13202c` | `f04a78e` | [run 17](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/17) success | 12:27:30 | 12:25:25 | **no — green 2m05s after** |
 | KE-7a | #6 | `be6f30b` | `82e3f02` | [run 20](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/20) success | 12:37:10 | 12:34:11 | **no — green 2m59s after** |
+| KE-9b | #10 | `05f9d3b` | `2b99707` | [run 32](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/32) success | before merge | 2026-08-28 12:00 | yes |
 
 Every reviewed head in this table verified green, and each had passed the full local gate before its
 pull request opened, so no merged tree is in question. What the two `no` rows record is that the gate
