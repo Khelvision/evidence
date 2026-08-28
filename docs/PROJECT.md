@@ -1,7 +1,7 @@
 # KhelSutra evidence delivery program
 
 > **Status:** `IN PROGRESS` · **Owner:** Avi Dullu · **Created:** 2026-08-22 ·
-> **Last updated:** 2026-08-27
+> **Last updated:** 2026-08-28
 >
 > **Lifecycle:** `DRAFT -> IN PROGRESS -> DONE -> ARCHIVED`
 >
@@ -98,6 +98,7 @@ stack rows.
 | KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
 | KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | [#8](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/8) |
 | KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | [#9](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/9) |
+| KE-9b | Fail closed on duplicate grants and missing `grant_ref` when a purpose is granted, and refuse private grant/record schemas in `evidence package` | KE-9 | Duplicate grants block the sample; a granted purpose without `grant_ref` is a fixture-covered gap; packaging `MediaGrantV1` / `PrivateEvidenceRecordV1` is refused | In progress | this PR |
 
 ## 6. External gates
 
@@ -184,6 +185,17 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-28 — KE-9b makes duplicate media grants and a granted purpose without `grant_ref` fail
+  closed, and refuses `MediaGrantV1` / `PrivateEvidenceRecordV1` inside `evidence package`. KE-9's
+  preflight remains the rights checklist; this row stops last-wins clearance and accidental public
+  packaging of private grants. All three were live fail-open defects in KE-9: a blocking grant followed
+  by a clearing one for the same sample cleared the sample, a granted purpose with no bound document
+  raised nothing though `CoachInstructionPlanV1` had enforced exactly that rule since KE-1, and a
+  private contract packaged without complaint. Landing the refusal also required moving the two private
+  contract examples out of `examples/` into `private-examples/`, because a directory the framework
+  refuses to package is not an example set: `evidence package examples` is a CI step and a README
+  quick-start command, and both are honest again. The deterministic-archive digest pin, dropped while
+  `examples/` was unpackageable, is restored.
 - 2026-08-27 — KE-10 adds `ReleaseDistributionV1` and teaches the preflight about it, recording the owner
   decision that v0.1 is `evidence_only`. A release now states machine-readably whether it hands over its
   source media, and an evidence-only declaration may not claim `independent_rescoring_possible` and must

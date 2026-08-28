@@ -134,9 +134,9 @@ def test_score_prints_result_and_bad_json_is_reported(
 
 
 def test_project_writes_the_declared_public_record(
-    examples_root: Path, tmp_path: Path, capsysbinary
+    private_examples_root: Path, tmp_path: Path, capsysbinary
 ) -> None:
-    record_path = examples_root / "private-evidence-record.json"
+    record_path = private_examples_root / "private-evidence-record.json"
     declared = json.loads(record_path.read_text(encoding="utf-8"))["projection"][
         "public_record_digest"
     ]["value"]

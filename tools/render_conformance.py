@@ -33,6 +33,7 @@ from khelsutra_evidence.validation import (
 
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLES = ROOT / "examples"
+PRIVATE_EXAMPLES = ROOT / "private-examples"
 FIXTURES = ROOT / "tests" / "fixtures"
 MANIFEST = ROOT / "conformance" / "v1" / "manifest.json"
 
@@ -40,7 +41,10 @@ JsonObject = dict[str, Any]
 
 
 def example(relative: str) -> JsonObject:
-    loaded: JsonObject = json.loads((EXAMPLES / relative).read_text(encoding="utf-8"))
+    path = EXAMPLES / relative
+    if not path.exists():
+        path = PRIVATE_EXAMPLES / relative
+    loaded: JsonObject = json.loads(path.read_text(encoding="utf-8"))
     return loaded
 
 

@@ -45,7 +45,10 @@ That is deliberate. A document listing who appears in which footage is itself th
 and this framework's own scanner treats participant identifiers as unpublishable. A rights register that
 becomes a participant register has made things worse, not better.
 
-`MediaGrantV1` is a private contract. It belongs with the producer's receipts, not in a public package.
+`MediaGrantV1` is a private contract. It belongs with the producer's receipts, not in a public package,
+and `evidence package` refuses it outright rather than trusting that nobody will try. The shipped example
+lives in [`private-examples/`](../private-examples/README.md) for the same reason: an `examples/`
+directory holding a private contract is an example set the framework cannot package.
 
 ## What blocks a sample
 
@@ -57,8 +60,11 @@ becomes a participant register has made things worse, not better.
 | `participant_consent_missing_public_evidence` | a participant's consent does not grant the `public_evidence` purpose |
 | `guardian_authorization_missing` | a participant needs guardian or legal authorization and none is bound |
 | `participant_withdrawn` | a participant withdrew |
+| `purpose_grant_ref_missing` | a purpose is `granted: true` without a bound `grant_ref` |
+| `duplicate_grants` | more than one `MediaGrantV1` covers the same sample |
 
 Every gap is reported at once, per sample, so one pass tells you the whole shape of the work.
+Duplicate grants never last-wins-clear: the report lists the sample IDs and the sample stays blocked.
 
 `no_participants_recorded` is not a technicality. Footage containing nobody and footage nobody reviewed
 are indistinguishable to a tool, so the preflight refuses to guess which it is looking at.

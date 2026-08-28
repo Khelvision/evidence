@@ -17,8 +17,8 @@ nobody classified is a field nobody reviewed.
 ## Running it
 
 ```bash
-evidence project examples/private-evidence-record.json --output dist/public.json
-evidence project examples/private-evidence-record.json | sha256sum
+evidence project private-examples/private-evidence-record.json --output dist/public.json
+evidence project private-examples/private-evidence-record.json | sha256sum
 ```
 
 Standard output carries the public record and nothing else, so the command composes. Refusals go to
