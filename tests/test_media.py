@@ -261,3 +261,68 @@ def test_media_included_may_claim_independent_rescoring(load_example) -> None:
     )
 
     assert validate_document(document) == []
+
+
+# --- conflicting grants ------------------------------------------------------------------------
+#
+# The duplicate rule exists because grants can disagree, and the original defect was order-
+# dependent: a blocking grant followed by a clearing one cleared the sample. These lock the property
+# that matters — no arrangement of conflicting grants ever clears — not one arrangement of it.
+
+
+def _conflicting_pair(load_example, load_fixture) -> tuple[dict[str, Any], dict[str, Any]]:
+    clearing = load_example("media-grant.json")
+    blocking = load_fixture("media/publication-not-clear.json")
+    blocking["sample_id"] = clearing["sample_id"]
+    blocking["record_id"] = "media-grant-conflicting"
+    return clearing, blocking
+
+
+@pytest.mark.parametrize("blocking_first", [True, False])
+def test_conflicting_grants_never_clear_in_either_order(
+    release, load_example, load_fixture, blocking_first: bool
+) -> None:
+    clearing, blocking = _conflicting_pair(load_example, load_fixture)
+    grants = [blocking, clearing] if blocking_first else [clearing, blocking]
+
+    report = preflight(release, grants)
+
+    assert report["summary"] == {"requested": 1, "cleared": 0, "blocked": 1}
+    assert "duplicate_grants" in {gap["requirement"] for gap in report["samples"][0]["gaps"]}
+
+
+def test_conflicting_grants_are_refused_under_evidence_only_too(
+    release, load_example, load_fixture
+) -> None:
+    # evidence_only forgives the media publication grant, which is precisely what the blocking
+    # grant withholds. The conflict must still block, or the relaxation would launder it.
+    clearing, blocking = _conflicting_pair(load_example, load_fixture)
+
+    report = preflight(release, [blocking, clearing], _distribution(load_example))
+
+    assert report["relaxed_requirements"] == ["publication_not_verified_clear"]
+    assert report["summary"]["blocked"] == 1
+    assert "duplicate_grants" in {gap["requirement"] for gap in report["samples"][0]["gaps"]}
+
+
+def test_two_identical_clearing_grants_still_block(release, load_example) -> None:
+    # Agreement is not the test. Two files claiming authority over one sample means somebody has to
+    # say which is authoritative, even when they happen to say the same thing today.
+    report = preflight(release, [load_example("media-grant.json")] * 2)
+
+    assert report["summary"]["blocked"] == 1
+
+
+def test_a_conflict_on_one_sample_does_not_block_a_clean_sibling(
+    release, load_example, load_fixture
+) -> None:
+    clearing, blocking = _conflicting_pair(load_example, load_fixture)
+    sibling = load_example("media-grant.json")
+    sibling["sample_id"] = "synthetic-match-002"
+    sibling["record_id"] = "media-grant-synthetic-match-002"
+    release["sample_ids"] = ["synthetic-match-001", "synthetic-match-002"]
+
+    report = preflight(release, [blocking, clearing, sibling])
+
+    assert report["summary"] == {"requested": 2, "cleared": 1, "blocked": 1}
+    assert [entry["cleared"] for entry in report["samples"]] == [False, True]
