@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:khelsutra:evidence:schema:v1:ReleaseRightsBasisV1",
+  "title": "ReleaseRightsBasisV1",
+  "description": "What a release's right to publish rests on. Bound documents are the strongest basis and are not always proportionate: an owner publishing their own academy's footage may hold consent perfectly well without a signed artifact per participant. This contract does not force the stronger basis. It requires the release to say which one it used, so a reader is never left to assume the stronger one.",
+  "type": "object",
+  "required": ["schema_name", "schema_version", "record_id", "release_id", "basis"],
+  "properties": {
+    "schema_name": { "const": "ReleaseRightsBasisV1" },
+    "schema_version": { "const": "1.0.0" },
+    "record_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "release_id": { "$ref": "urn:khelsutra:evidence:schema:v1:common#/$defs/recordId" },
+    "basis": { "enum": ["bound_documents", "owner_attestation"] },
+    "attestation": {
+      "type": "object",
+      "required": ["attested_by", "statement", "attested_at"],
+      "properties": {
+        "attested_by": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "statement": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "attested_at": { "type": "string", "format": "date-time" },
+        "covers": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 300 }
+        }
+      },
+      "additionalProperties": false
+    },
+    "notes": { "type": "string", "maxLength": 2000 }
+  },
+  "additionalProperties": false
+}

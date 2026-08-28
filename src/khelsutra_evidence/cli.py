@@ -74,6 +74,11 @@ def _parser() -> argparse.ArgumentParser:
         type=Path,
         help="ReleaseDistributionV1 document; without it the release is read as handing over media",
     )
+    media.add_argument(
+        "--rights-basis",
+        type=Path,
+        help="ReleaseRightsBasisV1 document; without it the release rests on bound documents",
+    )
     return parser
 
 
@@ -123,6 +128,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 load_json(args.release),
                 collect_grants(list(iter_json_documents(args.grants))),
                 load_json(args.distribution) if args.distribution else None,
+                load_json(args.rights_basis) if args.rights_basis else None,
             )
             _emit(report)
             return 0 if report["summary"]["blocked"] == 0 else 1

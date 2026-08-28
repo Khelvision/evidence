@@ -89,7 +89,7 @@ stack rows.
 | KE-1 | Publish the initial schemas, CLI, scorer, comparability rationale, examples, community rules, static site source, Forgejo CI, ownership routing, and this tracker | BHI #1063 doctrine | BHI #1063 must land before this PR; exact-head verification is recorded on the PR | Complete | [#1](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/1) |
 | KE-2a | Publish the private-superset/public-projection contract, the projector, and negative fixtures; producer integrations remain in their own repositories | KE-1 | Security review of the envelope classification, refusal reasons, and negative fixtures | Complete | [#3](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/3) |
 | KE-2b | Publish the portable conformance suite that pins normative behaviour, and propose the normativity decision as an ADR | KE-2a | Conformance corpus rendered from the implementation, replayed independently by the Python tests, and free of expectations only Python can meet | Complete | [#4](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/4) |
-| KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2a, KE-9, KE-10 | `evidence media-preflight` clears every sample under the declared distribution, plus redaction and claims review | Blocked | — |
+| KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2a, KE-9, KE-10, KE-12 | `evidence media-preflight` clears every sample under the declared distribution and rights basis, plus redaction and claims review | Blocked | — |
 | KE-4 | Publish the frozen v0.2 blind challenge | KE-3 | Rights-cleared frozen inventory, two annotators, frozen scorer/engine, no train/select overlap | Pending | — |
 | KE-5 | Publish the v0.3 owner-adaptation and portability proof | KE-2a | Authorized owner corpus, disjoint held-out ruler, and second clean environment | Pending | — |
 | KE-6 | Publish the v0.4 coach-agent query proof | KE-2a | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
@@ -99,6 +99,7 @@ stack rows.
 | KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | [#8](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/8) |
 | KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | [#9](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/9) |
 | KE-11 | Publish the system-provenance contract so a comparison states whether each side's output was produced by a model or a person, and refuse to publish a conclusion about somebody else's system | KE-1 | Comparison names both modes or names the undisclosed side; publication refused for any basis but `vendor_stated` | Complete | [#12](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/12) |
+| KE-12 | Publish the release-rights-basis contract so a release may rest on an owner attestation instead of bound documents, and say which it used | KE-9 | An attestation clears a release with no grants; a recorded withdrawal and conflicting grants still block; the report names every relaxed requirement | Complete | — |
 | KE-9b | Fail closed on duplicate grants and missing `grant_ref` when a purpose is granted, and refuse private grant/record schemas in `evidence package` | KE-9 | Duplicate grants block the sample; a granted purpose without `grant_ref` is a fixture-covered gap; packaging `MediaGrantV1` / `PrivateEvidenceRecordV1` is refused | Complete | [#10](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/10) |
 
 ## 6. External gates
@@ -187,7 +188,7 @@ stack rows.
 - [Comparability verdicts](COMPARABILITY.md)
 - [ADR-0001: how language-neutral is the contract](adr/0001-language-neutral-contract.md)
 - [Conformance suite](CONFORMANCE.md)
-- [Media grants, distribution modes, and the publication preflight](MEDIA_GRANTS.md)
+- [Media grants, rights basis, distribution modes, and the publication preflight](MEDIA_GRANTS.md)
 - [Private superset and public projection](PROJECTION.md)
 - [Publication safety](PUBLICATION.md)
 - [Schema guide](SCHEMAS.md)
@@ -196,6 +197,17 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-28 — KE-12 adds `ReleaseRightsBasisV1`, recording the owner decision that the rights checks
+  should be lighter and not always tightly binding. Bound documents are the strongest basis and are not
+  always proportionate: an owner publishing their own academy's footage may hold consent and venue
+  permission without a signed artifact per participant, and KE-9 demanded one anyway. A release may now
+  rest on `owner_attestation`, which satisfies every requirement that exists to prove consent on paper
+  and lets a release clear with no `MediaGrantV1` documents at all. Two things it does not cover, because
+  neither is a missing document: a recorded withdrawal, which is a fact somebody wrote down, and
+  conflicting grants, which is a data problem. The framework does not force the stronger basis; it
+  requires the release to say which one it used, and the report names every requirement the attestation
+  covered, so nobody reads a cleared release as one whose documents were checked. Without a declaration
+  the stricter reading still applies.
 - 2026-08-28 — KE-9b merge receipt: the fail-closed duplicate-grant / `grant_ref` / private-package
   row landed as [#10](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/10) (`05f9d3b` →
   `2b99707`). The progress table no longer says `this PR`.

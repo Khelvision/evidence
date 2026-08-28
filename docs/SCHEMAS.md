@@ -13,7 +13,8 @@ The v1 contracts are grouped into:
 - the private superset envelope that projects into a public record;
 - the media grant that records whether footage may be published;
 - the release distribution that records whether footage is actually handed over;
-- the system provenance that records whether a run's output was produced by a model or a person; and
+- the system provenance that records whether a run's output was produced by a model or a person;
+- the release rights basis that records whether permission rests on documents or an owner attestation; and
 - the conformance suite that pins normative behaviour.
 
 `PrivateEvidenceRecordV1` is the only contract a producer holds privately. It wraps exactly one public
