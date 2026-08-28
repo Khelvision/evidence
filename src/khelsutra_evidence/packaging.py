@@ -12,6 +12,7 @@ from .validation import load_json, safety_issues, validate_json_document
 
 _ALLOWED_SUFFIXES = {".json", ".md", ".txt"}
 _MAX_FILE_BYTES = 5 * 1024 * 1024
+_PRIVATE_PACKAGE_SCHEMAS = frozenset({"MediaGrantV1", "PrivateEvidenceRecordV1"})
 
 
 def package_directory(source: Path, destination: Path) -> str:
@@ -67,6 +68,12 @@ def _validate_files(files: list[Path]) -> None:
             document = load_json(path)
             issues = safety_issues(document)
             issues.extend(validate_json_document(document))
+            schema_name = document.get("schema_name")
+            if schema_name in _PRIVATE_PACKAGE_SCHEMAS:
+                raise ValueError(
+                    f"{path}: publication refused: {schema_name} is a private contract and "
+                    "cannot enter a public package"
+                )
         if issues:
             rendered = "; ".join(issue.render() for issue in issues)
             raise ValueError(f"{path}: publication refused: {rendered}")

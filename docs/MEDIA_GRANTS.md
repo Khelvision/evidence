@@ -57,8 +57,11 @@ becomes a participant register has made things worse, not better.
 | `participant_consent_missing_public_evidence` | a participant's consent does not grant the `public_evidence` purpose |
 | `guardian_authorization_missing` | a participant needs guardian or legal authorization and none is bound |
 | `participant_withdrawn` | a participant withdrew |
+| `purpose_grant_ref_missing` | a purpose is `granted: true` without a bound `grant_ref` |
+| `duplicate_grants` | more than one `MediaGrantV1` covers the same sample |
 
 Every gap is reported at once, per sample, so one pass tells you the whole shape of the work.
+Duplicate grants never last-wins-clear: the report lists the sample IDs and the sample stays blocked.
 
 `no_participants_recorded` is not a technicality. Footage containing nobody and footage nobody reviewed
 are indistinguishable to a tool, so the preflight refuses to guess which it is looking at.

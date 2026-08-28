@@ -22,6 +22,7 @@ BLOCKING_FIXTURES = [
     ("consent-without-public-evidence.json", "participant_consent_missing_public_evidence"),
     ("guardian-authorization-missing.json", "guardian_authorization_missing"),
     ("participant-withdrawn.json", "participant_withdrawn"),
+    ("purpose-grant-ref-missing.json", "purpose_grant_ref_missing"),
 ]
 
 
@@ -112,6 +113,9 @@ def test_duplicate_grants_for_one_sample_are_reported(release, load_example) -> 
     report = preflight(release, [load_example("media-grant.json")] * 2)
 
     assert report["duplicate_grants"] == ["synthetic-match-001"]
+    assert report["samples"][0]["cleared"] is False
+    assert report["summary"] == {"requested": 1, "cleared": 0, "blocked": 1}
+    assert any(gap["requirement"] == "duplicate_grants" for gap in report["samples"][0]["gaps"])
 
 
 def test_preflight_refuses_inputs_of_the_wrong_kind(release, load_example) -> None:

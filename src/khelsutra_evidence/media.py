@@ -96,6 +96,15 @@ def grant_gaps(grant: JsonObject, *, evidence_only: bool = False) -> list[MediaG
                     f"{handle} has no granted public_evidence purpose",
                 )
             )
+        for purpose in participant["purpose_grants"]:
+            if purpose["granted"] and "grant_ref" not in purpose:
+                gaps.append(
+                    MediaGap(
+                        sample_id,
+                        "purpose_grant_ref_missing",
+                        f"{handle} granted {purpose['purpose']!r} without a bound grant document",
+                    )
+                )
         if participant.get("guardian_authorization_required") and (
             "guardian_authorization_ref" not in participant
         ):
@@ -141,6 +150,7 @@ def preflight(
         if sample_id in by_sample:
             duplicates.append(sample_id)
         by_sample[sample_id] = grant
+    duplicate_ids = set(duplicates)
 
     samples: list[JsonObject] = []
     for sample_id in release["sample_ids"]:
@@ -155,6 +165,15 @@ def preflight(
                 "rehosting": bool(covering["rehosting_permitted"]),
                 "custody": str(covering["custody"]),
             }
+            if str(sample_id) in duplicate_ids:
+                gaps.append(
+                    MediaGap(
+                        str(sample_id),
+                        "duplicate_grants",
+                        "more than one MediaGrantV1 covers this sample; "
+                        "conflicting grants never clear",
+                    )
+                )
         samples.append(
             {
                 "sample_id": str(sample_id),
