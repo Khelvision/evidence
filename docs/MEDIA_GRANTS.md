@@ -5,12 +5,42 @@ right to publish it exists only as a set of documents somebody obtained. `MediaG
 rights position, and `evidence media-preflight` compares it against a proposed release.
 
 ```bash
-evidence media-preflight release.json grants/ [--distribution distribution.json]
+evidence media-preflight release.json grants/ \
+  [--distribution distribution.json] [--rights-basis rights-basis.json]
 ```
 
 Exit 0 when every sample in the release is cleared, 1 when any is not, 2 on malformed input. The report
 names, per sample, exactly what is missing — so "get the media grants" becomes a checklist instead of a
 judgement made at publication time.
+
+## What the right to publish rests on
+
+Bound documents are the strongest basis and are not always proportionate. An owner publishing their own
+academy's footage may hold consent and venue permission perfectly well without a signed artifact per
+participant, and demanding one is heavier than that situation warrants.
+
+`ReleaseRightsBasisV1` therefore offers two bases:
+
+| `basis` | Meaning | Preflight |
+|---|---|---|
+| `bound_documents` | every permission is a file bound by digest | every requirement applies |
+| `owner_attestation` | the owner attests the permissions are held | the documentary requirements are satisfied by the attestation |
+
+An attestation stands in for the requirements that exist to prove consent **on paper**: `no_grant`,
+`no_participants_recorded`, `participant_consent_missing_public_evidence`, `purpose_grant_ref_missing`,
+`guardian_authorization_missing`, `venue_permission_unresolved`, and `publication_not_verified_clear`. A
+release resting on one needs no `MediaGrantV1` documents at all.
+
+Two things it does **not** stand in for, because neither is a missing document:
+
+- **`participant_withdrawn`.** If somebody withdrew, that is a fact on record, and no attestation
+  unknows it.
+- **`duplicate_grants`.** Two grants disagreeing about one sample is a data problem, not a paperwork gap.
+
+The framework does not force the stronger basis. It requires the release to say which one it used, and
+the report names every requirement the attestation covered — so a reader is never left to assume bound
+documents were checked when they were not. Without a `--rights-basis` document the stricter reading
+applies and the release is read as resting on documents.
 
 ## Two ways to publish, and only one of them hands over footage
 

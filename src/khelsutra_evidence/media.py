@@ -22,6 +22,21 @@ from .validation import validate_document
 MEDIA_GRANT_SCHEMA_NAME = "MediaGrantV1"
 RELEASE_SCHEMA_NAME = "EvidenceReleaseV1"
 DISTRIBUTION_SCHEMA_NAME = "ReleaseDistributionV1"
+RIGHTS_BASIS_SCHEMA_NAME = "ReleaseRightsBasisV1"
+
+# What an owner attestation stands in for. These requirements exist to prove consent and permission
+# on paper; an owner who holds both without a signed artifact per participant is making the same
+# claim by a weaker route, and the release records which route it took. A recorded withdrawal is not
+# on this list: that is a known fact rather than a missing document, and it keeps blocking.
+_RELAXED_BY_OWNER_ATTESTATION = (
+    "no_grant",
+    "no_participants_recorded",
+    "participant_consent_missing_public_evidence",
+    "purpose_grant_ref_missing",
+    "guardian_authorization_missing",
+    "venue_permission_unresolved",
+    "publication_not_verified_clear",
+)
 
 # A release that hands over no footage does not exercise the right to publish that footage. Every
 # other requirement still applies: the people in it are still being measured in public.
@@ -42,12 +57,25 @@ class MediaGap:
         return f"{self.sample_id}: {self.requirement}: {self.detail}"
 
 
-def grant_gaps(grant: JsonObject, *, evidence_only: bool = False) -> list[MediaGap]:
+def grant_gaps(
+    grant: JsonObject, *, evidence_only: bool = False, attested: bool = False
+) -> list[MediaGap]:
     """Return every reason this grant does not clear its sample for public evidence.
 
     Under `evidence_only` the source media is not handed over, so the grant to publish that media is
     not exercised and is not required. Consent to be measured in public still is.
+
+    Under `attested` the release rests on an owner attestation rather than bound documents, so the
+    requirements that exist to prove consent on paper are satisfied by that attestation instead. A
+    recorded withdrawal still blocks: it is a known fact, not a missing document.
     """
+    gaps = _documentary_gaps(grant, evidence_only)
+    if attested:
+        return [gap for gap in gaps if gap.requirement not in _RELAXED_BY_OWNER_ATTESTATION]
+    return gaps
+
+
+def _documentary_gaps(grant: JsonObject, evidence_only: bool) -> list[MediaGap]:
     sample_id = str(grant["sample_id"])
     gaps: list[MediaGap] = []
 
@@ -126,7 +154,10 @@ def _grants_public_evidence(participant: JsonObject) -> bool:
 
 
 def preflight(
-    release: JsonObject, grants: list[JsonObject], distribution: JsonObject | None = None
+    release: JsonObject,
+    grants: list[JsonObject],
+    distribution: JsonObject | None = None,
+    rights_basis: JsonObject | None = None,
 ) -> JsonObject:
     """Report, per sample in the release, whether its media may be published.
 
@@ -140,8 +171,14 @@ def preflight(
         _require(distribution, DISTRIBUTION_SCHEMA_NAME, "release distribution")
         if str(distribution["release_id"]) != str(release["release_id"]):
             raise ValueError("release distribution names a different release")
+    if rights_basis is not None:
+        _require(rights_basis, RIGHTS_BASIS_SCHEMA_NAME, "release rights basis")
+        if str(rights_basis["release_id"]) != str(release["release_id"]):
+            raise ValueError("release rights basis names a different release")
     mode = str(distribution["distribution"]) if distribution else "media_included"
     evidence_only = mode == "evidence_only"
+    basis = str(rights_basis["basis"]) if rights_basis else "bound_documents"
+    attested = basis == "owner_attestation"
 
     by_sample: dict[str, JsonObject] = {}
     duplicates: list[str] = []
@@ -156,10 +193,14 @@ def preflight(
     for sample_id in release["sample_ids"]:
         covering = by_sample.get(str(sample_id))
         if covering is None:
-            gaps = [MediaGap(str(sample_id), "no_grant", "no MediaGrantV1 covers this sample")]
+            gaps = (
+                []
+                if attested
+                else [MediaGap(str(sample_id), "no_grant", "no MediaGrantV1 covers this sample")]
+            )
             permits: JsonObject = {}
         else:
-            gaps = grant_gaps(covering, evidence_only=evidence_only)
+            gaps = grant_gaps(covering, evidence_only=evidence_only, attested=attested)
             permits = {
                 "training": bool(covering["training_permitted"]),
                 "rehosting": bool(covering["rehosting_permitted"]),
@@ -190,7 +231,11 @@ def preflight(
         "registry": str(release["registry"]),
         "distribution": mode,
         "distribution_declared": distribution is not None,
-        "relaxed_requirements": list(_RELAXED_BY_EVIDENCE_ONLY) if evidence_only else [],
+        "rights_basis": basis,
+        "relaxed_requirements": sorted(
+            (set(_RELAXED_BY_EVIDENCE_ONLY) if evidence_only else set())
+            | (set(_RELAXED_BY_OWNER_ATTESTATION) if attested else set())
+        ),
         "samples": samples,
         "unused_grants": unused,
         "duplicate_grants": sorted(set(duplicates)),

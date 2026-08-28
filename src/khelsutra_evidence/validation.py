@@ -318,6 +318,7 @@ def _semantic_issues(document: JsonObject) -> list[ValidationIssue]:
         "MediaGrantV1": _media_grant_issues,
         "ReleaseDistributionV1": _release_distribution_issues,
         "SystemProvenanceV1": _system_provenance_issues,
+        "ReleaseRightsBasisV1": _rights_basis_issues,
     }
     issues = checks.get(name, lambda _: [])(document)
     if name not in _EMBEDDED_CORPUS_SCHEMAS:
@@ -591,6 +592,21 @@ def _private_record_issues(document: JsonObject) -> list[ValidationIssue]:
         issues.append(
             ValidationIssue("public.schema_name", "must name a published public evidence contract")
         )
+    return issues
+
+
+def _rights_basis_issues(document: JsonObject) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
+    attesting = document["basis"] == "owner_attestation"
+    if attesting and "attestation" not in document:
+        issues.append(
+            ValidationIssue(
+                "attestation",
+                "an owner attestation must record who attested, what they attested, and when",
+            )
+        )
+    if not attesting and "attestation" in document:
+        issues.append(ValidationIssue("attestation", "belongs only to an owner_attestation basis"))
     return issues
 
 

@@ -326,3 +326,94 @@ def test_a_conflict_on_one_sample_does_not_block_a_clean_sibling(
 
     assert report["summary"] == {"requested": 2, "cleared": 1, "blocked": 1}
     assert [entry["cleared"] for entry in report["samples"]] == [False, True]
+
+
+# --- rights basis --------------------------------------------------------------------------------
+#
+# Bound documents are the strongest basis and are not always proportionate. An owner publishing
+# their own academy's footage may hold consent perfectly well without a signed artifact per
+# participant. The framework does not force the stronger basis; it requires the release to say which
+# one it used.
+
+
+def _attestation(load_example, **overrides: Any) -> dict[str, Any]:
+    document: dict[str, Any] = load_example("release-rights-basis.json")
+    document.update(overrides)
+    return document
+
+
+def test_without_a_declaration_the_release_rests_on_documents(release, load_example) -> None:
+    report = preflight(release, [load_example("media-grant.json")])
+
+    assert report["rights_basis"] == "bound_documents"
+    assert report["relaxed_requirements"] == []
+
+
+def test_an_attestation_clears_a_release_with_no_grants_at_all(release, load_example) -> None:
+    report = preflight(release, [], None, _attestation(load_example))
+
+    assert report["rights_basis"] == "owner_attestation"
+    assert report["summary"] == {"requested": 1, "cleared": 1, "blocked": 0}
+
+
+def test_the_report_names_every_requirement_the_attestation_stood_in_for(
+    release, load_example
+) -> None:
+    report = preflight(release, [], None, _attestation(load_example))
+
+    assert "no_grant" in report["relaxed_requirements"]
+    assert "participant_consent_missing_public_evidence" in report["relaxed_requirements"]
+    assert "guardian_authorization_missing" in report["relaxed_requirements"]
+
+
+def test_a_recorded_withdrawal_still_blocks_under_an_attestation(
+    release, load_example, load_fixture
+) -> None:
+    # An attestation stands in for documents nobody produced. It does not stand in for a fact
+    # somebody recorded: if a participant withdrew, that is known, and no attestation unknows it.
+    withdrawn = load_fixture("media/participant-withdrawn.json")
+    withdrawn["sample_id"] = release["sample_ids"][0]
+
+    report = preflight(release, [withdrawn], None, _attestation(load_example))
+
+    assert report["summary"]["blocked"] == 1
+    assert [gap["requirement"] for gap in report["samples"][0]["gaps"]] == ["participant_withdrawn"]
+
+
+def test_conflicting_grants_still_block_under_an_attestation(
+    release, load_example, load_fixture
+) -> None:
+    clearing, blocking = _conflicting_pair(load_example, load_fixture)
+
+    report = preflight(release, [blocking, clearing], None, _attestation(load_example))
+
+    assert "duplicate_grants" in {gap["requirement"] for gap in report["samples"][0]["gaps"]}
+
+
+def test_an_attestation_must_carry_its_attestation(load_example) -> None:
+    document = _attestation(load_example)
+    document.pop("attestation")
+
+    messages = [issue.render() for issue in validate_document(document)]
+
+    assert any("who attested" in message for message in messages)
+
+
+def test_a_documents_basis_may_not_carry_an_attestation(load_example) -> None:
+    document = _attestation(load_example, basis="bound_documents")
+
+    messages = [issue.render() for issue in validate_document(document)]
+
+    assert any("belongs only to an owner_attestation" in message for message in messages)
+
+
+def test_a_rights_basis_for_another_release_is_refused(release, load_example) -> None:
+    other = _attestation(load_example, release_id="some-other-release")
+
+    with pytest.raises(ValueError, match="names a different release"):
+        preflight(release, [], None, other)
+
+
+def test_rights_basis_must_be_a_rights_basis_document(release, load_example) -> None:
+    with pytest.raises(ValueError, match="must use ReleaseRightsBasisV1"):
+        preflight(release, [], None, load_example("evidence-release.json"))

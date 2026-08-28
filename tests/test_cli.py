@@ -197,6 +197,32 @@ def test_media_preflight_exits_nonzero_when_a_sample_is_not_cleared(
     assert report["samples"][0]["gaps"][0]["requirement"] == "no_grant"
 
 
+def test_media_preflight_accepts_an_owner_attestation(
+    tmp_path: Path, capsys, load_example, examples_root: Path
+) -> None:
+    grants = tmp_path / "grants"
+    grants.mkdir()
+    release_path = tmp_path / "release.json"
+    release_path.write_text(json.dumps(load_example("evidence-release.json")), encoding="utf-8")
+
+    assert (
+        main(
+            [
+                "media-preflight",
+                str(release_path),
+                str(grants),
+                "--rights-basis",
+                str(examples_root / "release-rights-basis.json"),
+            ]
+        )
+        == 0
+    )
+
+    report = _json_output(capsys)
+    assert report["rights_basis"] == "owner_attestation"
+    assert report["summary"]["blocked"] == 0
+
+
 def test_parser_requires_a_command() -> None:
     with pytest.raises(SystemExit):
         main([])

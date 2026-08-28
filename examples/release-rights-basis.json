@@ -1,0 +1,17 @@
+{
+  "attestation": {
+    "attested_at": "2026-08-28T00:00:00Z",
+    "attested_by": "synthetic owner",
+    "covers": [
+      "participant consent for public evidence",
+      "venue recording permission"
+    ],
+    "statement": "Consent to publish evidence derived from these samples, and permission to record at the venue, are held for every sample in this release. No per-participant document is bound to this release."
+  },
+  "basis": "owner_attestation",
+  "notes": "Synthetic contract fixture; no real footage, venue, or person is described.",
+  "record_id": "rights-basis-synthetic-preview",
+  "release_id": "synthetic-preview-v0",
+  "schema_name": "ReleaseRightsBasisV1",
+  "schema_version": "1.0.0"
+}
