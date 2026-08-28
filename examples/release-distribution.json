@@ -1,0 +1,15 @@
+{
+  "distribution": "evidence_only",
+  "independent_rescoring_possible": false,
+  "rationale": "This release publishes measurements derived from footage rather than the footage. A reader can audit the contracts, the scoring inputs by sample ID, and the cost arithmetic, and cannot re-run the scorer against the original video.",
+  "record_id": "release-distribution-synthetic-preview",
+  "release_id": "synthetic-preview-v0",
+  "schema_name": "ReleaseDistributionV1",
+  "schema_version": "1.0.0",
+  "upgrade_path": "A later release may declare media_included once the source media is hosted; nothing in this declaration prevents that.",
+  "withheld": [
+    "source media for every sample",
+    "annotator identity",
+    "venue identity"
+  ]
+}

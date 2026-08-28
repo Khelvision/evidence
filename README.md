@@ -47,7 +47,8 @@ python -m venv .venv
 .venv/bin/evidence score examples/rallies/truth.json examples/rallies/prediction.json
 .venv/bin/evidence compare examples/runs/system-a.json examples/runs/system-b.json
 .venv/bin/evidence project examples/private-evidence-record.json --output dist/public.json
-.venv/bin/evidence media-preflight examples/evidence-release.json examples
+.venv/bin/evidence media-preflight examples/evidence-release.json examples \
+  --distribution examples/release-distribution.json
 .venv/bin/evidence package examples dist/examples.tar.gz
 ```
 

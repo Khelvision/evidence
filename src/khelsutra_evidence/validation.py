@@ -316,6 +316,7 @@ def _semantic_issues(document: JsonObject) -> list[ValidationIssue]:
         "PrivateEvidenceRecordV1": _private_record_issues,
         "ConformanceSuiteV1": _conformance_issues,
         "MediaGrantV1": _media_grant_issues,
+        "ReleaseDistributionV1": _release_distribution_issues,
     }
     issues = checks.get(name, lambda _: [])(document)
     if name not in _EMBEDDED_CORPUS_SCHEMAS:
@@ -588,6 +589,23 @@ def _private_record_issues(document: JsonObject) -> list[ValidationIssue]:
     if document["public"].get("schema_name") not in schemas_by_name():
         issues.append(
             ValidationIssue("public.schema_name", "must name a published public evidence contract")
+        )
+    return issues
+
+
+def _release_distribution_issues(document: JsonObject) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
+    evidence_only = document["distribution"] == "evidence_only"
+    if evidence_only and document["independent_rescoring_possible"]:
+        issues.append(
+            ValidationIssue(
+                "independent_rescoring_possible",
+                "cannot be true without the source media a reader would re-score",
+            )
+        )
+    if evidence_only and not document["withheld"]:
+        issues.append(
+            ValidationIssue("withheld", "an evidence-only release must name what it withholds")
         )
     return issues
 

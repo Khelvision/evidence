@@ -172,3 +172,88 @@ def test_gap_renders_for_a_human(load_fixture) -> None:
     assert gap.render() == (
         "synthetic-sample-001: venue_permission_unresolved: venue permission is 'unknown'"
     )
+
+
+# --- distribution mode -------------------------------------------------------------------------
+
+
+def _distribution(load_example, **overrides: Any) -> dict[str, Any]:
+    document: dict[str, Any] = load_example("release-distribution.json")
+    document.update(overrides)
+    return document
+
+
+def test_without_a_declaration_the_release_is_read_as_handing_over_media(
+    release, load_example
+) -> None:
+    report = preflight(release, [load_example("media-grant.json")])
+
+    assert report["distribution"] == "media_included"
+    assert report["distribution_declared"] is False
+    assert report["relaxed_requirements"] == []
+
+
+def test_evidence_only_relaxes_the_media_publication_grant_and_nothing_else(
+    load_fixture,
+) -> None:
+    for filename, requirement in BLOCKING_FIXTURES:
+        gaps = grant_gaps(load_fixture(f"media/{filename}"), evidence_only=True)
+        requirements = {gap.requirement for gap in gaps}
+        if requirement == "publication_not_verified_clear":
+            assert requirements == set(), filename
+        else:
+            assert requirements == {requirement}, filename
+
+
+def test_evidence_only_report_names_what_it_stopped_checking(
+    release, load_example, load_fixture
+) -> None:
+    blocked = load_fixture("media/publication-not-clear.json")
+    blocked["sample_id"] = "synthetic-match-001"
+
+    report = preflight(release, [blocked], _distribution(load_example))
+
+    assert report["summary"]["cleared"] == 1
+    assert report["relaxed_requirements"] == ["publication_not_verified_clear"]
+    assert report["distribution_declared"] is True
+
+
+def test_a_distribution_for_another_release_is_refused(release, load_example) -> None:
+    other = _distribution(load_example, release_id="some-other-release")
+
+    with pytest.raises(ValueError, match="names a different release"):
+        preflight(release, [load_example("media-grant.json")], other)
+
+
+def test_distribution_must_be_a_distribution_document(release, load_example) -> None:
+    with pytest.raises(ValueError, match="must use ReleaseDistributionV1"):
+        preflight(
+            release, [load_example("media-grant.json")], load_example("evidence-release.json")
+        )
+
+
+def test_evidence_only_cannot_claim_independent_rescoring(load_example) -> None:
+    document = _distribution(load_example, independent_rescoring_possible=True)
+
+    messages = [issue.render() for issue in validate_document(document)]
+
+    assert any("without the source media" in message for message in messages)
+
+
+def test_evidence_only_must_name_what_it_withholds(load_example) -> None:
+    document = _distribution(load_example, withheld=[])
+
+    messages = [issue.render() for issue in validate_document(document)]
+
+    assert any("must name what it withholds" in message for message in messages)
+
+
+def test_media_included_may_claim_independent_rescoring(load_example) -> None:
+    document = _distribution(
+        load_example,
+        distribution="media_included",
+        independent_rescoring_possible=True,
+        withheld=[],
+    )
+
+    assert validate_document(document) == []

@@ -11,7 +11,8 @@ The v1 contracts are grouped into:
 - owner workspace, model package, adaptation, and portability;
 - coach instruction, evidence recipe, and agent-run receipt;
 - the private superset envelope that projects into a public record;
-- the media grant that records whether footage may be published; and
+- the media grant that records whether footage may be published;
+- the release distribution that records whether footage is actually handed over; and
 - the conformance suite that pins normative behaviour.
 
 `PrivateEvidenceRecordV1` is the only contract a producer holds privately. It wraps exactly one public
