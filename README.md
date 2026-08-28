@@ -33,6 +33,7 @@ site source.
 - Fail-closed validation, a private-superset-to-public projector, a media-grant preflight, and
   public-package safety scanning.
 - Content-addressed coach plans, source-bound reel recipes, and clean-environment portability receipts.
+- Operation-mode disclosure, so a model's score and a person's score are never silently compared.
 - A portable conformance suite that pins the contract's normative behaviour in one file.
 - Separate official and community registries.
 - Static evidence-site source whose release index is generated from the registries, not typed

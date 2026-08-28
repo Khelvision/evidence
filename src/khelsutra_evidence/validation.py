@@ -317,6 +317,7 @@ def _semantic_issues(document: JsonObject) -> list[ValidationIssue]:
         "ConformanceSuiteV1": _conformance_issues,
         "MediaGrantV1": _media_grant_issues,
         "ReleaseDistributionV1": _release_distribution_issues,
+        "SystemProvenanceV1": _system_provenance_issues,
     }
     issues = checks.get(name, lambda _: [])(document)
     if name not in _EMBEDDED_CORPUS_SCHEMAS:
@@ -589,6 +590,43 @@ def _private_record_issues(document: JsonObject) -> list[ValidationIssue]:
     if document["public"].get("schema_name") not in schemas_by_name():
         issues.append(
             ValidationIssue("public.schema_name", "must name a published public evidence contract")
+        )
+    return issues
+
+
+def _system_provenance_issues(document: JsonObject) -> list[ValidationIssue]:
+    issues: list[ValidationIssue] = []
+    mode = document["operation_mode"]
+    basis = document["disclosure_basis"]
+    human_minutes = document.get("human_minutes_per_source_hour")
+
+    if mode in {"human_in_the_loop", "human_produced"} and human_minutes is None:
+        issues.append(
+            ValidationIssue(
+                "human_minutes_per_source_hour",
+                f"is required for {mode!r}; how much human time it takes is the comparable fact",
+            )
+        )
+    if mode == "automated" and human_minutes:
+        issues.append(
+            ValidationIssue(
+                "human_minutes_per_source_hour",
+                "must be zero or absent for an automated run",
+            )
+        )
+    if mode == "undisclosed" and basis != "unknown":
+        issues.append(
+            ValidationIssue(
+                "disclosure_basis",
+                "must be 'unknown' when the operation mode is undisclosed",
+            )
+        )
+    if basis in {"vendor_stated", "observed"} and not document.get("evidence_refs"):
+        issues.append(
+            ValidationIssue(
+                "evidence_refs",
+                f"a {basis!r} disclosure must bind the document or observation it rests on",
+            )
         )
     return issues
 

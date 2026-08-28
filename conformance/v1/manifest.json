@@ -11,7 +11,8 @@
           "left_run_id": "synthetic-run-a",
           "quality_comparable": false,
           "reasons": [
-            "task contract matches but the runs share no sample IDs"
+            "task contract matches but the runs share no sample IDs",
+            "operation mode is undisclosed for both runs; a number produced by a model and one produced by a person are different claims"
           ],
           "record_id": "comparison-00bbe989cc808c43fd60",
           "right_only_sample_ids": [
@@ -207,7 +208,8 @@
           "left_run_id": "synthetic-run-a",
           "quality_comparable": false,
           "reasons": [
-            "task contract differs: scorer_version"
+            "task contract differs: scorer_version",
+            "operation mode is undisclosed for both runs; a number produced by a model and one produced by a person are different claims"
           ],
           "record_id": "comparison-06908447e79ef2dbeb4b",
           "right_only_sample_ids": [],
@@ -411,7 +413,8 @@
           "left_run_id": "synthetic-run-a",
           "quality_comparable": true,
           "reasons": [
-            "task, scorer, samples, and strata match; cost evidence is incomplete"
+            "task, scorer, samples, and strata match; cost evidence is incomplete",
+            "operation mode is undisclosed for both runs; a number produced by a model and one produced by a person are different claims"
           ],
           "record_id": "comparison-3e82a50d37d0d5549285",
           "right_only_sample_ids": [],
@@ -586,7 +589,8 @@
           "left_run_id": "synthetic-run-a",
           "quality_comparable": true,
           "reasons": [
-            "task, scorer, samples, strata, and cost evidence are compatible"
+            "task, scorer, samples, strata, and cost evidence are compatible",
+            "operation mode is undisclosed for both runs; a number produced by a model and one produced by a person are different claims"
           ],
           "record_id": "comparison-ff17451deaf8a7df346f",
           "right_only_sample_ids": [],
@@ -790,7 +794,8 @@
           "left_run_id": "synthetic-run-a",
           "quality_comparable": true,
           "reasons": [
-            "only a strict subset of sample IDs is shared"
+            "only a strict subset of sample IDs is shared",
+            "operation mode is undisclosed for both runs; a number produced by a model and one produced by a person are different claims"
           ],
           "record_id": "comparison-9943536ea41c29b3ed1b",
           "right_only_sample_ids": [
@@ -2745,7 +2750,7 @@
   "schema_version": "1.0.0",
   "suite_digest": {
     "algorithm": "sha256",
-    "value": "412d9488a803cb73bb1a45aefc9930192d3be1ed6360af71ae220aff71abe638"
+    "value": "a7174ecee582164da5b769e3b4bc02fe35483ad84a31fb2bc96efe4a6f18a0e9"
   },
   "suite_id": "khelsutra-evidence-conformance-v1"
 }

@@ -13,3 +13,8 @@ The comparison command returns a verdict and reasons; it never silently normaliz
 The report lists shared and unpaired sample IDs and the exact fields that caused the verdict. Licensing and
 media rights remain independent gates: technical compatibility does not authorize running or publishing a
 comparison.
+
+A verdict says nothing about *how* either side produced its numbers. Pass `--provenance` and the report
+also names each run's operation mode, or says that nobody declared it — because a score a model produced
+and a score a person produced are different claims even when the task contract matches exactly. See
+[how a system's output was produced](SYSTEM_PROVENANCE.md).
