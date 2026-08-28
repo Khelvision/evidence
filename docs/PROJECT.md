@@ -185,6 +185,14 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-28 — Locked the conflicting-grants property that KE-9b's fix established. KE-9's defect was
+  order-dependent — a blocking grant followed by a clearing one cleared the sample — so a single
+  arrangement passing proves little. The new cases assert that no arrangement clears: either order,
+  under `evidence_only` where the relaxation would otherwise launder exactly the requirement the
+  blocking grant withholds, when both grants agree, and without punishing a clean sibling sample.
+  Removing the fix fails all of them, which is the only evidence that a regression test is load-bearing.
+  KE-9's original fixtures could never have caught this: each tested one grant in isolation, so none of
+  them could express two grants disagreeing.
 - 2026-08-28 — KE-9b makes duplicate media grants and a granted purpose without `grant_ref` fail
   closed, and refuses `MediaGrantV1` / `PrivateEvidenceRecordV1` inside `evidence package`. KE-9's
   preflight remains the rights checklist; this row stops last-wins clearance and accidental public
