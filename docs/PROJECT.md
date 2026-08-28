@@ -197,6 +197,14 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-28 — Filed the three missing merge receipts, for KE-9c, KE-11 and KE-12. `AGENTS.md` requires
+  every merged row to record one; that rule was added in the same session that then merged three rows
+  without following it, which is a poor advertisement for the rule. KE-9c and KE-11 met the gate. KE-12
+  did not, and differently from KE-8 and KE-7a: those were merged shortly before a run went green, while
+  KE-12 was merged with **no terminal status on its head at all**. Its merged tree is supported by the
+  green push run on `1874742` instead, which verifies the content after the fact rather than gating it.
+  Also annotated the red runs on `2efaeeb` and the two `docker create` failures, so a later reader does
+  not mistake a stuck daemon or a status race for a broken diff.
 - 2026-08-28 — KE-12 adds `ReleaseRightsBasisV1`, recording the owner decision that the rights checks
   should be lighter and not always tightly binding. Bound documents are the strongest basis and are not
   always proportionate: an owner publishing their own academy's footage may hold consent and venue
@@ -340,11 +348,28 @@ after the merge. Times are IST.
 | KE-8 | #5 | `d13202c` | `f04a78e` | [run 17](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/17) success | 12:27:30 | 12:25:25 | **no — green 2m05s after** |
 | KE-7a | #6 | `be6f30b` | `82e3f02` | [run 20](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/20) success | 12:37:10 | 12:34:11 | **no — green 2m59s after** |
 | KE-9b | #10 | `05f9d3b` | `2b99707` | [run 32](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/32) success | before merge | 2026-08-28 12:00 | yes |
+| KE-9c | #11 | `ca3c407` | `380b221` | [run 35](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/35) success | 12:14:13 | 12:18:01 | yes |
+| KE-11 | #12 | `2efaeeb` | `20fe5c7` | [run 41](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/41) success | 12:59:04 | 14:56:09 | yes |
+| KE-12 | #14 | `0493ee8` | `1874742` | [run 46](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/46) still running | — | 17:13:58 | **no — no terminal status existed** |
 
 Every reviewed head in this table verified green, and each had passed the full local gate before its
 pull request opened, so no merged tree is in question. What the two `no` rows record is that the gate
 was not consulted, which is a different fact and worth keeping: a green board read afterwards cannot
 tell you whether it was green at the moment someone pressed merge.
+
+KE-12 is the third `no`, and a different one from the first two. KE-8 and KE-7a were merged two and
+three minutes before a run that then went green. KE-12 was merged while its head carried **no terminal
+status at all** — its run was still going, and at the time of writing it still is. What supports the
+merged tree is the push run on `1874742`, which is green: the content is verified, on main, after the
+fact. That is a weaker thing than the gate and worth naming as such.
+
+Three of the red runs in this history are the same infrastructure and not defects. Runs 34 and 39 died
+at `docker create` with `write /mnt/dharti/docker/volumes/metadata.db: read-only file system`, six log
+lines each, before `git checkout` — the runner host's btrfs volume briefly remounted read-only and
+`dockerd` held that stale view until it was restarted. `2efaeeb` also carries 27 failure statuses
+against 4 successes for a related reason: the dead pre-restart run kept re-posting into the same status
+context, and once stamped a `failure` one second after the good run's `success`, so the board read red
+while the job it described had already been cancelled. Run 41 is the single clean run on that head.
 
 Runs 4105 and 4107 on `d38fed6` are red and are not defects. Both died inside `pip install` with
 `context deadline exceeded` against the Docker socket, reaching no gate step, while three heavyweight
