@@ -146,7 +146,10 @@ stack rows.
    completion or public model claim. The canonical six-clip macro tolF1 moved from 0.4572 to 0.6800
    (+0.2229), but the panel is historically reused and adaptive, the training mix is sport-imbalanced,
    and pickleball remains 0.0000 at the locked threshold. A disjoint held-out ruler plus the full
-   export, restore, replay, promotion, and rollback proof remains required for v0.3.
+   export, restore, replay, promotion, and rollback proof remains required for v0.3. Vault PR #236 head
+   `e6c6254672b337ffb996d3cce022d1810c9a39b0` now persists the candidate checkpoint registry entry;
+   `storagectl` identity and Tier-F byte-custody verification pass, but the open PR is not default-branch
+   evidence and the receipt grants no usage, training, redistribution, or promotion authority.
 
 ## 7. Definition of Done
 
@@ -216,7 +219,9 @@ stack rows.
   0.6800 (+0.2229), with adapted badminton 0.8885, table tennis 0.5263, and pickleball 0.0000 at the
   locked threshold. The panel is historically reused and adaptive, so this does not close KE-5 or
   support a public accuracy or unseen-generalization claim. The new note binds the result to exact
-  producer revisions and carries the imbalance and scorer-boundary caveats forward.
+  producer revisions and carries the imbalance and scorer-boundary caveats forward. A follow-up on
+  vault PR #236 persisted the candidate checkpoint registry entry at `e6c6254`; focused custody tests,
+  evidence-hash verification, and Tier-F byte verification passed without changing its authority.
 - 2026-08-30 — Added the KE-13 alternative-annotation strategy after the paid authenticated GGAB pass.
   The two new returns are partial (GX010164: 39/159 rallies/shots through 536.47 s; GX010165: 28/113
   through 379.78 s), so they cannot replace the existing owner-golden sets. More importantly, GGAB's

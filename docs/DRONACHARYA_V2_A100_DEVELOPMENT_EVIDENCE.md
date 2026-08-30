@@ -78,9 +78,17 @@ interpretable. This is an experimental recommendation, not a KE-5 gate change.
   canonical audit at `71bdcf6a7bc6b41d628f1455958f5ba60f9d03dc`.
 - [rally-corpus-vault PR #236](https://avis-pbook.tail651ec3.ts.net/Khelsutra/rally-corpus-vault/pulls/236):
   custody sidecar at reviewed head `222b28052e1d904d2925a29511f110af9652eaeb`, file
-  `operations/model-custody/2026-08-30-racket-window-r64-v1/upstream-evidence-v2.json`.
+  `operations/model-custody/2026-08-30-racket-window-r64-v1/upstream-evidence-v2.json`; follow-up head
+  `e6c6254672b337ffb996d3cce022d1810c9a39b0` also persists the candidate checkpoint registry entry.
 - [sports-data-collector PR #92](https://avis-pbook.tail651ec3.ts.net/Khelsutra/sports-data-collector/pulls/92):
   label-inventory evidence.
 
 Producer repositories retain their private artifacts and operational history. This repository links
 their exact revisions without claiming to own or publish those artifacts.
+
+At follow-up head `e6c6254`, 89 focused custody tests passed. `storagectl weights verify` returned
+`WEIGHTS_VERIFY_OK`, and byte verification of the registered Tier-F replica returned
+`WEIGHTS_CUSTODY_OK` with weights ID
+`sha256:f585a2eaf4aa0da963337c3e4d871a25a7b90322b443e8ed9798d5617221bd48`. These receipts verify
+identity and custody only; they grant no model usage, training, redistribution, production promotion,
+or serving-default authority.
