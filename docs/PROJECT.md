@@ -1,15 +1,16 @@
 # KhelSutra evidence delivery program
 
 > **Status:** `IN PROGRESS` · **Owner:** Avi Dullu · **Created:** 2026-08-22 ·
-> **Last updated:** 2026-08-28 (KE-9b merge receipt)
+> **Last updated:** 2026-08-30 (alternative annotations and A100 development evidence)
 >
 > **Lifecycle:** `DRAFT -> IN PROGRESS -> DONE -> ARCHIVED`
 >
 > **Tracking anchor:** the progress table in section 5 is the source of truth for this repository.
 > Each row is independently shippable and each implementation PR updates its own row and changelog.
 >
-> **Honesty note:** tracker rows project the state after their linked PR lands. Nothing in this file
-> claims a public model result, media grant, paid run, deployment, or completed backup propagation.
+> **Honesty note:** tracker rows project the state after their linked PR lands. External gate 11 records
+> a completed producer run by exact revision, but it is not a public model result, a KE-5 completion, a
+> media grant, a deployment, or completed backup propagation.
 
 ## 1. Objective
 
@@ -100,6 +101,7 @@ stack rows.
 | KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | [#9](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/9) |
 | KE-11 | Publish the system-provenance contract so a comparison states whether each side's output was produced by a model or a person, and refuse to publish a conclusion about somebody else's system | KE-1 | Comparison names both modes or names the undisclosed side; publication refused for any basis but `vendor_stated` | Complete | [#12](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/12) |
 | KE-12 | Publish the release-rights-basis contract so a release may rest on an owner attestation instead of bound documents, and say which it used | KE-9 | An attestation clears a release with no grants; a recorded withdrawal and conflicting grants still block; the report names every relaxed requirement | Complete | — |
+| KE-13 | Publish an alternative-annotation contract and disagreement report that cannot promote a second source into primary truth | KE-1, KE-11 | Synthetic partial-coverage fixtures prove coverage-aware boundary/taxonomy disagreement; permission and public-comparison gates fail closed; no real vendor labels are required | Pending | — |
 | KE-9b | Fail closed on duplicate grants and missing `grant_ref` when a purpose is granted, and refuse private grant/record schemas in `evidence package` | KE-9 | Duplicate grants block the sample; a granted purpose without `grant_ref` is a fixture-covered gap; packaging `MediaGrantV1` / `PrivateEvidenceRecordV1` is refused | Complete | [#10](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/10) |
 
 ## 6. External gates
@@ -135,6 +137,16 @@ stack rows.
    secret-shaped values in `tests/test_validation.py`, which exist so the public-safety scanner can be
    tested against them. They are reachable from merged history, so changing the current tip cannot clear
    them; only an owner action on the GitHub backup can. Agents do not push to GitHub.
+10. The 2026-08-30 authenticated GGAB pass is not an ingestion grant. Official GGAB terms say Avi retains
+   ownership of uploaded match data and annotations, but also prohibit bulk extraction and use of the
+   service to build a competing product without written consent. No GGAB label row enters BHI, a scorer,
+   training, or a public evidence package until the exact use is permitted in writing. The observed
+   operation mode is `undisclosed`; an application row marked `source=user` does not prove otherwise.
+11. The 2026-08-30 A100 Dronacharya-v2 E0 result is producer-owned development evidence, not a KE-5
+   completion or public model claim. The canonical six-clip macro tolF1 moved from 0.4572 to 0.6800
+   (+0.2229), but the panel is historically reused and adaptive, the training mix is sport-imbalanced,
+   and pickleball remains 0.0000 at the locked threshold. A disjoint held-out ruler plus the full
+   export, restore, replay, promotion, and rollback proof remains required for v0.3.
 
 ## 7. Definition of Done
 
@@ -186,6 +198,8 @@ stack rows.
 - [Walkthrough](WALKTHROUGH.md)
 - [Coach-agent authority](COACH_AGENT_AUTHORITY.md)
 - [Comparability verdicts](COMPARABILITY.md)
+- [Alternative annotation sources](ALTERNATIVE_ANNOTATION_SOURCES.md)
+- [Dronacharya-v2 A100 development evidence](DRONACHARYA_V2_A100_DEVELOPMENT_EVIDENCE.md)
 - [ADR-0001: how language-neutral is the contract](adr/0001-language-neutral-contract.md)
 - [Conformance suite](CONFORMANCE.md)
 - [Media grants, rights basis, distribution modes, and the publication preflight](MEDIA_GRANTS.md)
@@ -197,6 +211,18 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-08-30 — Recorded the corrected A100 Dronacharya-v2 E0 result as producer-owned development
+  evidence. The canonical audit supersedes the initial fork report: six-clip macro tolF1 is 0.4572 to
+  0.6800 (+0.2229), with adapted badminton 0.8885, table tennis 0.5263, and pickleball 0.0000 at the
+  locked threshold. The panel is historically reused and adaptive, so this does not close KE-5 or
+  support a public accuracy or unseen-generalization claim. The new note binds the result to exact
+  producer revisions and carries the imbalance and scorer-boundary caveats forward.
+- 2026-08-30 — Added the KE-13 alternative-annotation strategy after the paid authenticated GGAB pass.
+  The two new returns are partial (GX010164: 39/159 rallies/shots through 536.47 s; GX010165: 28/113
+  through 379.78 s), so they cannot replace the existing owner-golden sets. More importantly, GGAB's
+  official terms retain user ownership while restricting bulk extraction and competing-product use.
+  No raw label export was committed or scored. KE-13 will use synthetic fixtures until a real source has
+  written permission for the exact evaluation, model-improvement, redistribution, and publication uses.
 - 2026-08-28 — Filed the three missing merge receipts, for KE-9c, KE-11 and KE-12. `AGENTS.md` requires
   every merged row to record one; that rule was added in the same session that then merged three rows
   without following it, which is a poor advertisement for the rule. KE-9c and KE-11 met the gate. KE-12
