@@ -81,7 +81,7 @@ described above.
 
 Provider-token shapes — GitHub, Google, Slack, and AWS credential patterns — are exercised in this
 repository's own tests but are **not** embedded in the portable corpus. Committing a value that matches a
-credential pattern makes push mirrors fail GitHub push protection, which has already blocked this
+credential pattern can make push mirrors fail GitHub push protection; this previously blocked this
 repository's backup. Implementations should test those patterns against their own scanner; the corpus
 covers private endpoints, local paths, signed-URL credentials, and private-only field names instead.
 
