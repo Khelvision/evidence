@@ -3,6 +3,11 @@
 An open, local-first framework for publishing and comparing evidence from sports-video systems without
 turning a model score into a coaching claim.
 
+KhelSutra is the research, evidence, and open-tooling brand behind the KhelVision product. This public
+repository lives at [Khelvision/evidence](https://github.com/Khelvision/evidence). The existing
+`khelsutra-evidence` package, `khelsutra_evidence` import, and `urn:khelsutra:evidence:*` schema IDs are
+stable contract names; the GitHub organization move does not change them.
+
 > **KhelSutra is an AI agent for the coach. It is never the AI coach.**
 >
 > **You coach. KhelSutra does the video work.**
@@ -111,4 +116,5 @@ python tools/render_conformance.py   # after a deliberate behaviour change
 
 Forgejo runs the same lint, type, full-suite coverage, wheel, and clean-install gates from
 [`.forgejo/workflows/ci.yml`](.forgejo/workflows/ci.yml). No GitHub Actions workflow is included.
-Forgejo is authoritative; any GitHub repository is a disabled-Actions backup.
+Forgejo is authoritative; [Khelvision/evidence](https://github.com/Khelvision/evidence) is the
+public GitHub backup with Actions disabled.

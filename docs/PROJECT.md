@@ -1,7 +1,7 @@
 # KhelSutra evidence delivery program
 
 > **Status:** `IN PROGRESS` · **Owner:** Avi Dullu · **Created:** 2026-08-22 ·
-> **Last updated:** 2026-08-30 (alternative annotations and A100 development evidence)
+> **Last updated:** 2026-09-24 (GitHub organization migration check)
 >
 > **Lifecycle:** `DRAFT -> IN PROGRESS -> DONE -> ARCHIVED`
 >
@@ -10,7 +10,7 @@
 >
 > **Honesty note:** tracker rows project the state after their linked PR lands. External gate 11 records
 > a completed producer run by exact revision, but it is not a public model result, a KE-5 completion, a
-> media grant, a deployment, or completed backup propagation.
+> media grant, or a deployment. Backup propagation is a separate, point-in-time check.
 
 ## 1. Objective
 
@@ -130,13 +130,12 @@ stack rows.
 8. ADR-0001 is `Proposed`, not accepted. Until Avi decides, this repository does not claim that the
    contract is defined language-neutrally; it claims only that a portable suite pins the behaviour.
    Tracked on [issue #2](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/issues/2).
-9. The Forgejo-to-GitHub backup mirror is failing and needs an owner decision on GitHub. Every scheduled
-   push since KE-1 has been rejected: `PushRejected ... GH013: Repository rule violations found for
-   refs/heads/codex/initial-evidence-framework ... GITHUB PUSH PROTECTION ... Push cannot contain
-   secrets`, last attempted 2026-08-27T04:39:32+05:30. The flagged strings are the synthetic
-   secret-shaped values in `tests/test_validation.py`, which exist so the public-safety scanner can be
-   tested against them. They are reachable from merged history, so changing the current tip cannot clear
-   them; only an owner action on the GitHub backup can. Agents do not push to GitHub.
+9. The backup previously failed GitHub push protection on synthetic secret-shaped test values; the last
+   rejection recorded here was 2026-08-27T04:39:32+05:30. On 2026-09-24, the public repository is
+   [Khelvision/evidence](https://github.com/Khelvision/evidence), and its `main` head matches Forgejo
+   `main` at `d13903d2bafb0d8d52cd6f92e23e707262b483a2`. This proves the current head propagated,
+   not that scheduled mirroring will keep working after future commits. The test values remain in history;
+   preserve scanner coverage and check future mirror runs separately.
 10. The 2026-08-30 authenticated GGAB pass is not an ingestion grant. Official GGAB terms say Avi retains
    ownership of uploaded match data and annotations, but also prohibit bulk extraction and use of the
    service to build a competing product without written consent. No GGAB label row enters BHI, a scorer,
@@ -156,10 +155,11 @@ stack rows.
 - [x] KE-1 contains the initial contracts, tooling, synthetic examples, registries, site source, and
   tracker, and the package installs and runs from a clean environment. This proposed diff projects the
   state after PR #1 lands.
-- [x] GitHub Actions is disabled on the GitHub backup: `repos/Khelsutra/evidence/actions/permissions`
-  returned `{"enabled": false}` and the repository reports no workflows, verified 2026-08-27.
-- [ ] The exact Forgejo `main` head has **not** propagated to the GitHub backup. `Khelsutra/evidence` on
-  GitHub still has zero branches; the push mirror is blocked by external gate 9.
+- [x] GitHub Actions is disabled on the public backup: `repos/Khelvision/evidence/actions/permissions`
+  returned `{"enabled": false}`, verified 2026-09-24.
+- [x] The Forgejo and GitHub `main` heads matched at
+  `d13903d2bafb0d8d52cd6f92e23e707262b483a2` on 2026-09-24. This is a snapshot, not a
+  continuous mirror-health claim.
 - [x] External builders can validate, score, compare, and package their own evidence locally.
 - [x] A worked walkthrough takes an outside builder from an empty directory to a packaged public
   archive, including a real refusal. CI executes every command in it and checks every documented output
@@ -214,6 +214,11 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-09-24 — Checked the KhelSutra/KhelVision naming against the KhelVision marketing repository:
+  KhelSutra remains the research and open-tooling brand, so the package and schema IDs stay stable.
+  Updated the public GitHub home to `Khelvision/evidence`, verified that Actions is disabled and that
+  GitHub `main` matches Forgejo `main` at `d13903d2`, and retired the stale zero-branch/mirror-blocked
+  statements. Future mirror health still needs a fresh check after each new source commit.
 - 2026-08-30 — Recorded the corrected A100 Dronacharya-v2 E0 result as producer-owned development
   evidence. The canonical audit supersedes the initial fork report: six-clip macro tolF1 is 0.4572 to
   0.6800 (+0.2229), with adapted badminton 0.8885, table tennis 0.5263, and pickleball 0.0000 at the
