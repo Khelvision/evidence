@@ -38,11 +38,14 @@ The generated block ends with the SHA-256 of the canonical projection it rendere
 insignificant whitespace. A reader can recompute it from the registries and confirm the page shows
 exactly that data and nothing else. It moves when the registry data moves, and only then.
 
-It is a digest of the *release data*, not of the repository. Binding the page to a source revision as
-well belongs with a deployment that has a revision to bind, which does not exist yet.
+It is a digest of the *release data*, not of the repository. Binding the deployed page to a source
+revision belongs with the source-driven deployment path tracked as KE-7b.
 
-## What is not done here
+## Current publication state
 
-No site is deployed, and no domain is claimed. Publication needs explicit infrastructure authority and a
-source-driven deployment path — external gate 6 in [the tracker](PROJECT.md). This row delivers the
-source and its guarantees; it does not put anything on the internet.
+The page is publicly reachable at [evidence.khelsutra.guru](https://evidence.khelsutra.guru/)
+through a manually deployed Cloudflare Pages project. The custom domain and TLS are active. The Pages
+project is not connected to this repository, so a source change or merge does **not** update the live
+page automatically. KE-7b remains open until publication is source-driven and the deployed revision
+can be verified. Compare the live page with a reviewed source revision before calling any copy change
+published.

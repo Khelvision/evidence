@@ -96,6 +96,7 @@ stack rows.
 | KE-6 | Publish the v0.4 coach-agent query proof | KE-2a | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
 | KE-7a | Make the site source-driven: render the release index as an allowlisted projection of the registries, refuse what it may not publish, and stamp the exact release data it rendered | KE-1 | Checked-in page byte-identical to the renderer; refusals covered by tests | Complete | [#6](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/6) |
 | KE-7b | Deploy the durable evidence site | KE-7a | Explicit infrastructure/domain approval and a source-driven deployment path | Pending | — |
+| KE-7c | Make the evidence site clearly KhelVision-branded and connect product, app, research, and source destinations | KE-7a | Generated release index stays registry-bound; public links and claims checked against their destinations; reciprocal links tracked in owning sites | In progress | — |
 | KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
 | KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | [#8](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/8) |
 | KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | [#9](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/9) |
@@ -191,7 +192,9 @@ stack rows.
   escapes registry data so it cannot become markup; and it stamps the SHA-256 of the exact projection it
   rendered. CI fails if the checked-in page drifts from that projection. The page no longer asserts its
   own emptiness in prose beside the data.
-- [ ] No durable site is deployed and no domain is claimed. Publication remains external gate 6.
+- [x] A manually deployed Cloudflare Pages site is reachable at `evidence.khelsutra.guru` with TLS.
+- [ ] KE-7b: connect deployment to reviewed source and verify the deployed revision. The current
+  manual Pages deployment does not update when this repository changes.
 - [ ] Every required row is Complete; blocked or deferred work remains incomplete until shipped.
 
 ## 8. References
@@ -214,6 +217,10 @@ stack rows.
 
 ## 9. Changelog
 
+- 2026-09-24 — KE-7c drafts a KhelVision Evidence landing page, clarifies KhelSutra's role as the
+  open framework maintainer, and links the product, Android page, Studio, KhelSutra site, and public
+  source. The generated release index stays untouched. Recorded that the public Pages domain is active
+  but manually deployed; KE-7b remains open pending a source-driven deployment.
 - 2026-09-24 — Checked the KhelSutra/KhelVision naming against the KhelVision marketing repository:
   KhelSutra remains the research and open-tooling brand, so the package and schema IDs stay stable.
   Updated the public GitHub home to `Khelvision/evidence`, verified that Actions is disabled and that

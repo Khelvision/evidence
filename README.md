@@ -1,16 +1,19 @@
-# KhelSutra Evidence
+# KhelVision Evidence
 
 An open, local-first framework for publishing and comparing evidence from sports-video systems without
 turning a model score into a coaching claim.
 
-KhelSutra is the research, evidence, and open-tooling brand behind the KhelVision product. This public
-repository lives at [Khelvision/evidence](https://github.com/Khelvision/evidence). The existing
+KhelSutra is the research, evidence, and open-tooling organization behind the
+[KhelVision product](https://khelvision.com/). Explore the
+[evidence site and release index](https://evidence.khelsutra.guru/) or the
+[Android app page](https://khelvision.com/android). This public repository lives at
+[Khelvision/evidence](https://github.com/Khelvision/evidence). The existing
 `khelsutra-evidence` package, `khelsutra_evidence` import, and `urn:khelsutra:evidence:*` schema IDs are
 stable contract names; the GitHub organization move does not change them.
 
-> **KhelSutra is an AI agent for the coach. It is never the AI coach.**
+> **KhelVision helps the coach inspect video. It is never the AI coach.**
 >
-> **You coach. KhelSutra does the video work.**
+> **You coach. KhelVision does the video work.**
 
 This repository lets builders validate, score, compare, and package their own evidence. It treats real
 capture conditions, commercialization rights, inference economics, owner-model portability, failures,
@@ -18,7 +21,9 @@ and human authority as first-class data—not prose added after a result looks g
 
 ## Current public state
 
-**Framework preview only. There are no official KhelSutra quality releases in this repository yet.**
+**Framework preview only.** The [release index](https://evidence.khelsutra.guru/#release-index)
+shows the current official and community registry state; the live page is a manual deployment, so check
+the [source registries](registry/) when publication freshness matters.
 
 The checked-in examples are synthetic and exist to exercise the contracts. They are not product evidence,
 not a blind benchmark, and not permission to claim that the north-star coach query ships today.
@@ -42,7 +47,8 @@ site source.
 - A portable conformance suite that pins the contract's normative behaviour in one file.
 - Separate official and community registries.
 - Static evidence-site source whose release index is generated from the registries, not typed
-  beside them; publishable only after infrastructure approval.
+  beside them. The public Cloudflare Pages site is currently deployed manually; source-driven
+  deployment remains open as KE-7b in the [tracker](docs/PROJECT.md).
 
 ## Install and run
 
