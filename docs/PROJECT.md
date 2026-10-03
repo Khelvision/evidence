@@ -12,6 +12,9 @@
 > a completed producer run by exact revision, but it is not a public model result, a KE-5 completion, a
 > media grant, or a deployment. Backup propagation is a separate, point-in-time check.
 
+Private provenance references are retained by issue/run identifiers and commit revisions; their
+operational URLs are withheld. Access to those records remains separate from this public tracker.
+
 ## 1. Objective
 
 Publish a local-first, independently usable evidence framework for sports-video systems without turning
@@ -37,7 +40,7 @@ and CI integration. A producer obligation is linked here as an external dependen
 not mark work complete on behalf of BHI, code-doot, the vault, an app, or another repository.
 
 The BHI doctrine PR
-[#1063](https://avis-pbook.tail651ec3.ts.net/Khelsutra/badminton-highlight-indexer/pulls/1063)
+#1063 (private provenance reference)
 owns the engine/product wording and the coach-agent authority ratification. It does not own this
 repository's KE-1 through KE-7 delivery state.
 
@@ -87,23 +90,23 @@ stack rows.
 
 | ID | Deliverable | Depends on | Gate | Status | PR |
 |---|---|---|---|---|---|
-| KE-1 | Publish the initial schemas, CLI, scorer, comparability rationale, examples, community rules, static site source, Forgejo CI, ownership routing, and this tracker | BHI #1063 doctrine | BHI #1063 must land before this PR; exact-head verification is recorded on the PR | Complete | [#1](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/1) |
-| KE-2a | Publish the private-superset/public-projection contract, the projector, and negative fixtures; producer integrations remain in their own repositories | KE-1 | Security review of the envelope classification, refusal reasons, and negative fixtures | Complete | [#3](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/3) |
-| KE-2b | Publish the portable conformance suite that pins normative behaviour, and propose the normativity decision as an ADR | KE-2a | Conformance corpus rendered from the implementation, replayed independently by the Python tests, and free of expectations only Python can meet | Complete | [#4](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/4) |
+| KE-1 | Publish the initial schemas, CLI, scorer, comparability rationale, examples, community rules, static site source, Forgejo CI, ownership routing, and this tracker | BHI #1063 doctrine | BHI #1063 must land before this PR; exact-head verification is recorded on the PR | Complete | #1 (private provenance reference) |
+| KE-2a | Publish the private-superset/public-projection contract, the projector, and negative fixtures; producer integrations remain in their own repositories | KE-1 | Security review of the envelope classification, refusal reasons, and negative fixtures | Complete | #3 (private provenance reference) |
+| KE-2b | Publish the portable conformance suite that pins normative behaviour, and propose the normativity decision as an ADR | KE-2a | Conformance corpus rendered from the implementation, replayed independently by the Python tests, and free of expectations only Python can meet | Complete | #4 (private provenance reference) |
 | KE-3 | Publish the v0.1 demonstration release | KE-1, KE-2a, KE-9, KE-10, KE-12 | `evidence media-preflight` clears every sample under the declared distribution and rights basis, plus redaction and claims review | Blocked | — |
 | KE-4 | Publish the frozen v0.2 blind challenge | KE-3 | Rights-cleared frozen inventory, two annotators, frozen scorer/engine, no train/select overlap | Pending | — |
 | KE-5 | Publish the v0.3 owner-adaptation and portability proof | KE-2a | Authorized owner corpus, disjoint held-out ruler, and second clean environment | Pending | — |
 | KE-6 | Publish the v0.4 coach-agent query proof | KE-2a | Governed player/match/outcome/shot metadata and deterministic recipe renderer | Pending | — |
-| KE-7a | Make the site source-driven: render the release index as an allowlisted projection of the registries, refuse what it may not publish, and stamp the exact release data it rendered | KE-1 | Checked-in page byte-identical to the renderer; refusals covered by tests | Complete | [#6](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/6) |
+| KE-7a | Make the site source-driven: render the release index as an allowlisted projection of the registries, refuse what it may not publish, and stamp the exact release data it rendered | KE-1 | Checked-in page byte-identical to the renderer; refusals covered by tests | Complete | #6 (private provenance reference) |
 | KE-7b | Deploy the durable evidence site | KE-7a | Explicit infrastructure/domain approval and a source-driven deployment path | Pending | — |
-| KE-7c | Make the evidence site clearly KhelVision-branded and connect product, app, research, and source destinations | KE-7a | Generated release index stays registry-bound; public links and claims checked against their destinations; reciprocal links tracked in owning sites | In progress | [#17](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/17) |
-| KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | [#5](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/5) |
-| KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | [#8](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/8) |
-| KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | [#9](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/9) |
-| KE-11 | Publish the system-provenance contract so a comparison states whether each side's output was produced by a model or a person, and refuse to publish a conclusion about somebody else's system | KE-1 | Comparison names both modes or names the undisclosed side; publication refused for any basis but `vendor_stated` | Complete | [#12](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/12) |
+| KE-7c | Make the evidence site clearly KhelVision-branded and connect product, app, research, and source destinations | KE-7a | Generated release index stays registry-bound; public links and claims checked against their destinations; reciprocal links tracked in owning sites | In progress | #17 (private provenance reference) |
+| KE-8 | Publish a worked end-to-end walkthrough for outside builders, executed by CI | KE-2a | Every command runs in the test suite and every documented output is checked against real output | Complete | #5 (private provenance reference) |
+| KE-9 | Publish the media-grant contract and the publication preflight, so KE-3's rights gate is mechanical rather than a judgement made at publication time | KE-1 | Every blocking requirement covered by a fixture that withholds exactly one thing | Complete | #8 (private provenance reference) |
+| KE-10 | Publish the release-distribution contract so a release states whether it hands over its footage, and gate the preflight on it | KE-9 | Evidence-only relaxes exactly one requirement and the report names it | Complete | #9 (private provenance reference) |
+| KE-11 | Publish the system-provenance contract so a comparison states whether each side's output was produced by a model or a person, and refuse to publish a conclusion about somebody else's system | KE-1 | Comparison names both modes or names the undisclosed side; publication refused for any basis but `vendor_stated` | Complete | #12 (private provenance reference) |
 | KE-12 | Publish the release-rights-basis contract so a release may rest on an owner attestation instead of bound documents, and say which it used | KE-9 | An attestation clears a release with no grants; a recorded withdrawal and conflicting grants still block; the report names every relaxed requirement | Complete | — |
 | KE-13 | Publish an alternative-annotation contract and disagreement report that cannot promote a second source into primary truth | KE-1, KE-11 | Synthetic partial-coverage fixtures prove coverage-aware boundary/taxonomy disagreement; permission and public-comparison gates fail closed; no real vendor labels are required | Pending | — |
-| KE-9b | Fail closed on duplicate grants and missing `grant_ref` when a purpose is granted, and refuse private grant/record schemas in `evidence package` | KE-9 | Duplicate grants block the sample; a granted purpose without `grant_ref` is a fixture-covered gap; packaging `MediaGrantV1` / `PrivateEvidenceRecordV1` is refused | Complete | [#10](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/10) |
+| KE-9b | Fail closed on duplicate grants and missing `grant_ref` when a purpose is granted, and refuse private grant/record schemas in `evidence package` | KE-9 | Duplicate grants block the sample; a granted purpose without `grant_ref` is a fixture-covered gap; packaging `MediaGrantV1` / `PrivateEvidenceRecordV1` is refused | Complete | #10 (private provenance reference) |
 
 ## 6. External gates
 
@@ -130,7 +133,7 @@ stack rows.
    out of public packages, which `SystemProvenanceV1` now enforces.
 8. ADR-0001 is `Proposed`, not accepted. Until Avi decides, this repository does not claim that the
    contract is defined language-neutrally; it claims only that a portable suite pins the behaviour.
-   Tracked on [issue #2](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/issues/2).
+   Tracked on issue #2 (private provenance reference).
 9. The backup previously failed GitHub push protection on synthetic secret-shaped test values; the last
    rejection recorded here was 2026-08-27T04:39:32+05:30. On 2026-09-24, the public repository is
    [Khelvision/evidence](https://github.com/Khelvision/evidence), and its `main` head matches Forgejo
@@ -213,7 +216,7 @@ stack rows.
 - [Publication safety](PUBLICATION.md)
 - [Schema guide](SCHEMAS.md)
 - [Media terms](../MEDIA-LICENSE.md)
-- [BHI doctrine PR #1063](https://avis-pbook.tail651ec3.ts.net/Khelsutra/badminton-highlight-indexer/pulls/1063)
+- BHI doctrine PR #1063 (private provenance reference)
 
 ## 9. Changelog
 
@@ -222,8 +225,8 @@ stack rows.
   source. The generated release index stays untouched. Recorded that the public Pages domain is active
   but manually deployed; KE-7b remains open pending a source-driven deployment. Reciprocal links are
   owned by [KhelVision site PR #20](https://github.com/kartiks/khel-vision-app-site/pull/20) and
-  [KhelSutra site PR #503](https://avis-pbook.tail651ec3.ts.net/Khelsutra/khelsutra/pulls/503);
-  [marketing bug #33](https://avis-pbook.tail651ec3.ts.net/Khelsutra/marketing/issues/33)
+  KhelSutra site PR #503 (private provenance reference);
+  marketing bug #33 (private provenance reference)
   tracks live readback after deployment.
 - 2026-09-24 — Checked the KhelSutra/KhelVision naming against the KhelVision marketing repository:
   KhelSutra remains the research and open-tooling brand, so the package and schema IDs stay stable.
@@ -264,7 +267,7 @@ stack rows.
   covered, so nobody reads a cleared release as one whose documents were checked. Without a declaration
   the stricter reading still applies.
 - 2026-08-28 — KE-9b merge receipt: the fail-closed duplicate-grant / `grant_ref` / private-package
-  row landed as [#10](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/pulls/10) (`05f9d3b` →
+  row landed as #10 (private provenance reference) (`05f9d3b` →
   `2b99707`). The progress table no longer says `this PR`.
 - 2026-08-28 — KE-11 adds `SystemProvenanceV1`, so a comparison can say whether each side's output came
   from a model or a person. A score of 0.90 means one thing automated and another when somebody watched
@@ -389,15 +392,15 @@ after the merge. Times are IST.
 
 | Row | PR | Reviewed head | Merge commit | Exact-head CI | Green | Merged | Gate met first |
 |---|---|---|---|---|---|---|---|
-| KE-1 | #1 | `f04634a` | `e467f03` | [run 4](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/4) success | 2026-08-22 18:35 | 2026-08-22 22:21 | yes |
-| KE-2a | #3 | `391be05` | `dc092b0` | [run 7](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/7) success | 07:28:26 | 07:46:20 | yes |
-| KE-2b | #4 | `d38fed6` | `7986788` | [run 13](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/13) success | 09:10:16 | 12:22:22 | yes |
-| KE-8 | #5 | `d13202c` | `f04a78e` | [run 17](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/17) success | 12:27:30 | 12:25:25 | **no — green 2m05s after** |
-| KE-7a | #6 | `be6f30b` | `82e3f02` | [run 20](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/20) success | 12:37:10 | 12:34:11 | **no — green 2m59s after** |
-| KE-9b | #10 | `05f9d3b` | `2b99707` | [run 32](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/32) success | before merge | 2026-08-28 12:00 | yes |
-| KE-9c | #11 | `ca3c407` | `380b221` | [run 35](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/35) success | 12:14:13 | 12:18:01 | yes |
-| KE-11 | #12 | `2efaeeb` | `20fe5c7` | [run 41](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/41) success | 12:59:04 | 14:56:09 | yes |
-| KE-12 | #14 | `0493ee8` | `1874742` | [run 46](https://avis-pbook.tail651ec3.ts.net/Khelsutra/evidence/actions/runs/46) still running | — | 17:13:58 | **no — no terminal status existed** |
+| KE-1 | #1 | `f04634a` | `e467f03` | run 4 (private provenance reference) success | 2026-08-22 18:35 | 2026-08-22 22:21 | yes |
+| KE-2a | #3 | `391be05` | `dc092b0` | run 7 (private provenance reference) success | 07:28:26 | 07:46:20 | yes |
+| KE-2b | #4 | `d38fed6` | `7986788` | run 13 (private provenance reference) success | 09:10:16 | 12:22:22 | yes |
+| KE-8 | #5 | `d13202c` | `f04a78e` | run 17 (private provenance reference) success | 12:27:30 | 12:25:25 | **no — green 2m05s after** |
+| KE-7a | #6 | `be6f30b` | `82e3f02` | run 20 (private provenance reference) success | 12:37:10 | 12:34:11 | **no — green 2m59s after** |
+| KE-9b | #10 | `05f9d3b` | `2b99707` | run 32 (private provenance reference) success | before merge | 2026-08-28 12:00 | yes |
+| KE-9c | #11 | `ca3c407` | `380b221` | run 35 (private provenance reference) success | 12:14:13 | 12:18:01 | yes |
+| KE-11 | #12 | `2efaeeb` | `20fe5c7` | run 41 (private provenance reference) success | 12:59:04 | 14:56:09 | yes |
+| KE-12 | #14 | `0493ee8` | `1874742` | run 46 (private provenance reference) still running | — | 17:13:58 | **no — no terminal status existed** |
 
 Every reviewed head in this table verified green, and each had passed the full local gate before its
 pull request opened, so no merged tree is in question. What the two `no` rows record is that the gate
