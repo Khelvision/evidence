@@ -13,6 +13,7 @@ from jsonschema.exceptions import SchemaError
 from referencing.exceptions import Unresolvable
 
 from .comparison import collect_provenance, compare_runs
+from .disclosure import DisclosureControls, scan_disclosures
 from .media import collect_grants, preflight
 from .packaging import package_directory
 from .projection import canonical_public_bytes, projection_refusals
@@ -79,13 +80,37 @@ def _parser() -> argparse.ArgumentParser:
         type=Path,
         help="ReleaseRightsBasisV1 document; without it the release rests on bound documents",
     )
+    disclosure = subparsers.add_parser(
+        "disclosure-review", help="scan IP disclosures without echoing content"
+    )
+    disclosure.add_argument("path", type=Path)
+    disclosure.add_argument("--controls", type=Path)
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
-        if args.command == "init":
+        if args.command == "disclosure-review":
+            controls = (
+                DisclosureControls.parse(load_json(args.controls))
+                if args.controls
+                else DisclosureControls()
+            )
+            findings = scan_disclosures(args.path, controls)
+            _emit(
+                {
+                    "mode": controls.mode,
+                    "enabled": controls.enabled,
+                    "findings": findings,
+                    "scope": (
+                        "heuristic IP review only; "
+                        "existing publication and Git history are unchanged"
+                    ),
+                }
+            )
+            return 1 if controls.mode == "enforce" and findings else 0
+        elif args.command == "init":
             files = initialize_workspace(args.destination)
             _emit({"status": "created", "files": [str(path) for path in files]})
         elif args.command == "verify":

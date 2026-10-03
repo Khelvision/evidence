@@ -113,6 +113,11 @@ coaching conclusion.
 
 ## Development
 
+Run `evidence disclosure-review .` to report potential proprietary recipes, private service
+references, and model assets. This heuristic reports file locations and categories without printing
+matched content. Forgejo runs it in observe mode. See [publication safety](docs/PUBLICATION.md) for
+the master switch, independent feature switches, and enforce mode.
+
 ```bash
 ruff check .
 mypy src
