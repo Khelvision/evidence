@@ -1,22 +1,26 @@
 # Dronacharya-v2 A100 development evidence
 
 This note records what the 2026-08-30 Dronacharya-v2 E0 run establishes, what it does not establish,
-and which exact producer artifacts carry the result. It is an input to KE-5 planning. It is not a
-public evidence release or a completion record for v0.3.
+and how the result is tied to producer evidence. It is an input to KE-5 planning, not a formal
+public evidence release or a completion record for v0.3. Model architecture, adaptation parameters,
+training composition, processing recipes, and private operational locators are withheld here.
+The producer repositories retain the detailed record; this note is not a public reproduction bundle.
+
+Earlier versions of this note were publicly readable. Redacting the current version does not retract
+Git history or copies already distributed.
 
 ## Run identity
 
-- fresh Qwen3.5-9B R64 LoRA; no prior adapter resume;
-- 666 of 666 planned steps completed on A100;
+- a fresh adaptation run completed on A100 without resuming a prior adapter;
 - final-step mean token NLL: 0.1739, used only as a training diagnostic;
 - six-clip racket-sport development panel; and
 - canonical scoring from locked BHI scorer commit
   `1d58c0a183d6355668fe690f08b34689a52631a8`, recorded by BHI reviewed head
   `71bdcf6a7bc6b41d628f1455958f5ba60f9d03dc`.
 
-The initial fork report used a merge rule that included gaps exactly equal to 1.5 seconds. The canonical
-rule uses a strict boundary and keeps those gaps distinct. The following values are the corrected
-numbers of record and supersede the initial 0.4640-to-0.6872 macro report.
+The initial fork report used a noncanonical scoring interpretation. The locked producer scorer
+corrected that interpretation. The following values are the corrected numbers of record and
+supersede the initial 0.4640-to-0.6872 macro report; the private scorer record carries the exact rule.
 
 ## Canonical result
 
@@ -43,13 +47,15 @@ or locked result.
 ## Claim boundary
 
 The panel is historically reused and adaptive. Four badminton clips appeared in prior H1/H15 work; the
-table-tennis and pickleball clips appeared in XS artifacts. The 21,296 training windows were also
-approximately 90.9% badminton, 5.6% table tennis, and 3.5% pickleball.
+table-tennis and pickleball clips appeared in XS artifacts. The training mix was dominated by
+badminton, with smaller table-tennis and pickleball representation. That imbalance remains a
+material limitation; the exact composition belongs to the private producer record.
 
 The result therefore supports these statements:
 
 - the E0 adaptation improved the canonical score on this development panel;
-- the corrected scorer path is independently reproducible at the identified revisions; and
+- the corrected scores are tied to locked producer revisions, with reproduction requiring access
+  to the private implementation and inputs; and
 - sport balance and locked-threshold pickleball performance are the next experimental problems.
 
 It does not support these statements:
@@ -65,30 +71,20 @@ KE-5 remains pending. A v0.3 owner-adaptation proof still requires an authorized
 held-out data, common-ruler non-regression, portable export, clean restore, replay, promotion, rollback,
 time, and cost.
 
-The next controlled experiment should use a fresh base LoRA, whole-session reshuffling, and sport-first
-sampling at 50% badminton, 25% table tennis, and 25% pickleball. The prompt, context, rendering, LoRA
-shape, scorer, and locked thresholds should remain fixed so the within-run D-minus-C comparison stays
-interpretable. This is an experimental recommendation, not a KE-5 gate change.
+The next controlled experiment should address sport imbalance while holding the comparison
+conditions fixed so the within-run D-minus-C result stays interpretable. Sampling weights, prompts,
+context settings, adaptation shape, rendering, scorer rules, and thresholds remain in the private
+experiment plan. This is an experimental recommendation, not a KE-5 gate change.
 
-## Exact producer evidence
+## Producer evidence and custody boundary
 
-- [sft-factory PR #102](https://avis-pbook.tail651ec3.ts.net/Khelsutra/sft-factory/pulls/102):
-  training and replay artifacts.
-- [BHI PR #1158](https://avis-pbook.tail651ec3.ts.net/Khelsutra/badminton-highlight-indexer/pulls/1158):
-  canonical audit at `71bdcf6a7bc6b41d628f1455958f5ba60f9d03dc`.
-- [rally-corpus-vault PR #236](https://avis-pbook.tail651ec3.ts.net/Khelsutra/rally-corpus-vault/pulls/236):
-  custody sidecar at reviewed head `222b28052e1d904d2925a29511f110af9652eaeb`, file
-  `operations/model-custody/2026-08-30-racket-window-r64-v1/upstream-evidence-v2.json`; follow-up head
-  `e6c6254672b337ffb996d3cce022d1810c9a39b0` also persists the candidate checkpoint registry entry.
-- [sports-data-collector PR #92](https://avis-pbook.tail651ec3.ts.net/Khelsutra/sports-data-collector/pulls/92):
-  label-inventory evidence.
+The private producer record identifies training/replay evidence, the canonical scorer audit,
+model custody and checkpoint registration, and the label inventory. The canonical scorer revisions
+above remain identifiers for that audit; access to those repositories and artifacts is separate
+from access to this public note. Private service URLs, model registry locators, and operational
+paths are withheld here.
 
-Producer repositories retain their private artifacts and operational history. This repository links
-their exact revisions without claiming to own or publish those artifacts.
-
-At follow-up head `e6c6254`, 89 focused custody tests passed. `storagectl weights verify` returned
-`WEIGHTS_VERIFY_OK`, and byte verification of the registered Tier-F replica returned
-`WEIGHTS_CUSTODY_OK` with weights ID
-`sha256:f585a2eaf4aa0da963337c3e4d871a25a7b90322b443e8ed9798d5617221bd48`. These receipts verify
-identity and custody only; they grant no model usage, training, redistribution, production promotion,
-or serving-default authority.
+The follow-up custody checks reported verified model identity and a verified stored replica.
+Those receipts establish identity and custody only. They grant no model usage, training,
+redistribution, production promotion, or serving-default authority. This note publishes neither
+model weights nor a grant to use them.

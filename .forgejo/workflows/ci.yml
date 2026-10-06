@@ -37,6 +37,8 @@ jobs:
         run: .venv-ci/bin/python -m mypy src
       - name: Full suite with coverage floor
         run: .venv-ci/bin/python -m pytest
+      - name: Observe potential proprietary disclosures
+        run: .venv-ci/bin/evidence disclosure-review .
       - name: Build wheel
         run: .venv-ci/bin/python -m pip wheel --no-deps --wheel-dir dist .
       - name: Verify built wheel in a clean environment
